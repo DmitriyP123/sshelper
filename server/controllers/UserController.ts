@@ -67,6 +67,7 @@ class UserController {
       }
       const data: UserModelInterface = {
         email: req.body.email,
+        nickname: req.body.nickname,
         password: await bcryptHash(req.body.password),
       };
 
