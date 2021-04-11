@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useRef } from "react";
 import AnimationRevealPage from "helpers/AnimationRevealPage.js";
 import { Container as ContainerBase } from "components/misc/Layouts";
 import tw from "twin.macro";
@@ -9,8 +9,30 @@ import logo from "images/logo.svg";
 import googleIconImageSrc from "images/google-icon.png";
 import twitterIconImageSrc from "images/twitter-icon.png";
 import { ReactComponent as SignUpIcon } from "feather-icons/dist/icons/user-plus.svg";
+import { useHistory } from "react-router-dom";
+import { useDispatch, useSelector } from "react-redux";
+import { fetchRegisterUser } from "../../redux/reduxThunk/asyncFuncs";
 
-const Container = tw(ContainerBase)`min-h-screen bg-primary-900 text-white font-medium flex justify-center -m-8`;
+function RegisterPage(props) {
+  const logoLinkUrl = "/"
+ const  illustrationImageSrc = illustration
+  const headingText = "Зарегистрироваться в  SSHelper"
+  const socialButtons = [
+    {
+      iconImageSrc: googleIconImageSrc,
+      text: "Sign Up With VK",
+      url: "https://google.com",
+    },
+  ]
+  const submitButtonText = "Sign Up"
+  const SubmitButtonIcon = SignUpIcon
+ const  tosUrl = "#"
+  const privacyPolicyUrl = "#"
+  const signInUrl = "/signin"
+
+  const Container = tw(
+  ContainerBase
+)`min-h-screen bg-primary-900 text-white font-medium flex justify-center -m-8`;
 const Content = tw.div`max-w-screen-xl m-0 sm:mx-20 sm:my-16 bg-white text-gray-900 shadow sm:rounded-lg flex justify-center flex-1`;
 const MainContainer = tw.div`lg:w-1/2 xl:w-5/12 p-6 sm:p-12`;
 const LogoLink = tw.a``;
@@ -49,89 +71,103 @@ const SubmitButton = styled.button`
 `;
 const IllustrationContainer = tw.div`sm:rounded-r-lg flex-1 bg-purple-100 text-center hidden lg:flex justify-center`;
 const IllustrationImage = styled.div`
-  ${props => `background-image: url("${props.imageSrc}");`}
+  ${(props) => `background-image: url("${props.imageSrc}");`}
   ${tw`m-12 xl:m-16 w-full max-w-lg bg-contain bg-center bg-no-repeat`}
 `;
 
-const signupFormHandler = (e) => {
+const dispatch = useDispatch();
+const nicknameInput = useRef();
+const emailInput = useRef();
+const passwordInput = useRef();
+const history = useHistory();
+const { error, globalError } = useSelector((state) => state.users);
+console.log(globalError);
+const RegistrationHandler = async (e) => {
   e.preventDefault();
-  console.log('SIGNUP');
-}
+  const nickname = nicknameInput.current.value;
+  const email = emailInput.current.value;
+  const password = passwordInput.current.value;
+  dispatch(fetchRegisterUser(nickname, email, password));
+  if (error === false && globalError === true) {
+    history.push("/map");
+  }
+};
 
-export default ({
-  logoLinkUrl = "/",
-  illustrationImageSrc = illustration,
-  headingText = "Sign Up For SSHelper",
-  socialButtons = [
-    {
-      iconImageSrc: googleIconImageSrc,
-      text: "Sign Up With VK",
-      url: "https://google.com"
-    },
-  ],
-  submitButtonText = "Sign Up",
-  SubmitButtonIcon = SignUpIcon,
-  tosUrl = "#",
-  privacyPolicyUrl = "#",
-  signInUrl = "/signin"
-}) => (
-  // <AnimationRevealPage disabled>
-    <Container>
-      <Content>
-        <MainContainer>
-          <LogoLink href={logoLinkUrl}>
-            <LogoImage src={logo} />
-          </LogoLink>
-          <MainContent>
-            <Heading style={{position: "unset"}}>{headingText}</Heading>
-            <FormContainer>
-              <SocialButtonsContainer>
-                {socialButtons.map((socialButton, index) => (
-                  <SocialButton key={index} href={socialButton.url}>
-                    <span className="iconContainer">
-                      <img src={socialButton.iconImageSrc} className="icon" alt="" />
-                    </span>
-                    <span className="text">{socialButton.text}</span>
-                  </SocialButton>
-                ))}
-              </SocialButtonsContainer>
-              <DividerTextContainer>
-                <DividerText>Or Sign up with your e-mail</DividerText>
-              </DividerTextContainer>
+  return (
+    <>
+        <Container>
+    <Content>
+      <MainContainer>
+        <LogoLink href={logoLinkUrl}>
+          <LogoImage src={logo} />
+        </LogoLink>
+        <MainContent>
+          <Heading style={{ position: "unset" }}>{headingText}</Heading>
+          <FormContainer>
+            <SocialButtonsContainer>
+              {socialButtons.map((socialButton, index) => (
+                <SocialButton key={index} href={socialButton.url}>
+                  <span className="iconContainer">
+                    <img
+                      src={socialButton.iconImageSrc}
+                      className="icon"
+                      alt=""
+                    />
+                  </span>
+                  <span className="text">{socialButton.text}</span>
+                </SocialButton>
+              ))}
+            </SocialButtonsContainer>
+            <DividerTextContainer>
+              <DividerText></DividerText>
+            </DividerTextContainer>
 
-              <Form onSubmit={signupFormHandler}>
-                <Input type="email" placeholder="Email" />
-                <Input type="password" placeholder="Password" />
-                <SubmitButton type="submit">
-                  <SubmitButtonIcon className="icon" />
-                  <span className="text">{submitButtonText}</span>
-                </SubmitButton>
-                <p tw="mt-6 text-xs text-gray-600 text-center">
-                  I agree to abide by treact's{" "}
-                  <a href={tosUrl} tw="border-b border-gray-500 border-dotted">
-                    Terms of Service
-                  </a>{" "}
-                  and its{" "}
-                  <a href={privacyPolicyUrl} tw="border-b border-gray-500 border-dotted">
-                    Privacy Policy
-                  </a>
-                </p>
+            <Form onSubmit={RegistrationHandler}>
+              <Input type="text" ref={nicknameInput} placeholder="nickname" />
+              <Input type="email" ref={emailInput} placeholder="Email" />
+              <Input
+                type="password"
+                ref={passwordInput}
+                placeholder="Password"
+              />
+              <SubmitButton type="submit">
+                <SubmitButtonIcon className="icon" />
+                <span className="text">Зарегистрироваться</span>
+              </SubmitButton>
+              {error && <p tw="mt-8 text-sm text-red-600 text-center">Пользователь с таким именем/почтой уже существует</p>}
+              {globalError && <p tw="mt-6 text-xs text-red-600 text-center">Изивините, в данный момент наш сервис недоступен :(</p>} 
+              <p tw="mt-6 text-xs text-gray-600 text-center">
+                I agree to abide by treact's{" "}
+                <a href={tosUrl} tw="border-b border-gray-500 border-dotted">
+                  Terms of Service
+                </a>{" "}
+                and its{" "}
+                <a
+                  href={privacyPolicyUrl}
+                  tw="border-b border-gray-500 border-dotted"
+                >
+                  Privacy Policy
+                </a>
+              </p>
 
-                <p tw="mt-8 text-sm text-gray-600 text-center">
-                  Already have an account?{" "}
-                  <a href={signInUrl} tw="border-b border-gray-500 border-dotted">
-                    Sign In
-                  </a>
-                </p>
-              </Form>
-
-            </FormContainer>
-          </MainContent>
-        </MainContainer>
-        {/* <IllustrationContainer>
+              <p tw="mt-8 text-sm text-gray-600 text-center">
+                Already have an account?{" "}
+                <a href={signInUrl} tw="border-b border-gray-500 border-dotted">
+                  Sign In
+                </a>
+              </p>
+            </Form>
+          </FormContainer>
+        </MainContent>
+      </MainContainer>
+      {/* <IllustrationContainer>
           <IllustrationImage imageSrc={illustrationImageSrc} />
         </IllustrationContainer> */}
-      </Content>
-    </Container>
-  // </AnimationRevealPage>
-);
+    </Content>
+  </Container>
+   {/* </AnimationRevealPage> */}
+    </>
+  );
+}
+
+export default RegisterPage;
