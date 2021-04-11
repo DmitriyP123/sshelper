@@ -1,53 +1,65 @@
 import React from "react";
-import { Link } from 'react-router-dom'
+import tw from "twin.macro";
+import styled from "styled-components";
+import { css } from "styled-components/macro"; //eslint-disable-line
+
+import Header, { NavLink, NavLinks, PrimaryLink as PrimaryLinkBase, LogoLink, NavToggle, DesktopNavLinks } from "../headers/light.js";
+
+const StyledHeader = styled(Header)`
+  ${tw`pt-8 max-w-none w-full`}
+  ${DesktopNavLinks} ${NavLink}, ${LogoLink} {
+    ${tw`text-gray-100 hover:border-gray-300 hover:text-gray-300`}
+  }
+  ${NavToggle}.closed {
+    ${tw`text-gray-100 hover:text-primary-500`}
+  }
+`;
+
+const PrimaryLink = tw(PrimaryLinkBase)`rounded-full`
+const Container = styled.div`
+  ${tw`relative -mx-8 -mt-8 bg-center bg-cover h-screen`}
+  background-color: purple;
+  height: 8rem;
+`;
+
+const OpacityOverlay = tw.div`z-10 mt-0 absolute inset-0 bg-black opacity-100`;
+// opacity-100 ???
+const HeroContainer = tw.div`z-20 relative px-6 sm:px-8 mx-auto h-full flex flex-row-reverse`;
+
+
+// ADD STYLES IN TALIWIND (PADDINGS, MARGINS, SPACING)
 
 function Navbar() {
+  const navLinks = [
+    <NavLinks key={1}>
+      <NavLink href="/">
+        Main
+      </NavLink>
+      <NavLink href="/map">
+        Map
+      </NavLink>
+      <NavLink href="/addmark">
+        Add Mark
+      </NavLink>
+    </NavLinks>,
+    <NavLinks key={2}>
+      <PrimaryLink style={{ marginRight: '5%' }} href="/signin">
+        Login
+      </PrimaryLink>
+      <PrimaryLink style={{ marginRight: '5%' }} href="/signup">
+        SignUp
+    </PrimaryLink>
+    </NavLinks>
+  ];
+
   return (
-    <>
-      <nav className="navbar navbar-expand-lg navbar-light bg-light">
-        <div className="container-fluid">
-          <Link to="/" className="navbar-brand">
-            SSHelper
-          </Link>
-          <button
-            className="navbar-toggler"
-            type="button"
-            data-bs-toggle="collapse"
-            data-bs-target="#navbarNav"
-            aria-controls="navbarNav"
-            aria-expanded="false"
-            aria-label="Toggle navigation"
-          >
-            <span className="navbar-toggler-icon"></span>
-          </button>
-          <div className="collapse navbar-collapse" id="navbarNav">
-            <ul className="navbar-nav">
-              <li className="nav-item">
-                <Link to="/" className="nav-link">
-                  Home
-                </Link>
-              </li>
-              <li className="nav-item">
-                <Link to="/map" className="nav-link">
-                  Map
-                </Link>
-              </li>
-              <li className="nav-item">
-                <Link to="/login" className="nav-link">
-                  Login
-                </Link>
-              </li>
-              <li className="nav-item">
-                <Link to="/register" className="nav-link">
-                  Register
-                </Link>
-              </li>
-            </ul>
-          </div>
-        </div>
-      </nav>
-    </>
+    <Container>
+      <OpacityOverlay />
+      <HeroContainer>
+        <StyledHeader links={navLinks} />
+      </HeroContainer>
+    </Container>
   );
-}
+};
 
 export default Navbar;
