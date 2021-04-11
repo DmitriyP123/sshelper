@@ -34,6 +34,7 @@
     "use-in-view": "^1.0.15",
     "web-vitals": "^1.1.1"
   },
+  "proxy": "http://localhost:4200",
   "scripts": {
     "start": "react-scripts start",
     "build": "react-scripts build",

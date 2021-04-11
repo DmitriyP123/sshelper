@@ -82,7 +82,7 @@ export default ({
         <LogoLink href={logoLinkUrl}>
           <LogoImage src={logo} />
         </LogoLink>
-        <MainContent>
+        <MainContent>i
           <Heading style={{ position: "unset" }}>{headingText}</Heading>
           <FormContainer>
             <SocialButtonsContainer>

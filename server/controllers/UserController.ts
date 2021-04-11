@@ -12,7 +12,7 @@ import { isValidObjectId } from "../utils/isValidObjectId";
 
 class UserController {
   // полчучаем всех пользователей
-  async index(_: any, res: express.Response): Promise<void> {
+  async index( res: express.Response): Promise<void> {
     try {
       const users = await UserModel.find();
 
@@ -29,7 +29,7 @@ class UserController {
   }
 
   /// Конкретный пользователь
-  async show(req: any, res: express.Response): Promise<void> {
+  async show(req: express.Request, res: express.Response): Promise<void> {
     try {
       const userId = req.params.id;
 
