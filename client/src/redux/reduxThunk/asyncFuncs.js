@@ -91,16 +91,10 @@ export const fetchCheckUser = (token) => {
 export const fetchInitMarkers = () => {
   return async (dispatch) => {
     try {
-      let response = await fetch("/marks", {
-        method: "GET",
-        headers: {
-          "Content-type": "Application/json",
-        },
-      });
+      let response = await fetch("/marks");
       let result = await response.json();
       let { data } = result;
-
-      if (data.status === "success") {
+      if (result.status === "success") {
         dispatch(initMarkersAC(data));
       }
     } catch (err) {

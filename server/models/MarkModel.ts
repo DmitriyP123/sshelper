@@ -16,20 +16,20 @@ const MarkSchema = new Schema({
   lat: {
     unique: true,
     required: true,
-    type: String,
+    type: Number,
   },
   lng: {
     unique: true,
     required: true,
-    type: String,
+    type: Number,
   },
   info: {
     type: String,
   },
-  field:{
+  field: {
     type: Schema.Types.ObjectId,
     ref: 'Field',
-    default:''
+    default: ''
   },
 });
 

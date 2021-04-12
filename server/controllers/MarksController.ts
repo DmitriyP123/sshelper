@@ -27,8 +27,8 @@ class MarksController {
   // создание метки 
   async create(req: express.Request, res: express.Response): Promise<void> {
     try {
-      console.log(req.body.lat,req.body.lng);
-      
+      console.log(req.body.lat, req.body.lng);
+
       const data: MarkModelInterface = {
         lat: req.body.lat,
         lng: req.body.lng,
@@ -38,7 +38,7 @@ class MarksController {
 
       let mark = await MarkModel.create(data);
       console.log(mark);
-      
+
       res.status(200).json({
         status: "success",
         data: mark,
@@ -55,12 +55,12 @@ class MarksController {
   async delete(req: express.Request, res: express.Response): Promise<void> {
     try {
       console.log(req.body);
-      
-      let currentMark = await MarkModel.findOne({_id:req.body.id})
+
+      let currentMark = await MarkModel.findOne({ _id: req.body.id })
       console.log(currentMark);
-      
+
       if (currentMark) {
-        await MarkModel.findByIdAndDelete({_id:req.body.id})
+        await MarkModel.findByIdAndDelete({ _id: req.body.id })
         res.status(200).json({
           status: "success",
         });
@@ -68,7 +68,7 @@ class MarksController {
         res.json({
           status: "error",
           message: 'Такой метки не существует',
-        }); 
+        });
       }
     } catch (error) {
       res.json({

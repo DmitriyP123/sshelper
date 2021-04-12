@@ -11,6 +11,7 @@ import Navbar from 'components/Navbar/Navbar';
 import "@reach/combobox/styles.css";
 import { useHistory } from 'react-router';
 import { fetchInitMarkers } from '../../redux/reduxThunk/asyncFuncs';
+import { Link } from 'react-router-dom';
 
 
 const Container = styled.div`
@@ -65,12 +66,15 @@ function Map(props) {
   //   ]);
   // }, []);
 
+  console.log(selected);
+
   const mapRef = useRef();
   const onMapLoad = useCallback((map) => {
     mapRef.current = map;
   }, []);
 
   const showFieldInfo = () => {
+    console.log(selected.id);
     history.push('/fieldpage');
   };
 
@@ -90,7 +94,7 @@ function Map(props) {
             options={options}
             // onClick={onMapClick}
             onLoad={onMapLoad}>
-            {markers.map(marker => <Marker key={marker.time}
+            {markers.map(marker => <Marker key={marker.id}
               // key = .id ?
               // UUID ?
               position={{
@@ -104,7 +108,7 @@ function Map(props) {
                 anchor: new window.google.maps.Point(15, 15)
               }}
               onClick={() => {
-                setSelected((selected) => selected = { marker, id: 1 });
+                setSelected((selected) => selected = { marker });
               }} />)}
 
             {selected ? (
@@ -114,10 +118,11 @@ function Map(props) {
                 }}
               >
                 <div>
-                  <h2>{selected.marker.lat}</h2>
+                  {/* <h2>{selected.marker.lat}</h2> */}
                   <p>Info</p>
-                  <p>Добавлено: {formatRelative(selected.marker.time, new Date())}</p>
-                  <button onClick={showFieldInfo}>Подробнее</button>
+                  {/* <p>Добавлено: {formatRelative(selected.marker.time, new Date())}</p> */}
+                  {/* <button onClick={showFieldInfo}>Подробнее</button> */}
+                  <Link to={`/field/${selected.marker.field}`}>Подробнее</Link>
                 </div>
               </InfoWindow>
             ) : null}
@@ -129,6 +134,15 @@ function Map(props) {
     </Container>
   );
 };
+
+// 59.941774
+// 30.361191
+
+// 59.933549
+// 30.345025
+
+// 59.968925
+// 30.41511
 
 
 export default Map;
