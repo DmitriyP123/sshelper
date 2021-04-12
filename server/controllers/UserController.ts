@@ -12,13 +12,13 @@ import { isValidObjectId } from "../utils/isValidObjectId";
 
 class UserController {
   // полчучаем всех пользователей
-  async index( res: express.Response): Promise<void> {
+  async getAll( res: express.Response): Promise<void> {
     try {
       const users = await UserModel.find();
 
       res.json({
         status: "success",
-        data: users,
+        data:users,
       });
     } catch (error) {
       res.json({
@@ -58,32 +58,41 @@ class UserController {
   }
 
   // Создаем подьзователя (при регистрации)
-  async create(req: express.Request, res: express.Response): Promise<void> {
+  async registration(req: express.Request, res: express.Response): Promise<void> {
     try {     
       const errors = validationResult(req);
       if (!errors.isEmpty()) {
         res.status(400).json({ status: "error", errors: errors.array() });
         return;
       }
-      const data: UserModelInterface = {
-        email: req.body.email,
-        nickname: req.body.nickname,
-        password: await bcryptHash(req.body.password),
-      };
-
-       let user = await UserModel.create(data);
-
-      res.status(200).json({
-        status: "success",
-        data: user,
-        token: jwt.sign(
-          { data: user },
-          process.env.SECRET_KEY || "123",
-          {
-            expiresIn: "30 days",
-          }
-        ),
-      });
+      let userCheckEmail = await UserModel.findOne({email:req.body.email})
+      let userCheckNickname = await UserModel.findOne({email:req.body.nickname})
+      if (!userCheckEmail && !userCheckNickname) {
+        const data: UserModelInterface = {
+          email: req.body.email,
+          nickname: req.body.nickname,
+          password: await bcryptHash(req.body.password),
+        };
+  
+         let user = await UserModel.create(data);
+  
+        res.status(200).json({
+          status: "success",
+          data: user,
+          token: jwt.sign(
+            { data: user },
+            process.env.SECRET_KEY || "123",
+            {
+              expiresIn: "30 days",
+            }
+          ),
+        });
+      } else {
+        res.status(200).json({
+          status: "error",
+          message: 'Registration Error',
+        });
+      }
     } catch (error) {
       res.status(500).json({
         status: "error",
@@ -93,7 +102,7 @@ class UserController {
     }
   }
  // Логин, отдаем токен
-  async afterLogin(req: express.Request, res: express.Response): Promise<void> {
+  async login(req: express.Request, res: express.Response): Promise<void> {
     try {
         let user = await UserModel.findOne({email:req.body.email})
         if (user && await bcrypt.compare(req.body.password, user.password)) {
@@ -118,6 +127,41 @@ class UserController {
       });
     }
   }
+
+  async verify(req: express.Request, res: express.Response): Promise<void> {
+    try {
+
+      let test: any = jwt.decode(req.body.token, {complete: true})
+        console.log(req.body.token);  
+        console.log(test)
+
+       
+      
+
+      // if (user) {
+      //   user.confirmed = true;
+      //   await user.save();
+
+      //   res.json({
+      //     status: 'success',
+      //     data: {
+      //       ...user.toJSON(),
+      //       token: jwt.sign({ data: user.toJSON() }, process.env.SECRET_KEY || '123', {
+      //         expiresIn: '30 days',
+      //       }),
+      //     },
+      //   });
+      // } else {
+      //   res.status(404).json({ status: 'error', message: 'Пользователь не найден' });
+      // }
+    } catch (error) {
+      res.status(500).json({
+        status: 'error',
+        message: error,
+      });
+    }
+  }
 }
+
 
 export const UserCtrl = new UserController();

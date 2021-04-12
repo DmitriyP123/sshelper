@@ -9,15 +9,17 @@ function RegisterPage() {
   const emailInput = useRef()
   const passwordInput = useRef()
   const history = useHistory()
-  const { error } = useSelector(state => state)
-  
+  const { error, globalError } = useSelector(state => state.users)
   const RegistrationHandler = async (e) => {
     e.preventDefault()
     const nickname = nicknameInput.current.value
     const email = emailInput.current.value
     const password = passwordInput.current.value
     dispatch(fetchRegisterUser(nickname,email,password))
-    history.push('/map')
+    if (error && !globalError) {
+      console.log(error);
+      history.push('/map')
+    }
   };
 
   return (
