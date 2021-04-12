@@ -12,7 +12,7 @@ import { isValidObjectId } from "../utils/isValidObjectId";
 
 class UserController {
   // полчучаем всех пользователей
-  async getAll( res: express.Response): Promise<void> {
+  async getAll(_: any,res: express.Response): Promise<void> {
     try {
       const users = await UserModel.find();
 

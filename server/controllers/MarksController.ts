@@ -8,12 +8,13 @@ import { FieldModelDocumentInterface } from '../models/FieldModel'
 class MarksController {
 
   // получаем все метки
-  async getAll( res: express.Response): Promise<void> {
+  async getAll(_: any, res: express.Response): Promise<void> {
     try {
       const marks = await MarkModel.find();
+
       res.json({
         status: "success",
-        data: marks,
+        data:marks,
       });
     } catch (error) {
       res.json({
@@ -31,6 +32,7 @@ class MarksController {
       const data: MarkModelInterface = {
         lat: req.body.lat,
         lng: req.body.lng,
+        info:req.body.info,
         field: req.body.field as FieldModelDocumentInterface,
       };
 
