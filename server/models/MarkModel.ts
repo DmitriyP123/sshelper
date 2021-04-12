@@ -6,6 +6,7 @@ export interface MarkModelInterface {
   _id?: string;
   lat?: string;
   lng?: string;
+  info?: string;
   field?: FieldModelDocumentInterface;
 }
 
@@ -20,6 +21,9 @@ const MarkSchema = new Schema({
   lng: {
     unique: true,
     required: true,
+    type: String,
+  },
+  info: {
     type: String,
   },
   field:{
