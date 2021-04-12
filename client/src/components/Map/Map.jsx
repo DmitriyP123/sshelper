@@ -49,6 +49,7 @@ function Map(props) {
         time: new Date(),
       }
     ]);
+    console.log(markers);
   }, []);
 
   const mapRef = useRef();
