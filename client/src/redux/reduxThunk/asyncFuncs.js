@@ -6,6 +6,7 @@ import {
   ErrorLoginUserAC,
   ErrorRegisterUserAC,
   checkUserAC,
+  initMarkersAC,
 } from "../actionCreators/actionCreators";
 
 export const fetchRegisterUser = (nickname, email, password) => {
@@ -74,9 +75,35 @@ export const fetchCheckUser = (token) => {
         }),
       });
       let userInfo = await response.json();
-      console.log(userInfo);
+      let { data, token } = userInfo;
+      if (userInfo.status === "success") {
+        dispatch(registerUserAC({ data, token }));
+      } else {
+        dispatch(ErrorRegisterUserAC(userInfo.message));
+      }
     } catch (err) {
       dispatch(globalErrorAC());
+    }
+  };
+};
+
+export const fetchInitMarkers = () => {
+  return async (dispatch) => {
+    try {
+      let response = await fetch("/marks", {
+        method: "GET",
+        headers: {
+          "Content-type": "Application/json",
+        },
+      });
+      let result = await response.json();
+      let { data } = result;
+
+      if (data.status === "success") {
+        dispatch(initMarkersAC(data));
+      }
+    } catch (err) {
+      console.log(err);
     }
   };
 };

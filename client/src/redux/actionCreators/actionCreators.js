@@ -1,4 +1,4 @@
-import { REGISTER_USER, USER_CHECK, LOGIN_USER, LOGOUT_USER, ERROR_REGISTER, ERROR_LOGIN, GLOBAL_ERROR} from '../actionTypes/actionTypes'
+import { REGISTER_USER, USER_CHECK, LOGIN_USER, LOGOUT_USER, ERROR_REGISTER, ERROR_LOGIN, GLOBAL_ERROR, INIT_MARKERS, ADD_MARKER } from '../actionTypes/actionTypes'
 
 export const registerUserAC = (payload) => {
   return {
@@ -42,5 +42,19 @@ export const checkUserAC = (payload) => {
 export const logoutUserAC = () => {
   return {
     type: LOGOUT_USER,
+  }
+}
+
+export const initMarkersAC = (payload) => {
+  return {
+    type: INIT_MARKERS,
+    payload
+  }
+}
+
+export const addMarkerAC = (payload) => {
+  return {
+    type: ADD_MARKER,
+    payload
   }
 }

@@ -35,12 +35,11 @@ export default () => {
     <Container>
       <OpacityOverlay />
       <HeroContainer>
-      <Navbar />
+        <Navbar />
         <Content>
           <Heading style={{ position: 'unset' }}>
-          WELCOME
+            WELCOME
           </Heading>
-          {/* если что можно сделать PrimaryLink и тогда хистори пуш не нужен?  */}
           <PrimaryAction
             onClick={() => history.push('/map')}>
             SHOW MAP
