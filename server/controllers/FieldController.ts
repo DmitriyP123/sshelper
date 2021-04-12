@@ -28,7 +28,6 @@ class FieldsController {
       });
     }
   }
-}
-
+};
 
 export const FieldCtrl = new FieldsController();
