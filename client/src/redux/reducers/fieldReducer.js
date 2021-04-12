@@ -5,7 +5,7 @@ const initialState = {
 };
 
 const reducer = (state = initialState, action) => {
-    switch (action.types) {
+    switch (action.type) {
         case INIT_FIELDS:
             return {...state, fields: action.payload}
             

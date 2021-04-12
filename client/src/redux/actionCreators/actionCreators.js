@@ -1,4 +1,4 @@
-import { REGISTER_USER, USER_CHECK, LOGIN_USER, LOGOUT_USER, ERROR_REGISTER, ERROR_LOGIN, GLOBAL_ERROR, INIT_MARKERS, ADD_MARKER, INIT_FIELDS } from '../actionTypes/actionTypes'
+import { REGISTER_USER, USER_CHECK, LOGIN_USER, LOGOUT_USER, ERROR_REGISTER, ERROR_LOGIN, GLOBAL_ERROR, INIT_MARKERS, ADD_MARKER, INIT_FIELDS, INIT_REQUESTS, ADD_REQUEST, DELETE_REQUEST } from '../actionTypes/actionTypes'
 
 export const registerUserAC = (payload) => {
   return {
@@ -63,6 +63,27 @@ export const addMarkerAC = (payload) => {
 export const initFieldsAC = (payload) => {
   return {
     type: INIT_FIELDS,
+    payload
+  }
+}
+
+export const initRequestAC = (payload) => {
+  return {
+    type:INIT_REQUESTS,
+    payload
+  }
+}
+
+export const addRequestAC = (payload) => {
+  return {
+    type:ADD_REQUEST,
+    payload
+  }
+}
+
+export const deleteRequestAC = (payload) => {
+  return {
+    type:DELETE_REQUEST,
     payload
   }
 }

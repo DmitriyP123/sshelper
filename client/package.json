@@ -20,6 +20,7 @@
     "react-anchor-link-smooth-scroll": "^1.0.12",
     "react-calendar": "^3.3.1",
     "react-dom": "^16.13.1",
+    "react-horizontal-timeline": "^1.5.3",
     "react-modal": "^3.11.2",
     "react-redux": "^7.2.3",
     "react-rnd": "^10.1.9",

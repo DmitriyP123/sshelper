@@ -31,7 +31,7 @@ const HeroContainer = tw.div`z-20 relative px-6 sm:px-8 mx-auto h-full flex flex
 // ADD STYLES IN TALIWIND (PADDINGS, MARGINS, SPACING)
 
 function Navbar() {
-  const { logged } = useSelector(state => state.users)
+  const { logged, nickname, id, isAdmin } = useSelector(state => state.users)
   const dispatch = useDispatch()
   const history = useHistory()
   const logOutHandler = (e) => {
@@ -66,18 +66,24 @@ function Navbar() {
   const navLinksSignined = [
     <NavLinks key={1}>
       <NavLink href="/">
-        Main
+        Главная
       </NavLink>
       <NavLink href="/map">
-        Map
+        Карта
       </NavLink>
       <NavLink href="/addmark">
-        Add Mark
+        Добавить метку
       </NavLink>
+      {isAdmin && <NavLink href="/requests">
+        Заявки
+      </NavLink>}
     </NavLinks>,
     <NavLinks key={2}>
-      <PrimaryLink style={{ marginRight: '5%' }} onClick = {logOutHandler} href="/logout">
-        LogOut
+      <PrimaryLink style={{ marginRight: '10%' }} href={`/profile/${id}`}>
+        {nickname}
+      </PrimaryLink>
+      <PrimaryLink onClick = {logOutHandler} href="/logout">
+        Выйти
       </PrimaryLink>
     </NavLinks>
   ];

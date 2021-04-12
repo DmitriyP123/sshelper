@@ -1,17 +1,10 @@
-import React, { useCallback, useEffect, useRef, useState } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
+import React, { useCallback, useRef, useState } from 'react';
 import { GoogleMap, useLoadScript, Marker, InfoWindow } from '@react-google-maps/api';
 import { formatRelative } from 'date-fns';
 import tw from "twin.macro";
 import styled from "styled-components";
 import './Map.css';
 import Navbar from 'components/Navbar/Navbar';
-// import usePlacesAutocomplete, { getGeocode, getLatLng } from 'use-places-autocomplete';
-// import { Combobox, ComboboxInput, ComboboxPopover, ComboboxList, ComboboxOption, } from "@reach/combobox";
-import "@reach/combobox/styles.css";
-import { useHistory } from 'react-router';
-import { fetchInitMarkers } from '../../redux/reduxThunk/asyncFuncs';
-
 
 const Container = styled.div`
   ${tw`relative -mx-8 -mt-8 bg-center bg-cover h-screen min-h-144`}
@@ -23,7 +16,7 @@ const libraries = ['places'];
 
 const mapContainerStyle = {
   width: '100vw',
-  height: '95vh'
+  height: '91vh'
 };
 
 const center = {
@@ -38,32 +31,26 @@ const options = {
 };
 
 function Map(props) {
-
-  const dispatch = useDispatch();
-  const { markers } = useSelector(state => state.map);
-  const history = useHistory();
-
-  useEffect(() => {
-    dispatch(fetchInitMarkers());
-  }, [dispatch]);
-
   const { isLoaded, loadError } = useLoadScript({
     googleMapsApiKey: process.env.REACT_APP_GOOGLE_MAPS_API_KEY,
     libraries,
   });
 
+  const [markers, setMarkers] = useState([]);
+
   const [selected, setSelected] = useState(null);
 
-  // const onMapClick = useCallback((e) => {
-  //   setMarkers((current) => [
-  //     ...current,
-  //     {
-  //       lat: e.latLng.lat(),
-  //       lng: e.latLng.lng(),
-  //       time: new Date(),
-  //     }
-  //   ]);
-  // }, []);
+  const onMapClick = useCallback((e) => {
+    setMarkers((current) => [
+      ...current,
+      {
+        lat: e.latLng.lat(),
+        lng: e.latLng.lng(),
+        time: new Date(),
+      }
+    ]);
+    console.log(markers);
+  }, []);
 
   const mapRef = useRef();
   const onMapLoad = useCallback((map) => {
@@ -71,8 +58,8 @@ function Map(props) {
   }, []);
 
   const showFieldInfo = () => {
-    history.push('/fieldpage');
-  };
+    console.log(123);
+  }
 
   if (loadError) return "ERROR LOADING MAPS";
   if (!isLoaded) return "LOADING...";
@@ -88,47 +75,33 @@ function Map(props) {
             zoom={10}
             center={center}
             options={options}
-            // onClick={onMapClick}
+            onClick={onMapClick}
             onLoad={onMapLoad}>
-            {markers.map(marker => <Marker key={marker.time}
-              // key = .id ?
+            {markers.map(marker => <Marker key={marker.time.toISOString()}
               // UUID ?
               position={{
                 lat: marker.lat,
                 lng: marker.lng
               }}
-              icon={{
-                url: '/images/basketball.svg', // ???
-                scaledSize: new window.google.maps.Size(30, 30),
-                origin: new window.google.maps.Point(0, 0),
-                anchor: new window.google.maps.Point(15, 15)
-              }}
               onClick={() => {
-                setSelected((selected) => selected = { marker, id: 1 });
+                setSelected(marker);
               }} />)}
 
             {selected ? (
-              <InfoWindow position={{ lat: selected.marker.lat, lng: selected.marker.lng }}
-                onCloseClick={() => {
-                  setSelected(null);
-                }}
-              >
+              <InfoWindow position={{ lat: selected.lat, lng: selected.lng }}>
                 <div>
-                  <h2>{selected.marker.lat}</h2>
+                  <h2>FieldName</h2>
                   <p>Info</p>
-                  <p>Добавлено: {formatRelative(selected.marker.time, new Date())}</p>
+                  <p>Добавлено: {formatRelative(selected.time, new Date())}</p>
                   <button onClick={showFieldInfo}>Подробнее</button>
                 </div>
               </InfoWindow>
             ) : null}
-            {/* <Locate panTo={panTo} />
-            <Search panTo={panTo} /> */}
           </GoogleMap>
         </Content>
       </HeroContainer>
     </Container>
   );
 };
-
 
 export default Map;
