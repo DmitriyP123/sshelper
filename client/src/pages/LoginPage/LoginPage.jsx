@@ -82,7 +82,7 @@ export default ({
         <LogoLink href={logoLinkUrl}>
           <LogoImage src={logo} />
         </LogoLink>
-        <MainContent>i
+        <MainContent>
           <Heading style={{ position: "unset" }}>{headingText}</Heading>
           <FormContainer>
             <SocialButtonsContainer>
@@ -114,7 +114,7 @@ export default ({
                 </a>
             </p>
             <p tw="mt-8 text-sm text-gray-600 text-center">
-              Dont have an account?{" "}
+              Don't have an account?{" "}
               <a href={signupUrl} tw="border-b border-gray-500 border-dotted">
                 Sign Up
                 </a>
