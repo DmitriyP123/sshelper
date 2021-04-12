@@ -7,6 +7,7 @@ import {
   ErrorRegisterUserAC,
   checkUserAC,
   initMarkersAC,
+  initFieldsAC,
 } from "../actionCreators/actionCreators";
 
 export const fetchRegisterUser = (nickname, email, password) => {
@@ -101,3 +102,23 @@ export const fetchInitMarkers = () => {
     }
   };
 };
+
+export const fetchInitFields = () => {
+  return async (dispatch) => {
+    try {
+      let response = await fetch("/fields", {
+        method: "GET",
+        headers: {
+          "Content-type": "Application/json",
+        },
+      });
+      let  result = await response.json();
+      let { data } = result;
+      if (result.status === "success") {
+        dispatch(initFieldsAC(data));
+      }
+    } catch (err) {
+      console.log(err)
+    }
+  }
+}

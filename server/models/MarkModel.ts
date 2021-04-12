@@ -4,8 +4,9 @@ import { FieldModelDocumentInterface } from '../models/FieldModel'
 
 export interface MarkModelInterface {
   _id?: string;
-  lat?: number;
-  lng?: number;
+  lat?: string;
+  lng?: string;
+  info?: string;
   field?: FieldModelDocumentInterface;
 }
 
@@ -22,10 +23,13 @@ const MarkSchema = new Schema({
     required: true,
     type: Number,
   },
-  field:{
+  info: {
+    type: String,
+  },
+  field: {
     type: Schema.Types.ObjectId,
     ref: 'Field',
-    default:''
+    default: ''
   },
 });
 

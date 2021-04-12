@@ -27,6 +27,7 @@ app.get('/marks', MarkCtrl.getAll)
 app.post('/marks', MarkCtrl.create )
 app.delete('/marks', MarkCtrl.delete )
 
+app.get('/fields', FieldCtrl.getAll )
 app.post('/field', FieldCtrl.create)
 
 app.post('/events', EventCtrl.create)
