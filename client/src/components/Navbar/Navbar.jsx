@@ -21,6 +21,8 @@ const Container = styled.div`
   ${tw`relative -mx-8 -mt-8 bg-center bg-cover h-screen`}
   background-color: purple;
   height: 8rem;
+  margin-left: 0rem;
+  margin-right: 0rem;
 `;
 
 const OpacityOverlay = tw.div`z-10 mt-0 absolute inset-0 bg-black opacity-100`;

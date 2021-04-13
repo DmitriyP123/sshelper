@@ -7,6 +7,23 @@ import {
 
 class EventsController {
 
+   // получаем все ивенты
+   async getAll(_: any, res: express.Response): Promise<void> {
+    try {
+      const events = await EventModel.find();
+
+      res.json({
+        status: "success",
+        data:events,
+      });
+    } catch (error) {
+      res.json({
+        status: "error",
+        errors: JSON.stringify(error),
+      });
+    }
+  }
+
   async create(req: express.Request, res: express.Response): Promise<void> {
     try {
       

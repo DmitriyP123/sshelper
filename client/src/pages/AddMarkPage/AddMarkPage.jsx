@@ -42,6 +42,7 @@ function AddMarkPage() {
       lat: e.latLng.lat(),
       lng: e.latLng.lng(),
     })
+    center = {lat:marker.lat, lng:marker.lng}
   }
   const history = useHistory()
   const dispatch = useDispatch()
@@ -77,11 +78,10 @@ function AddMarkPage() {
       fieldContent: contentInput.current.value,
     }
     dispatch(fetchAddRequests(data))
-    history.pushState('/')
+    history.push('/')
   }
   return (
     <>
-      <Navbar />
       <div style={{ display: "flex" }}>
         <div>
           <GoogleMap

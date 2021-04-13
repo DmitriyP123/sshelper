@@ -68,7 +68,6 @@ function Map(props) {
   return (
     <Container>
       <HeroContainer>
-        <Navbar />
         <Content>
           <GoogleMap
             mapContainerStyle={mapContainerStyle}

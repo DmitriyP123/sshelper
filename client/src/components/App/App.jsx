@@ -17,6 +17,7 @@ function App() {
 
   return (
     <Router>
+    <Navbar />
       <AnimationRevealPage disabled>
         <Switch>
           <Route exact path="/">

@@ -164,15 +164,15 @@ export const fetchAddRequests = ({ lat, lng, fieldTitle, fieldContent}) => {
   }
 }
 
-export const fetchDeleteRequests = () => {
+export const fetchDeleteRequests = (id) => {
   return async (dispatch) => {
     try {
       let response = await fetch("/requests", {
-        method: "POST",
+        method: "DELETE",
         headers: {
           "Content-type": "Application/json",
         },
-        body: JSON.stringify({}),
+        body: JSON.stringify({id}),
       });
       let  result = await response.json();
       let { data } = result

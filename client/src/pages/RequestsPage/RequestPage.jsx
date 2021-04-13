@@ -1,6 +1,6 @@
 import React, { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux'
-import { fetchInitRequests } from '../../redux/reduxThunk/asyncFuncs'
+import { fetchInitRequests, fetchDeleteRequests } from '../../redux/reduxThunk/asyncFuncs'
 import Navbar from '../../components/Navbar/Navbar'
 function RequestPage() {
   const dispatch = useDispatch()
@@ -9,9 +9,12 @@ function RequestPage() {
     dispatch(fetchInitRequests())
   }, [dispatch])
 
+  const deleteRequestHandler = (e) => {
+    const { id } = e.target
+    dispatch(fetchDeleteRequests(id))
+  }
   return (
     <>
-    <Navbar />
     <ul>
      {requests?.map(el=> 
       <li key = {el._id}>
@@ -21,7 +24,7 @@ function RequestPage() {
         <p>FieldContent: {el.fieldContent}</p>
         <button>Принять</button>
         <br />
-        <button>Отклонить</button>
+        <button style={{color:'red'}} onClick={deleteRequestHandler} id={el._id}>Отклонить</button>
         <hr />
       </li>)} 
      </ul>
