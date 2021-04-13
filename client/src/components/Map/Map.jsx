@@ -6,6 +6,13 @@ import styled from "styled-components";
 import './Map.css';
 import Navbar from 'components/Navbar/Navbar';
 
+import "@reach/combobox/styles.css";
+import { useHistory } from 'react-router';
+import { fetchInitMarkers } from '../../redux/reduxThunk/asyncFuncs';
+import { Link } from 'react-router-dom';
+
+
+
 const Container = styled.div`
   ${tw`relative -mx-8 -mt-8 bg-center bg-cover h-screen min-h-144`}
 `;
@@ -52,14 +59,18 @@ function Map(props) {
     console.log(markers);
   }, []);
 
+  console.log(selected);
+
   const mapRef = useRef();
   const onMapLoad = useCallback((map) => {
     mapRef.current = map;
   }, []);
 
   const showFieldInfo = () => {
-    console.log(123);
-  }
+
+    console.log(selected.id);
+    history.push('/fieldpage');
+  };
 
   if (loadError) return "ERROR LOADING MAPS";
   if (!isLoaded) return "LOADING...";
@@ -76,23 +87,31 @@ function Map(props) {
             options={options}
             onClick={onMapClick}
             onLoad={onMapLoad}>
-            {markers.map(marker => <Marker key={marker.time.toISOString()}
+
+            {markers.map(marker => <Marker key={marker.id}
+              // key = .id ?
+
               // UUID ?
               position={{
                 lat: marker.lat,
                 lng: marker.lng
               }}
               onClick={() => {
-                setSelected(marker);
+
+                setSelected((selected) => selected = { marker });
+
               }} />)}
 
             {selected ? (
               <InfoWindow position={{ lat: selected.lat, lng: selected.lng }}>
                 <div>
-                  <h2>FieldName</h2>
+
+                  {/* <h2>{selected.marker.lat}</h2> */}
                   <p>Info</p>
-                  <p>Добавлено: {formatRelative(selected.time, new Date())}</p>
-                  <button onClick={showFieldInfo}>Подробнее</button>
+                  {/* <p>Добавлено: {formatRelative(selected.marker.time, new Date())}</p> */}
+                  {/* <button onClick={showFieldInfo}>Подробнее</button> */}
+                  <Link to={`/field/${selected.marker.field}`}>Подробнее</Link>
+
                 </div>
               </InfoWindow>
             ) : null}
@@ -102,5 +121,16 @@ function Map(props) {
     </Container>
   );
 };
+
+
+// 59.941774
+// 30.361191
+
+// 59.933549
+// 30.345025
+
+// 59.968925
+// 30.41511
+
 
 export default Map;
