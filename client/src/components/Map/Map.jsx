@@ -8,7 +8,7 @@ import Navbar from 'components/Navbar/Navbar';
 
 import "@reach/combobox/styles.css";
 import { useHistory } from 'react-router';
-import { fetchInitMarkers } from '../../redux/reduxThunk/asyncFuncs';
+import { fetchInitMarkers, fetchInitFields } from '../../redux/reduxThunk/asyncFuncs';
 import { Link } from 'react-router-dom';
 
 
@@ -87,8 +87,8 @@ function Map(props) {
             options={options}
             onClick={onMapClick}
             onLoad={onMapLoad}>
+            {markers.map(marker => <Marker key={marker._id}
 
-            {markers.map(marker => <Marker key={marker.id}
               // key = .id ?
 
               // UUID ?
@@ -107,7 +107,7 @@ function Map(props) {
                 <div>
 
                   {/* <h2>{selected.marker.lat}</h2> */}
-                  <p>Info</p>
+                  <p>{selected.marker.info}</p>
                   {/* <p>Добавлено: {formatRelative(selected.marker.time, new Date())}</p> */}
                   {/* <button onClick={showFieldInfo}>Подробнее</button> */}
                   <Link to={`/field/${selected.marker.field}`}>Подробнее</Link>

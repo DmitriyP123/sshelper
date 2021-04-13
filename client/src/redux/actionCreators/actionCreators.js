@@ -1,4 +1,5 @@
-import { REGISTER_USER, USER_CHECK, LOGIN_USER, LOGOUT_USER, ERROR_REGISTER, ERROR_LOGIN, GLOBAL_ERROR, INIT_MARKERS, ADD_MARKER, INIT_FIELDS, INIT_REQUESTS, ADD_REQUEST, DELETE_REQUEST } from '../actionTypes/actionTypes'
+import { REGISTER_USER, USER_CHECK, LOGIN_USER, LOGOUT_USER, ERROR_REGISTER, ERROR_LOGIN, GLOBAL_ERROR, INIT_MARKERS, ADD_MARKER, INIT_FIELDS, GET_FIELD, SET_DATE, INIT_REQUESTS, ADD_REQUEST, DELETE_REQUEST, INIT_EVENTS } from '../actionTypes/actionTypes'
+
 
 export const registerUserAC = (payload) => {
   return {
@@ -65,25 +66,46 @@ export const initFieldsAC = (payload) => {
     type: INIT_FIELDS,
     payload
   }
-}
+};
+
+export const getFieldAC = (payload) => {
+  return {
+    type: GET_FIELD,
+    payload
+  }
+};
+
+export const initEventsAC = (payload) => {
+  return {
+    type: INIT_EVENTS,
+    payload
+  }
+};
+
+export const setDateAC = (payload) => {
+  return {
+    type: SET_DATE,
+    payload
+  }
+};
 
 export const initRequestAC = (payload) => {
   return {
-    type:INIT_REQUESTS,
+    type: INIT_REQUESTS,
     payload
   }
 }
 
 export const addRequestAC = (payload) => {
   return {
-    type:ADD_REQUEST,
+    type: ADD_REQUEST,
     payload
   }
 }
 
 export const deleteRequestAC = (payload) => {
   return {
-    type:DELETE_REQUEST,
+    type: DELETE_REQUEST,
     payload
   }
 }

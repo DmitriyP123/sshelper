@@ -12,12 +12,23 @@ import ProfilePage from '../../pages/ProfilePage/ProfilePage'
 import Navbar from '../Navbar/Navbar'
 import RequestPage from '../../pages/RequestsPage/RequestPage'
 import FieldPage from '../../pages/FieldPage/FieldPage';
+import { fetchInitFields } from '../../redux/reduxThunk/asyncFuncs';
 import AddMarkPage from '../../pages/AddMarkPage/AddMarkPage'
+
 function App() {
+  const dispatch = useDispatch();
+  // const { token } = useSelector(state => state.users)
+  // const dispatch = useDispatch()
+  // useEffect(()=> {
+  //   dispatch(fetchCheckUser(token))
+  // })
+  useEffect(() => {
+    dispatch(fetchInitFields());
+  }, [dispatch]);
 
   return (
     <Router>
-    <Navbar />
+      <Navbar />
       <AnimationRevealPage disabled>
         <Switch>
           <Route exact path="/">

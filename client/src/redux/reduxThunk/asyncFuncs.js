@@ -110,7 +110,7 @@ export const fetchInitFields = () => {
   return async (dispatch) => {
     try {
       let response = await fetch("/fields");
-      let  result = await response.json();
+      let result = await response.json();
       let { data } = result
       if (result.status === "success") {
         dispatch(initFieldsAC(data));
@@ -125,7 +125,7 @@ export const fetchInitRequests = () => {
   return async (dispatch) => {
     try {
       let response = await fetch("/requests");
-      let  result = await response.json();
+      let result = await response.json();
       let { data } = result
       if (result.status === "success") {
         dispatch(initRequestAC(data));
@@ -136,7 +136,7 @@ export const fetchInitRequests = () => {
   }
 }
 
-export const fetchAddRequests = ({ lat, lng, fieldTitle, fieldContent}) => {
+export const fetchAddRequests = ({ lat, lng, fieldTitle, fieldContent }) => {
   return async (dispatch) => {
     try {
       let response = await fetch("/requests", {
@@ -151,8 +151,8 @@ export const fetchAddRequests = ({ lat, lng, fieldTitle, fieldContent}) => {
           fieldContent,
         }),
       });
-      let  result = await response.json();
-      let { data } = result
+      let result = await response.json();
+      let { data } = result;
       if (result.status === "success") {
         dispatch(addRequestAC(data));
         alert('Ваша заявка успешно отправлена')
@@ -171,9 +171,9 @@ export const fetchDeleteRequests = (id) => {
         headers: {
           "Content-type": "Application/json",
         },
-        body: JSON.stringify({id}),
+        body: JSON.stringify({ id }),
       });
-      let  result = await response.json();
+      let result = await response.json();
       let { data } = result
       if (result.status === "success") {
         dispatch(deleteRequestAC(data));
