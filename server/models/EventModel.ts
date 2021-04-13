@@ -3,9 +3,9 @@ import { UserModelDocumentInterface } from '../models/UserModel'
 export interface EventModelInterface {
   _id?: string;
   title: string;
-  content:string;
-  end: string;
-  date:string;
+  content: string;
+  start: string;
+  date: string;
   participants?: Array<UserModelDocumentInterface>;
 }
 
@@ -33,7 +33,7 @@ const EventSchema = new Schema({
   participants: [{
     type: Schema.Types.ObjectId,
     ref: 'User',
-    default:[],
+    default: [],
   }],
 });
 
