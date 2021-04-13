@@ -13,6 +13,7 @@ import { ReactComponent as SvgDecoratorBlob1 } from "../../images/svg-decorator-
 import { ReactComponent as SvgDecoratorBlob2 } from "../../images/svg-decorator-blob-5.svg";
 import "slick-carousel/slick/slick.css";
 import { useParams } from "react-router";
+import { fetchGetFieldEvents } from '../../redux/reduxThunk/asyncFuncs';
 
 import Navbar from '../../components/Navbar/Navbar';
 import Calendar from 'react-calendar';
@@ -20,7 +21,7 @@ import 'react-calendar/dist/Calendar.css';
 
 import Timeline from '../../components/Timeline/Timeline';
 
-import { getFieldAC, initDateAC, setDateAC } from '../../redux/actionCreators/actionCreators';
+import { getFieldAC, setDateAC, getDayEventsAC } from '../../redux/actionCreators/actionCreators';
 import { useDispatch, useSelector } from "react-redux";
 
 const Container = tw.div`relative `;
@@ -74,6 +75,8 @@ export default function FieldPage() {
 
   const { currentField } = useSelector(state => state.field);
 
+  const {eventsData} = useSelector(state => state.events);
+
   let subheading = "Адрес";
   let heading = "Название"; // .name
   let description = "ИНФОРМАЦИЯ. Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.";
@@ -113,15 +116,17 @@ export default function FieldPage() {
   // format = D.M.YYYY
 
   useEffect(() => {
+    dispatch(fetchGetFieldEvents(id));
     setTimeout(() => {
       dispatch(getFieldAC(id));
-      // dispatch 
+      dispatch(getDayEventsAC(`${date.getDate()}.${Number(date.getMonth()) + 1}.${date.getFullYear()}`));
     }, 200);
   }, [dispatch]);
 
   const changeDate = (date) => {
     setDate(date);
     dispatch(setDateAC(`${date.getDate()}.${Number(date.getMonth()) + 1}.${date.getFullYear()}`));
+    dispatch(getDayEventsAC(`${date.getDate()}.${Number(date.getMonth()) + 1}.${date.getFullYear()}`));
   };
 
   return (
@@ -165,7 +170,7 @@ export default function FieldPage() {
       <DecoratorBlob2 />
 
       <div>
-        <Timeline />
+        <Timeline data={eventsData} />
       </div>
 
     </Container>

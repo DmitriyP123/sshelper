@@ -10,7 +10,7 @@ import Navbar from 'components/Navbar/Navbar';
 // import { Combobox, ComboboxInput, ComboboxPopover, ComboboxList, ComboboxOption, } from "@reach/combobox";
 import "@reach/combobox/styles.css";
 import { useHistory } from 'react-router';
-import { fetchInitMarkers, fetchInitFields } from '../../redux/reduxThunk/asyncFuncs';
+import { fetchInitMarkers } from '../../redux/reduxThunk/asyncFuncs';
 import { Link } from 'react-router-dom';
 
 

@@ -15,7 +15,8 @@ export const GET_FIELD = 'GET_FIELD';
 
 export const SET_DATE = 'SET_DATE';
 
-export const INIT_EVENTS = 'INIT_EVENTS';
+export const GET_FIELD_EVENTS = 'GET_FIELD_EVENTS';
+export const GET_DAY_EVENTS = 'GET_DAY_EVENTS';
 
 export const INIT_REQUESTS = 'INIT_REQUESTS'
 export const ADD_REQUEST = 'ADD_REQUEST'
