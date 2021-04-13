@@ -1,17 +1,21 @@
-import { INIT_FIELDS } from '../actionTypes/actionTypes';
+import { INIT_FIELDS, GET_FIELD } from '../actionTypes/actionTypes';
 
 const initialState = {
-    fields: [],
+  fields: [],
+  currentField: { title: '', content: '', pictures: [] },
 };
 
 const reducer = (state = initialState, action) => {
-    switch (action.types) {
-        case INIT_FIELDS:
-            return {...state, fields: action.payload}
-            
-        default:
-            return {...state}
-    }
+  switch (action.type) {
+    case INIT_FIELDS:
+      return { ...state, fields: action.payload }
+
+    case GET_FIELD:
+      return { ...state, currentField: state.fields.find(el => el._id === action.payload) }
+
+    default:
+      return { ...state }
+  }
 }
 
 export default reducer

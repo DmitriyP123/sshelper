@@ -106,13 +106,8 @@ export const fetchInitMarkers = () => {
 export const fetchInitFields = () => {
   return async (dispatch) => {
     try {
-      let response = await fetch("/fields", {
-        method: "GET",
-        headers: {
-          "Content-type": "Application/json",
-        },
-      });
-      let  result = await response.json();
+      let response = await fetch("/fields");
+      let result = await response.json();
       let { data } = result;
       if (result.status === "success") {
         dispatch(initFieldsAC(data));

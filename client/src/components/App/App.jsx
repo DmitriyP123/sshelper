@@ -11,13 +11,18 @@ import Footer from '../Footer/Footer';
 import { fetchCheckUser } from '../../redux/reduxThunk/asyncFuncs'
 import { useDispatch, useSelector } from "react-redux";
 import FieldPage from '../../pages/FieldPage/FieldPage';
+import { fetchInitFields } from '../../redux/reduxThunk/asyncFuncs';
 
 function App() {
+  const dispatch = useDispatch();
   // const { token } = useSelector(state => state.users)
   // const dispatch = useDispatch()
   // useEffect(()=> {
   //   dispatch(fetchCheckUser(token))
   // })
+  useEffect(() => {
+    dispatch(fetchInitFields());
+  }, [dispatch]);
 
   return (
     <Router>

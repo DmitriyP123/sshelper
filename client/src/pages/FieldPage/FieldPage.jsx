@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import Slider from "react-slick";
 import styled from "styled-components";
 import tw from "twin.macro";
@@ -11,11 +11,17 @@ import { ReactComponent as ChevronLeftIcon } from "feather-icons/dist/icons/chev
 import { ReactComponent as ChevronRightIcon } from "feather-icons/dist/icons/chevron-right.svg";
 import { ReactComponent as SvgDecoratorBlob1 } from "../../images/svg-decorator-blob-4.svg";
 import { ReactComponent as SvgDecoratorBlob2 } from "../../images/svg-decorator-blob-5.svg";
+import "slick-carousel/slick/slick.css";
+import { useParams } from "react-router";
+
 import Navbar from '../../components/Navbar/Navbar';
 import Calendar from 'react-calendar';
 import 'react-calendar/dist/Calendar.css';
 
-import "slick-carousel/slick/slick.css";
+import Timeline from '../../components/Timeline/Timeline';
+
+import { getFieldAC, initDateAC, setDateAC } from '../../redux/actionCreators/actionCreators';
+import { useDispatch, useSelector } from "react-redux";
 
 const Container = tw.div`relative `;
 const Content = tw.div`max-w-screen-xl mx-auto py-20 lg:py-24`;
@@ -65,10 +71,13 @@ const DecoratorBlob2 = tw(
 )`absolute w-32 bottom-0 right-0 -z-10 text-pink-500 opacity-15 transform translate-x-2/3 translate-y-8`;
 
 export default function FieldPage() {
+
+  const { currentField } = useSelector(state => state.field);
+
   let subheading = "Адрес";
   let heading = "Название"; // .name
   let description = "ИНФОРМАЦИЯ. Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.";
-  let testimonials = null;
+  let testimonials = currentField.pictures;
   let textOnLeft = false;
   /*
    * You can modify the testimonials shown by modifying the array below or passing in the testimonials prop above
@@ -77,11 +86,11 @@ export default function FieldPage() {
   const defaultTestimonials = [
     {
       imageSrc:
-        "https://upload.wikimedia.org/wikipedia/commons/8/88/Game_3_of_the_2006_NBA_Finals.jpg",
+        '',
     },
     {
       imageSrc:
-        "https://images.unsplash.com/photo-1523952578875-e6bb18b26645?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1024&q=80",
+        '',
     }
   ];
 
@@ -92,13 +101,27 @@ export default function FieldPage() {
   const [textSliderRef, setTextSliderRef] = useState(null);
 
 
+  const dispatch = useDispatch();
+  const { id } = useParams();
+
   // CALENDAR
   const [date, setDate] = useState(new Date());
 
+  // const currentDate = `${date.getDate()}.${date.getMonth()}.${date.getFullYear()}`;
+
+  // months = 0-11
+  // format = D.M.YYYY
+
+  useEffect(() => {
+    setTimeout(() => {
+      dispatch(getFieldAC(id));
+    }, 200);
+  }, [dispatch]);
+
   const changeDate = (date) => {
     setDate(date);
-    console.log(date);
-  }
+    dispatch(setDateAC(`${date.getDate()}.${date.getMonth()}.${date.getFullYear()}`));
+  };
 
   return (
     <Container>
@@ -111,7 +134,7 @@ export default function FieldPage() {
               <TestimonialImageSlider arrows={false} ref={setImageSliderRef} asNavFor={textSliderRef} fade={true}>
                 {testimonials.map((testimonial, index) => (
                   <ImageAndControlContainer key={index}>
-                    <Image imageSrc={testimonial.imageSrc} />
+                    <Image imageSrc={testimonial} />
                     <ControlContainer>
                       <ControlButton onClick={imageSliderRef?.slickPrev}>
                         <ChevronLeftIcon />
@@ -124,14 +147,13 @@ export default function FieldPage() {
                 ))}
               </TestimonialImageSlider>
               <TextContainer textOnLeft={textOnLeft}>
-                <HeadingInfo tw="hidden lg:block" subheading={subheading} heading={heading} description={description} />
+                <HeadingInfo tw="hidden lg:block" subheading={subheading} heading={currentField.title} description={currentField.content} />
 
                 <div>
                   <Calendar
                     onChange={changeDate}
                     value={date}
                   />
-                  {date.toString()}
                 </div>
 
               </TextContainer>
@@ -141,9 +163,11 @@ export default function FieldPage() {
       </Content>
       <DecoratorBlob1 />
       <DecoratorBlob2 />
-      <div style={{ margin: 'auto' }}>
-        ТАЙМЛАЙН
+
+      <div>
+        <Timeline />
       </div>
+
     </Container>
   );
 };

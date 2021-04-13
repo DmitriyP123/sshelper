@@ -12,5 +12,10 @@ export const ADD_MARKER = 'ADD_MARKER';
 export const DELETE_MARKER = 'DELETE_MARKER';
 
 export const INIT_FIELDS = 'INIT_FIELDS';
+export const GET_FIELD = 'GET_FIELD';
+
+export const SET_DATE = 'SET_DATE';
+
+export const INIT_EVENTS = 'INIT_EVENTS';
 
 
