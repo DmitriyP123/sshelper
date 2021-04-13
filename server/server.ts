@@ -30,6 +30,8 @@ app.delete('/marks', MarkCtrl.delete )
 
 app.get('/fields', FieldCtrl.getAll )
 app.post('/field', FieldCtrl.create)
+app.post('/field/:id/events', FieldCtrl.addEvent)
+app.get('/field/:id/events', FieldCtrl.getFieldEvents)
 
 app.get('/events', EventCtrl.getAll)
 app.post('/events', EventCtrl.create)

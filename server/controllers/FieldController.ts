@@ -4,6 +4,10 @@ import {
   FieldModelInterface,
 } from "../models/FieldModel";
 
+import {
+  EventModelInterface,
+  EventModel,
+} from '../models/EventModel'
 
 class FieldsController {
 
@@ -30,7 +34,8 @@ class FieldsController {
       const data: FieldModelInterface = {
         title: req.body.title,
         content: req.body.content,
-        pictures: req.body.pictures
+        pictures: req.body.pictures,
+        events: [],
       };
 
       let field = await FieldModel.create(data);
@@ -38,6 +43,80 @@ class FieldsController {
         status: "success",
         data: field,
       });
+    } catch (error) {
+      res.json({
+        status: "error",
+        errors: JSON.stringify(error),
+      });
+    }
+  }
+
+  async addEvent (req:express.Request, res: express.Response): Promise<void> {
+    try {
+      let fieldId = req.params.id
+      const field = await FieldModel.findById(fieldId)
+
+      
+      const data: EventModelInterface = {
+        title: req.body.title,
+        content: req.body.content,
+        start: req.body.start,
+        date: req.body.date,
+      };
+
+      let event = await EventModel.create(data);
+
+      
+      field?.events.push(event._id)
+
+      await field?.save()
+
+      res.status(200).json({
+        status: "success",
+      });
+
+
+    } catch (error) {
+      res.json({
+        status: "error",
+        errors: JSON.stringify(error),
+      });
+    }
+  }
+
+  
+  async create(req: express.Request, res: express.Response): Promise<void> {
+    try {
+      const data: FieldModelInterface = {
+        title: req.body.title,
+        content: req.body.content,
+        pictures: req.body.pictures,
+        events: [],
+      };
+
+      let field = await FieldModel.create(data);
+      res.status(200).json({
+        status: "success",
+        data: field,
+      });
+    } catch (error) {
+      res.json({
+        status: "error",
+        errors: JSON.stringify(error),
+      });
+    }
+  }
+
+  async getFieldEvents (req:express.Request, res: express.Response): Promise<void> {
+    try {
+      let fieldId = req.params.id
+      const field = await FieldModel.findById(fieldId)
+
+      res.status(200).json({
+        status: "success",
+        data: field?.events,
+      });
+
     } catch (error) {
       res.json({
         status: "error",
