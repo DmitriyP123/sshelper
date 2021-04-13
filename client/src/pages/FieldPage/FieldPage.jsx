@@ -125,7 +125,6 @@ export default function FieldPage() {
 
   return (
     <Container>
-      <Navbar />
       <Content>
         <HeadingInfo tw="text-center lg:hidden" subheading={subheading} heading={heading} description={description} />
         <TestimonialsContainer>
