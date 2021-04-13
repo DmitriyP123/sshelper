@@ -4,7 +4,7 @@ export interface EventModelInterface {
   _id?: string;
   title: string;
   content:string;
-  end: string;
+  start: string;
   date:string;
   participants?: Array<UserModelDocumentInterface>;
 }
