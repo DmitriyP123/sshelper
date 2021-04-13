@@ -1,4 +1,3 @@
-
 export const REGISTER_USER = 'REGISTER_USER'
 export const LOGOUT_USER = 'LOGOUT_USER'
 export const ERROR_REGISTER = 'ERROR_REGISTER'
@@ -13,4 +12,6 @@ export const DELETE_MARKER = 'DELETE_MARKER';
 
 export const INIT_FIELDS = 'INIT_FIELDS';
 
-
+export const INIT_REQUESTS = 'INIT_REQUESTS'
+export const ADD_REQUEST = 'ADD_REQUEST'
+export const DELETE_REQUEST = 'DELETE_REQUEST'

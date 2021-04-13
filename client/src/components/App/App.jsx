@@ -8,23 +8,23 @@ import LoginPage from '../../pages/LoginPage/LoginPage';
 import RegisterPage from '../../pages/RegisterPage/RegisterPage';
 import MapPage from '../../pages/MapPage/MapPage';
 import Footer from '../Footer/Footer';
-import { fetchCheckUser } from '../../redux/reduxThunk/asyncFuncs'
-import { useDispatch, useSelector } from "react-redux";
+import ProfilePage from '../../pages/ProfilePage/ProfilePage'
+import Navbar from '../Navbar/Navbar'
+import RequestPage from '../../pages/RequestsPage/RequestPage'
 import FieldPage from '../../pages/FieldPage/FieldPage';
-
+import AddMarkPage from '../../pages/AddMarkPage/AddMarkPage'
 function App() {
-  // const { token } = useSelector(state => state.users)
-  // const dispatch = useDispatch()
-  // useEffect(()=> {
-  //   dispatch(fetchCheckUser(token))
-  // })
 
   return (
     <Router>
+    <Navbar />
       <AnimationRevealPage disabled>
         <Switch>
           <Route exact path="/">
             <WelcomePage />
+          </Route>
+          <Route path="/addmark">
+            <AddMarkPage />
           </Route>
           <Route path="/map">
             <MapPage />
@@ -37,6 +37,12 @@ function App() {
           </Route>
           <Route path="/field/:id">
             <FieldPage />
+          </Route>
+          <Route path="/profile/:id">
+            <ProfilePage />
+          </Route>
+          <Route path="/requests">
+            <RequestPage />
           </Route>
         </Switch>
         <Footer />

@@ -119,7 +119,7 @@ function LoginPage() {
                   </DividerTextContainer>
 
                   <Form onSubmit={loginFormHandler}>
-                    <Input type="email" ref = {emailInput}placeholder="Email" />
+                    <Input type="email" ref = {emailInput} placeholder="Email" />
                     <Input type="password" ref = {passwordInput} placeholder="Password" />
                     <SubmitButton type="submit">
                       <SubmitButtonIcon className="icon" />

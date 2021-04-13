@@ -30,8 +30,9 @@ class FieldsController {
       const data: FieldModelInterface = {
         title: req.body.title,
         content: req.body.content,
+        pictures: req.body.pictures,
       };
-
+      
       let field = await FieldModel.create(data);
       res.status(200).json({
         status: "success",

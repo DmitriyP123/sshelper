@@ -8,6 +8,9 @@ import {
   checkUserAC,
   initMarkersAC,
   initFieldsAC,
+  initRequestAC,
+  addRequestAC,
+  deleteRequestAC
 } from "../actionCreators/actionCreators";
 
 export const fetchRegisterUser = (nickname, email, password) => {
@@ -106,16 +109,74 @@ export const fetchInitMarkers = () => {
 export const fetchInitFields = () => {
   return async (dispatch) => {
     try {
-      let response = await fetch("/fields", {
-        method: "GET",
+      let response = await fetch("/fields");
+      let  result = await response.json();
+      let { data } = result
+      if (result.status === "success") {
+        dispatch(initFieldsAC(data));
+      }
+    } catch (err) {
+      console.log(err)
+    }
+  }
+}
+
+export const fetchInitRequests = () => {
+  return async (dispatch) => {
+    try {
+      let response = await fetch("/requests");
+      let  result = await response.json();
+      let { data } = result
+      if (result.status === "success") {
+        dispatch(initRequestAC(data));
+      }
+    } catch (err) {
+      console.log(err)
+    }
+  }
+}
+
+export const fetchAddRequests = ({ lat, lng, fieldTitle, fieldContent}) => {
+  return async (dispatch) => {
+    try {
+      let response = await fetch("/requests", {
+        method: "POST",
         headers: {
           "Content-type": "Application/json",
         },
+        body: JSON.stringify({
+          lat,
+          lng,
+          fieldTitle,
+          fieldContent,
+        }),
       });
       let  result = await response.json();
-      let { data } = result;
+      let { data } = result
       if (result.status === "success") {
-        dispatch(initFieldsAC(data));
+        dispatch(addRequestAC(data));
+        alert('Ваша заявка успешно отправлена')
+      }
+    } catch (err) {
+      console.log(err)
+    }
+  }
+}
+
+export const fetchDeleteRequests = (id) => {
+  return async (dispatch) => {
+    try {
+      let response = await fetch("/requests", {
+        method: "DELETE",
+        headers: {
+          "Content-type": "Application/json",
+        },
+        body: JSON.stringify({id}),
+      });
+      let  result = await response.json();
+      let { data } = result
+      if (result.status === "success") {
+        dispatch(deleteRequestAC(data));
       }
     } catch (err) {
       console.log(err)

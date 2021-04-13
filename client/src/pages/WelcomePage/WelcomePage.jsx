@@ -35,7 +35,6 @@ export default () => {
     <Container>
       <OpacityOverlay />
       <HeroContainer>
-        <Navbar />
         <Content>
           <Heading style={{ position: 'unset' }}>
             WELCOME

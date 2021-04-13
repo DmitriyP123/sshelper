@@ -88,7 +88,7 @@ const RegistrationHandler = async (e) => {
   const email = emailInput.current.value;
   const password = passwordInput.current.value;
   dispatch(fetchRegisterUser(nickname, email, password));
-  if (error === false && globalError === true) {
+  if (error === false && globalError === false) {
     history.push("/map");
   }
 };
