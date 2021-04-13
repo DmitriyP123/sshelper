@@ -1,7 +1,7 @@
 import { SET_DATE } from '../actionTypes/actionTypes';
 
 const initialState = {
-  date: `${new Date().getDate()}.${new Date().getMonth()}.${new Date().getFullYear()}`,
+  date: `${new Date().getDate()}.${Number(new Date().getMonth()) + 1}.${new Date().getFullYear()}`,
 };
 
 const reducer = (state = initialState, action) => {

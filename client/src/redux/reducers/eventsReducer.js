@@ -10,7 +10,7 @@ const reducer = (state = initialState, action) => {
       return { ...state, events: action.payload }
 
     case GET_EVENTS:
-      return { ...state, events: state.events.filter(el => el.date === action.payload) }
+      return { ...state, events: state.events.filter(el => el.date === action.payload).sort }
 
     default:
       return { ...state };
