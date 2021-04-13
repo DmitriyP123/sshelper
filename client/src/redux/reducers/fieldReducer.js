@@ -2,7 +2,7 @@ import { INIT_FIELDS, GET_FIELD } from '../actionTypes/actionTypes';
 
 const initialState = {
   fields: [],
-  currentField: { title: '', content: '', pictures: [] },
+  currentField: { },
 };
 
 const reducer = (state = initialState, action) => {

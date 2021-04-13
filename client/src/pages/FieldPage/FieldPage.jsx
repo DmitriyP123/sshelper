@@ -107,20 +107,21 @@ export default function FieldPage() {
   // CALENDAR
   const [date, setDate] = useState(new Date());
 
+  console.log(`${date.getDate()}.${Number(date.getMonth()) + 1}.${date.getFullYear()}`)
   // const currentDate = `${date.getDate()}.${date.getMonth()}.${date.getFullYear()}`;
 
-  // months = 0-11
   // format = D.M.YYYY
 
   useEffect(() => {
     setTimeout(() => {
       dispatch(getFieldAC(id));
+      // dispatch 
     }, 200);
   }, [dispatch]);
 
   const changeDate = (date) => {
     setDate(date);
-    dispatch(setDateAC(`${date.getDate()}.${date.getMonth()}.${date.getFullYear()}`));
+    dispatch(setDateAC(`${date.getDate()}.${Number(date.getMonth()) + 1}.${date.getFullYear()}`));
   };
 
   return (
