@@ -10,7 +10,8 @@ import {
   initFieldsAC,
   initRequestAC,
   addRequestAC,
-  deleteRequestAC
+  deleteRequestAC,
+  getFieldEventsAC
 } from "../actionCreators/actionCreators";
 
 export const fetchRegisterUser = (nickname, email, password) => {
@@ -183,3 +184,16 @@ export const fetchDeleteRequests = (id) => {
     }
   }
 }
+
+export const fetchGetFieldEvents = (payload) => {
+  return async (dispatch) => {
+    try {
+      const response = await fetch(`/field/${payload}/events`);
+      const result = await response.json();
+      const { data } = result;
+      dispatch(getFieldEventsAC(data));
+    } catch (err) {
+      console.log(err)
+    }
+  }
+};
