@@ -1,4 +1,3 @@
-
 export const REGISTER_USER = 'REGISTER_USER'
 export const LOGOUT_USER = 'LOGOUT_USER'
 export const ERROR_REGISTER = 'ERROR_REGISTER'
@@ -18,4 +17,6 @@ export const SET_DATE = 'SET_DATE';
 
 export const INIT_EVENTS = 'INIT_EVENTS';
 
-
+export const INIT_REQUESTS = 'INIT_REQUESTS'
+export const ADD_REQUEST = 'ADD_REQUEST'
+export const DELETE_REQUEST = 'DELETE_REQUEST'

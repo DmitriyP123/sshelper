@@ -4,7 +4,6 @@ export interface EventModelInterface {
   _id?: string;
   title: string;
   content:string;
-  start: string;
   end: string;
   date:string;
   participants?: Array<UserModelDocumentInterface>;
@@ -24,10 +23,6 @@ const EventSchema = new Schema({
   },
   start: {
     unique: true,
-    required: true,
-    type: String,
-  },
-  end: {
     required: true,
     type: String,
   },
