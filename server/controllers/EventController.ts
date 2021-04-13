@@ -32,6 +32,7 @@ class EventsController {
         content: req.body.content,
         start: req.body.start,
         date: req.body.date,
+        field: req.body.fieldId,
       };
 
       let event = await EventModel.create(data);
@@ -48,6 +49,21 @@ class EventsController {
     }
   }
 
+  async getFieldEvents(req: express.Request, res: express.Response): Promise<void> {
+    try {
+      const events = await EventModel.find({field:req.params.id});
+
+      res.json({
+        status: "success",
+        data:events,
+      });
+    } catch (error) {
+      res.json({
+        status: "error",
+        errors: JSON.stringify(error),
+      });
+    }
+  }
 }
 
 

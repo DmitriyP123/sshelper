@@ -6,6 +6,7 @@ export interface EventModelInterface {
   content: string;
   start: string;
   date: string;
+  field: string;
   participants?: Array<UserModelDocumentInterface>;
 }
 
@@ -13,7 +14,6 @@ export type EventModelDocumentInterface = EventModelInterface & Document;
 
 const EventSchema = new Schema({
   title: {
-    unique: true,
     required: true,
     type: String,
   },
@@ -22,13 +22,17 @@ const EventSchema = new Schema({
     type: String,
   },
   start: {
-    unique: true,
     required: true,
     type: String,
   },
   date: {
     required: true,
     type: String,
+  },
+  field: {
+    type: Schema.Types.ObjectId,
+    ref: 'Field',
+    default: {},
   },
   participants: [{
     type: Schema.Types.ObjectId,

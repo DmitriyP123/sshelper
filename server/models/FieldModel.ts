@@ -1,11 +1,10 @@
 import { model, Schema, Document } from "mongoose";
-import { EventModelDocumentInterface } from '../models/EventModel'
 export interface FieldModelInterface {
   _id?: string;
   title: string;
   content: string;
   pictures?: Array<String>,
-  events?: Array<EventModelDocumentInterface> 
+  events: Array<String> 
 }
 
 export type FieldModelDocumentInterface = FieldModelInterface & Document;
