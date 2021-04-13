@@ -4,7 +4,7 @@ import { INIT_EVENTS, GET_FIELD_EVENTS, GET_DAY_EVENTS } from '../actionTypes/ac
 const initialState = {
   currentFieldEvents: [],
   currentDayEvents: [],
-  eventsData: [{ title: '', cardTitle: '', cardText: '' }],
+  eventsData: [],
 };
 
 const reducer = (state = initialState, action) => {

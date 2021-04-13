@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import "./Timeline.css";
 import { Chrono } from "react-chrono";
 import { useSelector } from "react-redux";
@@ -15,76 +15,26 @@ const SubmitButton = styled.button`
   }
 `;
 
-function Timeline(props) {
+function Timeline() {
   const { eventsData } = useSelector(state => state.events);
-
-  console.log(eventsData[0].title);
-
-  const data = [
-    {
-      title: eventsData[0].title,
-      cardTitle: "Dunkirk",
-      cardText:
-        "Men of the British Expeditionary Force (BEF) wade out to a destroyer during the evacuation from Dunkirk.",
-      cardDetailedText: `On 10 May 1940, Hitler began his long-awaited offensive in the west by invading neutral Holland and Belgium and attacking northern France. Holland capitulated after only five days of fighting, and the Belgians surrendered on 28 May. With the success of the German ‘Blitzkrieg’, the British Expeditionary Force and French troops were in danger of being cut off and destroyed.
-      To save the BEF, an evacuation by sea was organised under the direction of Admiral Bertram Ramsay. Over nine days, warships of the Royal and French navies together with civilian craft, including the “little ships” made famous in a BBC broadcast by JB Priestley, successfully evacuated more than 338,000 British and Allied troops from the beaches of Dunkirk, in the remarkable Operation Dynamo. Churchill called it a “miracle of deliverance”, but warned, “Wars are not won by evacuations.”`,
-      cardDetailedText: 'blalblbla',
-      media: {
-        name: "dunkirk beach",
-        source: {
-          url: "http://someurl/image.jpg"
-        },
-        type: "IMAGE"
-      },
-    },
-    {
-      title: "May 1940",
-      cardTitle: "Dunkirk",
-      cardText:
-        "Men of the British Expeditionary Force (BEF) wade out to a destroyer during the evacuation from Dunkirk.",
-      cardDetailedText: `On 10 May 1940, Hitler began his long-awaited offensive in the west by invading neutral Holland and Belgium and attacking northern France. Holland capitulated after only five days of fighting, and the Belgians surrendered on 28 May. With the success of the German ‘Blitzkrieg’, the British Expeditionary Force and French troops were in danger of being cut off and destroyed.
-      To save the BEF, an evacuation by sea was organised under the direction of Admiral Bertram Ramsay. Over nine days, warships of the Royal and French navies together with civilian craft, including the “little ships” made famous in a BBC broadcast by JB Priestley, successfully evacuated more than 338,000 British and Allied troops from the beaches of Dunkirk, in the remarkable Operation Dynamo. Churchill called it a “miracle of deliverance”, but warned, “Wars are not won by evacuations.”`,
-      cardDetailedText: 'blalblbla',
-      media: {
-        name: "dunkirk beach",
-        source: {
-          url: "http://someurl/image.jpg"
-        },
-        type: "IMAGE"
-      },
-    }
-  ];
-
-  // console.log(eventsData);
-
-  // const width = 1340 / props.data.length;
-
   return (
-
     <div className="Timeline">
       <div style={{ width: "100%", height: "500px" }}>
         <Chrono
-          items={data}
-          // theme={{primary: "red", secondary: "blue", cardBgColor: "yellow", cardForeColor: "violet" }}
           mode="HORIZONTAL"
-          itemWidth={670}
+          itemWidth={1340/eventsData.length}
           cardHeight={400}
-        // allowDynamicUpdate
+          allowDynamicUpdate
+          items = {eventsData}
         >
-          {/* <div> */}
-          {/* {currentDayEvents?.map(el => <div key={performance.now()}>
-            {console.log(el)}
-            <p>{el.content}</p>
-            <p>{el.start}</p>
-            <a style={{ cursor: 'pointer', color: 'red' }} onClick={() => console.log(123)}>УЧАСТНИК</a>
-            <SubmitButton>ПРИНЯТЬ УЧАСТИЕ</SubmitButton>*/}
-          <SubmitButton>ПРИНЯТЬ УЧАСТИЕ</SubmitButton>
-          {/* </div> */}
-          {/* </div> */}
-          {/* <div className="chrono-icons">
-            <img src="/images/basketball.svg" alt="" />
-            <img src="/images/basketball.svg" alt="" />
-          </div> */}
+      {eventsData?.map((el) => {
+        return  <div key={performance.now()}><p>{el.title}</p><p>{el.cardTitle}</p><p>{el.cardText}</p><p>{el.cardDetailedText}</p><SubmitButton>Присоединиться</SubmitButton></div>
+      })}
+      <div className="chrono-icons" key={performance.now()}>
+      {eventsData?.map((el) => {
+        return  <img src="/images/basketball.svg" alt="" />
+      })}
+      </div>
         </Chrono>
       </div>
     </div >
