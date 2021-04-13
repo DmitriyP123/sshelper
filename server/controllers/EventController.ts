@@ -29,10 +29,9 @@ class EventsController {
       
       const data: EventModelInterface = {
         title: req.body.title,
-        start: req.body.start,
-        end: req.body.end,
-        date: req.body.date,
         content: req.body.content,
+        start: req.body.start,
+        date: req.body.date,
       };
 
       let event = await EventModel.create(data);
