@@ -216,6 +216,57 @@ export const fetchDeleteRequests = (id) => {
   }
 }
 
+export const fetchAcceptRequests = (id, title, content, lat, lng, info) => {
+  return async (dispatch) => {
+    try {
+      let response = await fetch('/field', {
+        method: "POST",
+        headers: {
+          "Content-type": "Application/json",
+        },
+        body: JSON.stringify({ 
+          title,
+          content
+        }),
+      });
+      let result = await response.json();
+      let { data } = result
+      if (result.status === "success") {
+        let response = await fetch('/marks', {
+          method: "POST",
+          headers: {
+            "Content-type": "Application/json",
+          },
+          body: JSON.stringify({ 
+            lat,
+            lng,
+            info,
+            field:data._id,
+          }),
+        });
+        let result = await response.json();
+        if (result.status === "success") {
+          let response = await fetch("/requests", {
+            method: "DELETE",
+            headers: {
+              "Content-type": "Application/json",
+            },
+            body: JSON.stringify({ id }),
+          });
+          let result = await response.json();
+          let { data } = result
+          if (result.status === "success") {
+            dispatch(deleteRequestAC(data));
+          }
+        }
+      }
+    } catch (err) {
+      console.log(err)
+    }
+  }
+}
+
+
 export const fetchGetFieldEvents = (payload) => {
   return async (dispatch) => {
     try {
