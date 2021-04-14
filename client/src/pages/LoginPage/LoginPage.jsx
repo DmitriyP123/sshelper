@@ -11,7 +11,7 @@ import { ReactComponent as LoginIcon } from "feather-icons/dist/icons/log-in.svg
 import { useHistory } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { fetchLoginUser } from '../../redux/reduxThunk/asyncFuncs'
-
+import store from '../../redux/store'
 function LoginPage() {
   const Container = tw(
     ContainerBase
@@ -63,11 +63,11 @@ function LoginPage() {
   const socialButtons = [
     {
       iconImageSrc: googleIconImageSrc,
-      text: "Sign In With VK",
+      text: "Sign In With Google",
       url: "https://google.com",
     },
   ];
-  const submitButtonText = "Sign In";
+  const submitButtonText = "Войти";
   const SubmitButtonIcon = LoginIcon;
   const forgotPasswordUrl = "#";
   const signupUrl = "/signup";
@@ -77,15 +77,20 @@ function LoginPage() {
   const emailInput = useRef()
   const passwordInput = useRef()
   const history = useHistory()
-  const { error, globalError } = useSelector(state => state.users)
+  const { error } = useSelector(state => state.users)
+
   const loginFormHandler = (e) => {
     e.preventDefault()
     const email = emailInput.current.value
     const password = passwordInput.current.value
     dispatch(fetchLoginUser(email,password))
-      if (error === false  && globalError === false) {
-        history.push('/map')
+    setTimeout(() => {
+      let  isError  = store.getState((store) =>store.users.error)
+      console.log(isError.users.error);
+      if (!isError.users.error) {
+        history.push("/map");
       }   
+    }, 500);  
   };
 
   return (
@@ -119,14 +124,13 @@ function LoginPage() {
                   </DividerTextContainer>
 
                   <Form onSubmit={loginFormHandler}>
-                    <Input type="email" ref = {emailInput} placeholder="Email" />
-                    <Input type="password" ref = {passwordInput} placeholder="Password" />
+                    <Input type="email" ref = {emailInput} placeholder="Email" required />
+                    <Input type="password" ref = {passwordInput} placeholder="Password" required />
                     <SubmitButton type="submit">
                       <SubmitButtonIcon className="icon" />
                       <span className="text">{submitButtonText}</span>
                     </SubmitButton>
-                   {error && <p tw="mt-6 text-xs text-red-600 text-center">Вы неверно ввели почту или пароль</p>} 
-                   {globalError && <p tw="mt-6 text-xs text-red-600 text-center">Изивините, в данный момент наш сервис недоступен :(</p>}  
+                    {error && <p tw="mt-8 text-sm text-red-600 text-center">{error}</p>} 
                   </Form>
                   <p tw="mt-6 text-xs text-gray-600 text-center">
                     <a

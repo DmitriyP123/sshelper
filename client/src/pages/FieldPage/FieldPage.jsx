@@ -111,7 +111,6 @@ export default function FieldPage() {
   // CALENDAR
   const [date, setDate] = useState(new Date());
 
-  console.log(`${date.getDate()}.${Number(date.getMonth()) + 1}.${date.getFullYear()}`)
   // const currentDate = `${date.getDate()}.${date.getMonth()}.${date.getFullYear()}`;
 
   // format = D.M.YYYY
@@ -121,7 +120,7 @@ export default function FieldPage() {
     setTimeout(() => {
       dispatch(getFieldAC(id));
       dispatch(getDayEventsAC(`${date.getDate()}.${Number(date.getMonth()) + 1}.${date.getFullYear()}`));
-    }, 200);
+    }, 350);
   }, [dispatch]);
 
   const changeDate = (date) => {

@@ -2,7 +2,6 @@ import {
   registerUserAC,
   loginUserAC,
   logoutUserAC,
-  globalErrorAC,
   ErrorLoginUserAC,
   ErrorRegisterUserAC,
   checkUserAC,
@@ -11,32 +10,37 @@ import {
   initRequestAC,
   addRequestAC,
   deleteRequestAC,
-  getFieldEventsAC
+  getFieldEventsAC,
+  editUserAC
 } from "../actionCreators/actionCreators";
 
 export const fetchRegisterUser = (nickname, email, password) => {
   return async (dispatch) => {
     try {
-      let response = await fetch("/users/registration", {
-        method: "POST",
-        headers: {
-          "Content-type": "Application/json",
-        },
-        body: JSON.stringify({
-          nickname,
-          email,
-          password,
-        }),
-      });
-      let userInfo = await response.json();
-      let { data, token } = userInfo;
-      if (userInfo.status === "success") {
-        dispatch(registerUserAC({ data, token }));
+      if ( nickname && email && password) {
+        let response = await fetch("/users/registration", {
+          method: "POST",
+          headers: {
+            "Content-type": "Application/json",
+          },
+          body: JSON.stringify({
+            nickname,
+            email,
+            password,
+          }),
+        });
+        let userInfo = await response.json();
+        let { data, token } = userInfo;
+        if (userInfo.status === "success") {
+          dispatch(registerUserAC({ data, token }));
+        } else {
+          dispatch(ErrorRegisterUserAC('Пользователь с таким именем/почтой уже существует'));
+        }
       } else {
-        dispatch(ErrorRegisterUserAC());
+        dispatch(ErrorRegisterUserAC('Пожалуйста, заполните все поля'))
       }
     } catch (err) {
-      dispatch(globalErrorAC());
+      dispatch(ErrorRegisterUserAC('Изивините, в данный момент наш сервис недоступен'));
     }
   };
 };
@@ -44,6 +48,7 @@ export const fetchRegisterUser = (nickname, email, password) => {
 export const fetchLoginUser = (email, password) => {
   return async (dispatch) => {
     try {
+      if (email && password) {
       let response = await fetch("/users/login", {
         method: "POST",
         headers: {
@@ -59,10 +64,13 @@ export const fetchLoginUser = (email, password) => {
       if (userInfo.status === "success") {
         dispatch(loginUserAC(data));
       } else {
-        dispatch(ErrorLoginUserAC());
-      }
+        dispatch(ErrorLoginUserAC('Неверно введены email или пароль'));
+      } 
+    } else {
+      dispatch(ErrorLoginUserAC('Пожалуйста, заполните все поля'))
+    }
     } catch (err) {
-      dispatch(globalErrorAC());
+      dispatch(ErrorLoginUserAC('Изивините, в данный момент наш сервис недоступен'));
     }
   };
 };
@@ -84,10 +92,32 @@ export const fetchCheckUser = (token) => {
       if (userInfo.status === "success") {
         dispatch(registerUserAC({ data, token }));
       } else {
-        dispatch(ErrorRegisterUserAC(userInfo.message));
+        dispatch(ErrorRegisterUserAC('Error'));
       }
     } catch (err) {
-      dispatch(globalErrorAC());
+      dispatch(ErrorRegisterUserAC('Error'));
+    }
+  };
+};
+
+export const fetchEditUser = (id, about, expirience) => {
+  return async (dispatch) => {
+    try {
+      let response = await fetch(`/users/${id}`, {
+        method: "PUT",
+        headers: {
+          "Content-type": "Application/json",
+        },
+        body: JSON.stringify({
+          about,
+          expirience
+        }),
+      });
+      let userInfo = await response.json();
+      let { data, token } = userInfo;
+        dispatch(editUserAC({ data, token }));
+    } catch (err) {
+      dispatch(ErrorRegisterUserAC('Error'));
     }
   };
 };

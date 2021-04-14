@@ -22,19 +22,20 @@ function Timeline() {
       <div style={{ width: "100%", height: "500px" }}>
         <Chrono
           mode="HORIZONTAL"
-          itemWidth={1340 / eventsData.length}
+
+          itemWidth={1340/eventsData.length}
           cardHeight={400}
           allowDynamicUpdate
-          items={eventsData}
+          items = {eventsData}
         >
-          {eventsData?.map((el) => {
-            return <div key={performance.now()}><p>{el.title}</p><p>{el.cardTitle}</p><p>{el.cardText}</p><p>{el.cardDetailedText}</p><SubmitButton>Присоединиться</SubmitButton></div>
-          })}
-          <div className="chrono-icons" key={performance.now()}>
-            {eventsData?.map((el) => {
-              return <img src="/images/basketball.svg" alt="" />
-            })}
-          </div>
+      {eventsData?.map((el) => {
+        return  <div key={performance.now()}><p>{el.title}</p><p>{el.cardTitle}</p><p>{el.cardText}</p><p>{el.cardDetailedText}</p><SubmitButton>Присоединиться</SubmitButton></div>
+      })}
+      <div className="chrono-icons" key={performance.now()}>
+      {eventsData?.map(() => {
+        return  <img src="/images/basketball.svg" alt="" />
+      })}
+      </div>
         </Chrono>
       </div>
     </div >
