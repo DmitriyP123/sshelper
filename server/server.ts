@@ -33,8 +33,10 @@ app.post('/field', FieldCtrl.create)
 app.post('/field/:id/events', FieldCtrl.addEvent)
 
 app.get('/events', EventCtrl.getAll)
-app.get('/field/:id/events',EventCtrl.getFieldEvents )
 app.post('/events', EventCtrl.create)
+app.patch('/events/:id', EventCtrl.join )
+app.put('/events/:id', EventCtrl.leave)
+app.get('/field/:id/events',EventCtrl.getFieldEvents )
 
 app.get('/requests', RequestCtrl.getAll)
 app.post('/requests', RequestCtrl.create)

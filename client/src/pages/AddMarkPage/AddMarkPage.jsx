@@ -9,8 +9,9 @@ import styled from "styled-components";
 import Navbar from "components/Navbar/Navbar";
 import { ReactComponent as LoginIcon } from "feather-icons/dist/icons/upload.svg";
 import { fetchAddRequests } from '../../redux/reduxThunk/asyncFuncs'
-import { useDispatch } from 'react-redux'
+import { useDispatch, useSelector } from 'react-redux'
 import { useHistory } from 'react-router-dom'
+
 function AddMarkPage() {
   const libraries = ["places"];
 
@@ -20,11 +21,7 @@ function AddMarkPage() {
     alignItems: "left",
   };
   
-  let center = {
-    lat: 59.93848,
-    lng: 30.31248,
-  };
-
+  
   const options = {
     disableDefaultUI: true,
     zoomControl: true,
@@ -36,21 +33,26 @@ function AddMarkPage() {
   });
   
   const [marker, setMarker] = useState({lat:'', lng:''});
-  
+  const [input, setInputs] = useState({title:'',content:''})
+  const [center, setCenter] = useState({lat: 59.93848,lng: 30.31248,})
   const onMapClick = (e) => {
+    setInputs({
+      title:titleInput.current.value,
+      content:contentInput.current.value,
+    })
     setMarker({
       lat: e.latLng.lat(),
       lng: e.latLng.lng(),
     })
-    center = {lat:marker.lat, lng:marker.lng}
+    setCenter({lat:e.latLng.lat(), lng:e.latLng.lng()})
   }
+
   const history = useHistory()
   const dispatch = useDispatch()
   let latInput = useRef()
   let lngInput = useRef()
   let titleInput = useRef()
   let contentInput = useRef()
-
   if (loadError) return "ERROR LOADING MAPS";
   if (!isLoaded) return "LOADING...";
 
@@ -68,7 +70,7 @@ function AddMarkPage() {
       ${tw`ml-3`}
     }
   `;
-  
+
   const requestHandler = (e) => {
     e.preventDefault()
     let data = {
@@ -103,8 +105,8 @@ function AddMarkPage() {
           <Form onSubmit={requestHandler}>
             <Input type="text" ref={latInput} placeholder="метка 1" value={marker.lat} readOnly />
             <Input type="text" ref={lngInput} placeholder="метка 2" value={marker.lng} readOnly />
-            <Input type="text" ref={titleInput} placeholder="Название поля" />
-            <Input type="text" ref={contentInput} placeholder="Описание поля" />
+            <Input type="text" ref={titleInput} defaultValue={input.title} placeholder="Название поля" />
+            <Input type="text" ref={contentInput} defaultValue={input.content} placeholder="Описание поля" />
             <SubmitButton type="submit">
               <SubmitButtonIcon className="icon" />
               <span className="text">{submitButtonText}</span>

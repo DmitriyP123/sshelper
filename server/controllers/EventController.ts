@@ -4,7 +4,6 @@ import {
   EventModelInterface,
 } from "../models/EventModel";
 
-
 class EventsController {
 
    // получаем все ивенты
@@ -64,6 +63,53 @@ class EventsController {
       });
     }
   }
+
+  async join (req: express.Request, res: express.Response): Promise<void> {
+    try {
+      let currentEvent = await EventModel.findOne({ _id: req.params.id })
+      if (currentEvent) {
+        currentEvent = await EventModel.findByIdAndUpdate({ _id: req.params.id }, {$push: {participants: req.body.id}}, {new:true})
+        res.status(200).json({
+          status: "success",
+          data:currentEvent,
+        });
+      } else {
+        res.json({
+          status: "error",
+          message: 'Такого ивента не существует',
+        });
+      }
+    } catch (error) {
+      res.json({
+        status: "error",
+        errors: JSON.stringify(error),
+      });
+    }
+   }
+
+   async leave (req: express.Request, res: express.Response): Promise<void> {
+    try {
+      let currentEvent = await EventModel.findOne({ _id: req.params.id })
+      if (currentEvent) {
+        let newPart = currentEvent.participants?.filter(el => el != req.body.id)
+        await EventModel.findByIdAndUpdate(req.params.id, {participants:newPart}, {new:true}) 
+        res.status(200).json({
+          status: "success",
+          data:currentEvent,
+        });
+      } else {
+        res.json({
+          status: "error",
+          message: 'Такого ивента не существует',
+        });
+      }
+    } catch (error) {
+      res.json({
+        status: "error",
+        errors: JSON.stringify(error),
+      });
+    }
+   } 
 }
 
 

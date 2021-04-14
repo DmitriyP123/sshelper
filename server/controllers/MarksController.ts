@@ -27,7 +27,6 @@ class MarksController {
   // создание метки 
   async create(req: express.Request, res: express.Response): Promise<void> {
     try {
-      console.log(req.body.lat, req.body.lng);
 
       const data: MarkModelInterface = {
         lat: req.body.lat,
@@ -37,7 +36,6 @@ class MarksController {
       };
 
       let mark = await MarkModel.create(data);
-      console.log(mark);
 
       res.status(200).json({
         status: "success",
@@ -54,10 +52,8 @@ class MarksController {
   // удаление метки
   async delete(req: express.Request, res: express.Response): Promise<void> {
     try {
-      console.log(req.body);
 
       let currentMark = await MarkModel.findOne({ _id: req.body.id })
-      console.log(currentMark);
 
       if (currentMark) {
         await MarkModel.findByIdAndDelete({ _id: req.body.id })
@@ -77,6 +73,7 @@ class MarksController {
       });
     }
   }
+
 }
 
 
