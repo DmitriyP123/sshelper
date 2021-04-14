@@ -5,7 +5,8 @@ export interface UserModelInterface {
   email: string;
   password: string;
   nickname: string;
-  confirmed?: boolean;
+  about?:string;
+  expirience?:string;
   isAdmin?: boolean;
 }
 
@@ -26,9 +27,11 @@ const UserSchema = new Schema({
     required: true,
     type: String,
   },
-  confirmed: {
-    type: Boolean,
-    default: false,
+  about: {
+    type: String,
+  },
+  expirience: {
+    type:String,
   },
   isAdmin: {
     type: Boolean,

@@ -119,7 +119,12 @@ class UserController {
               ),
             },
           });
-        } 
+        } else {
+          res.status(200).json({
+            status: "error",
+            message: 'Registration Error',
+          });
+        }
     } catch (error) {
       res.status(500).json({
         status: "error",
@@ -158,6 +163,30 @@ class UserController {
       res.status(500).json({
         status: 'error',
         message: error,
+      });
+    }
+  }
+
+  async updateProfile(req: express.Request, res: express.Response): Promise<void> {
+    try {     
+      let user = await UserModel.findOneAndUpdate({_id:req.params.id}, {about:req.body.about, expirience:req.body.expirience}, { new: true})
+      await user?.save()
+        res.status(200).json({
+          status: "success",
+          data: user,
+          token: jwt.sign(
+            { data: user },
+            process.env.SECRET_KEY || "123",
+            {
+              expiresIn: "30 days",
+            }
+          ),
+        });
+    } catch (error) {
+      res.status(500).json({
+        status: "error",
+        message: error,
+        
       });
     }
   }

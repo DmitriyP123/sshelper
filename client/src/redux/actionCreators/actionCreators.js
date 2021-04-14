@@ -1,4 +1,4 @@
-import { REGISTER_USER, USER_CHECK, LOGIN_USER, LOGOUT_USER, ERROR_REGISTER, ERROR_LOGIN, GLOBAL_ERROR, INIT_MARKERS, ADD_MARKER, INIT_FIELDS, GET_FIELD, SET_DATE, INIT_REQUESTS, ADD_REQUEST, DELETE_REQUEST, GET_FIELD_EVENTS, GET_DAY_EVENTS } from '../actionTypes/actionTypes'
+import { REGISTER_USER, USER_CHECK,EDIT_USER, LOGIN_USER, LOGOUT_USER, ERROR_REGISTER, ERROR_LOGIN, INIT_MARKERS, ADD_MARKER, INIT_FIELDS, GET_FIELD, SET_DATE, INIT_REQUESTS, ADD_REQUEST, DELETE_REQUEST, GET_FIELD_EVENTS, GET_DAY_EVENTS } from '../actionTypes/actionTypes'
 
 
 export const registerUserAC = (payload) => {
@@ -15,21 +15,24 @@ export const loginUserAC = (payload) => {
   }
 }
 
-export const ErrorLoginUserAC = () => {
+export const editUserAC = (payload) => {
+  return {
+    type: EDIT_USER,
+    payload
+  }
+}
+
+export const ErrorLoginUserAC = (payload) => {
   return {
     type: ERROR_LOGIN,
+    payload
   }
 }
 
-export const ErrorRegisterUserAC = () => {
+export const ErrorRegisterUserAC = (payload) => {
   return {
     type: ERROR_REGISTER,
-  }
-}
-
-export const globalErrorAC = () => {
-  return {
-    type: GLOBAL_ERROR,
+    payload
   }
 }
 

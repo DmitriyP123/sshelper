@@ -1,14 +1,13 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux'
 import { fetchInitRequests, fetchDeleteRequests } from '../../redux/reduxThunk/asyncFuncs'
-import Navbar from '../../components/Navbar/Navbar'
+
 function RequestPage() {
   const dispatch = useDispatch()
   let { requests } = useSelector(state=> state.requests)
   useEffect(()=> {
     dispatch(fetchInitRequests())
   }, [dispatch])
-
   const deleteRequestHandler = (e) => {
     const { id } = e.target
     dispatch(fetchDeleteRequests(id))
@@ -22,7 +21,7 @@ function RequestPage() {
         <span>Lng: {el.lng}</span>
         <p>FieldName: {el.fieldTitle}</p>
         <p>FieldContent: {el.fieldContent}</p>
-        <button>Принять</button>
+        <button style={{color:'blue'}}>Принять</button>
         <br />
         <button style={{color:'red'}} onClick={deleteRequestHandler} id={el._id}>Отклонить</button>
         <hr />
