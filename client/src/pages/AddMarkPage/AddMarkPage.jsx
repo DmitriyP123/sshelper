@@ -10,7 +10,22 @@ import Navbar from "components/Navbar/Navbar";
 import { ReactComponent as LoginIcon } from "feather-icons/dist/icons/upload.svg";
 import { fetchAddRequests } from '../../redux/reduxThunk/asyncFuncs'
 import { useDispatch, useSelector } from 'react-redux'
-import { useHistory } from 'react-router-dom'
+import { useHistory } from 'react-router-dom';
+import Geocode from "react-geocode";
+
+Geocode.setApiKey(process.env.REACT_APP_GOOGLE_MAPS_API_KEY);
+
+Geocode.setLanguage("ru");
+
+Geocode.setRegion("ru");
+
+Geocode.setLocationType("ROOFTOP");
+
+Geocode.enableDebug();
+
+
+
+
 
 function AddMarkPage() {
   const libraries = ["places"];
@@ -20,8 +35,8 @@ function AddMarkPage() {
     height: "80vh",
     alignItems: "left",
   };
-  
-  
+
+
   const options = {
     disableDefaultUI: true,
     zoomControl: true,
@@ -31,20 +46,61 @@ function AddMarkPage() {
     googleMapsApiKey: process.env.REACT_APP_GOOGLE_MAPS_API_KEY,
     libraries,
   });
-  
-  const [marker, setMarker] = useState({lat:'', lng:''});
-  const [input, setInputs] = useState({title:'',content:''})
-  const [center, setCenter] = useState({lat: 59.93848,lng: 30.31248,})
+
+  const [marker, setMarker] = useState({ lat: '', lng: '' });
+  const [input, setInputs] = useState({ title: '', content: '' })
+  const [center, setCenter] = useState({ lat: 59.93848, lng: 30.31248, })
+  const [address, setAddress] = useState('');
   const onMapClick = (e) => {
+    console.log(e.latLng.lng())
     setInputs({
-      title:titleInput.current.value,
-      content:contentInput.current.value,
+      title: titleInput.current.value,
+      content: contentInput.current.value,
     })
     setMarker({
       lat: e.latLng.lat(),
       lng: e.latLng.lng(),
     })
-    setCenter({lat:e.latLng.lat(), lng:e.latLng.lng()})
+    setCenter({ lat: e.latLng.lat(), lng: e.latLng.lng() })
+
+
+    Geocode.fromLatLng(e.latLng.lat(), e.latLng.lng()).then(
+      (response) => {
+        const address = response.results[0].formatted_address;
+        setAddress(address);
+        console.log(address);
+      },
+      (error) => {
+        console.error(error);
+      }
+    );
+
+    Geocode.fromLatLng("48.8583701", "2.2922926").then(
+      (response) => {
+        const address = response.results[0].formatted_address;
+        let city, state, country;
+        for (let i = 0; i < response.results[0].address_components.length; i++) {
+          for (let j = 0; j < response.results[0].address_components[i].types.length; j++) {
+            switch (response.results[0].address_components[i].types[j]) {
+              case "locality":
+                city = response.results[0].address_components[i].long_name;
+                break;
+              case "administrative_area_level_1":
+                state = response.results[0].address_components[i].long_name;
+                break;
+              case "country":
+                country = response.results[0].address_components[i].long_name;
+                break;
+            }
+          }
+        }
+        console.log(city, state, country);
+        console.log(address);
+      },
+      (error) => {
+        console.error(error);
+      }
+    );
   }
 
   const history = useHistory()
@@ -53,6 +109,7 @@ function AddMarkPage() {
   let lngInput = useRef()
   let titleInput = useRef()
   let contentInput = useRef()
+  const addressInput = useRef()
   if (loadError) return "ERROR LOADING MAPS";
   if (!isLoaded) return "LOADING...";
 
@@ -93,18 +150,19 @@ function AddMarkPage() {
             options={options}
             onClick={onMapClick}
           >
-             {marker.lat && <Marker
-                position={{
-                  lat: marker.lat,
-                  lng: marker.lng,
-                }}
-              />}
+            {marker.lat && <Marker
+              position={{
+                lat: marker.lat,
+                lng: marker.lng,
+              }}
+            />}
           </GoogleMap>
         </div>
         <div style={{ margin: "0 auto", marginTop: "5em" }}>
           <Form onSubmit={requestHandler}>
             <Input type="text" ref={latInput} placeholder="метка 1" value={marker.lat} readOnly />
             <Input type="text" ref={lngInput} placeholder="метка 2" value={marker.lng} readOnly />
+            <Input type="text" ref={addressInput} defaultValue={address} placeholder="Адрес поля" />
             <Input type="text" ref={titleInput} defaultValue={input.title} placeholder="Название поля" />
             <Input type="text" ref={contentInput} defaultValue={input.content} placeholder="Описание поля" />
             <SubmitButton type="submit">

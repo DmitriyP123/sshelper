@@ -11035,6 +11035,13 @@
   "resolved" "https://registry.npmjs.org/react-error-overlay/-/react-error-overlay-6.0.9.tgz"
   "version" "6.0.9"
 
+"react-geocode@^0.2.3":
+  "integrity" "sha512-sIpbgmn1IUzAxO4haOZ6jeeFnMD8ya9PC38yiNrmJ9vPWbvAO2D/2yfCBzZjGZVUm4PRzKAc0KghXfaEnug0TQ=="
+  "resolved" "https://registry.npmjs.org/react-geocode/-/react-geocode-0.2.3.tgz"
+  "version" "0.2.3"
+  dependencies:
+    "regenerator-runtime" "^0.13.3"
+
 "react-horizontal-timeline@^1.5.3":
   "integrity" "sha512-+fUSK31KxD1fYL1TXyNPwFJQqTG1uwzepKjtl4KN1E33daiLzoUdZSBHQr4ya4iYgKjVvFqXsB/GFdcyrVLBbQ=="
   "resolved" "https://registry.npmjs.org/react-horizontal-timeline/-/react-horizontal-timeline-1.5.3.tgz"

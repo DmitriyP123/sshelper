@@ -160,6 +160,7 @@ export default function FieldPage() {
                   <Calendar
                     onChange={changeDate}
                     value={date}
+                    minDate={new Date()} // ??????????
                   />
                 </div>
 
