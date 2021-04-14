@@ -18,6 +18,7 @@ import { fetchGetFieldEvents } from '../../redux/reduxThunk/asyncFuncs';
 import Navbar from '../../components/Navbar/Navbar';
 import Calendar from 'react-calendar';
 import 'react-calendar/dist/Calendar.css';
+import AddEventModal from '../../components/AddEventModal/AddEventModal';
 
 import Timeline from '../../components/Timeline/Timeline';
 
@@ -75,7 +76,7 @@ export default function FieldPage() {
 
   const { currentField } = useSelector(state => state.field);
 
-  const {eventsData} = useSelector(state => state.events);
+  const { eventsData } = useSelector(state => state.events);
 
   let subheading = "Адрес";
   let heading = "Название"; // .name
@@ -160,6 +161,10 @@ export default function FieldPage() {
                     value={date}
                   />
                 </div>
+                
+                <div>
+                  <AddEventModal />
+                </div>
 
               </TextContainer>
             </Testimonial>
@@ -170,7 +175,7 @@ export default function FieldPage() {
       <DecoratorBlob2 />
 
       <div>
-        <Timeline data={eventsData} />
+        <Timeline />
       </div>
 
     </Container>
