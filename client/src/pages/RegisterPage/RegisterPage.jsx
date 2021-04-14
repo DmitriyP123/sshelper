@@ -1,21 +1,17 @@
 import React, { useRef } from "react";
-import AnimationRevealPage from "helpers/AnimationRevealPage.js";
 import { Container as ContainerBase } from "components/misc/Layouts";
 import tw from "twin.macro";
 import styled from "styled-components";
-import { css } from "styled-components/macro"; //eslint-disable-line
 import illustration from "images/signup-illustration.svg";
 import logo from "images/logo.svg";
 import googleIconImageSrc from "images/google-icon.png";
-import twitterIconImageSrc from "images/twitter-icon.png";
 import { ReactComponent as SignUpIcon } from "feather-icons/dist/icons/user-plus.svg";
 import { useHistory } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { fetchRegisterUser } from "../../redux/reduxThunk/asyncFuncs";
-
-function RegisterPage(props) {
+import store from '../../redux/store'
+function RegisterPage() {
   const logoLinkUrl = "/"
- const  illustrationImageSrc = illustration
   const headingText = "Зарегистрироваться в  SSHelper"
   const socialButtons = [
     {
@@ -69,28 +65,27 @@ const FormContainer = tw.div`w-full flex-1 mt-8`;
     ${tw`ml-3`}
   }
 `;
-const IllustrationContainer = tw.div`sm:rounded-r-lg flex-1 bg-purple-100 text-center hidden lg:flex justify-center`;
-const IllustrationImage = styled.div`
-  ${(props) => `background-image: url("${props.imageSrc}");`}
-  ${tw`m-12 xl:m-16 w-full max-w-lg bg-contain bg-center bg-no-repeat`}
-`;
 
 const dispatch = useDispatch();
 const nicknameInput = useRef();
 const emailInput = useRef();
 const passwordInput = useRef();
 const history = useHistory();
-const { error, globalError } = useSelector((state) => state.users);
-console.log(globalError);
-const RegistrationHandler = async (e) => {
+const {error} = useSelector((state) => state.users);
+
+const RegistrationHandler = (e) => {
   e.preventDefault();
   const nickname = nicknameInput.current.value;
   const email = emailInput.current.value;
   const password = passwordInput.current.value;
   dispatch(fetchRegisterUser(nickname, email, password));
-  if (error === false && globalError === false) {
-    history.push("/map");
-  }
+
+  setTimeout(() => {
+    let  isError  = store.getState((store) =>store.users.error)
+    if (!isError.users.error) {
+      history.push("/map");
+    }   
+  }, 500);
 };
 
   return (
@@ -123,19 +118,20 @@ const RegistrationHandler = async (e) => {
             </DividerTextContainer>
 
             <Form onSubmit={RegistrationHandler}>
-              <Input type="text" ref={nicknameInput} placeholder="nickname" />
-              <Input type="email" ref={emailInput} placeholder="Email" />
+              <Input type="text" ref={nicknameInput} placeholder="nickname" required/>
+              <Input type="email" ref={emailInput} placeholder="Email" required />
               <Input
                 type="password"
                 ref={passwordInput}
                 placeholder="Password"
+                required
               />
               <SubmitButton type="submit">
                 <SubmitButtonIcon className="icon" />
                 <span className="text">Зарегистрироваться</span>
               </SubmitButton>
-              {error && <p tw="mt-8 text-sm text-red-600 text-center">Пользователь с таким именем/почтой уже существует</p>}
-              {globalError && <p tw="mt-6 text-xs text-red-600 text-center">Изивините, в данный момент наш сервис недоступен :(</p>} 
+              {error && <p tw="mt-8 text-sm text-red-600 text-center">{error}</p>}
+
               <p tw="mt-6 text-xs text-gray-600 text-center">
                 I agree to abide by treact's{" "}
                 <a href={tosUrl} tw="border-b border-gray-500 border-dotted">

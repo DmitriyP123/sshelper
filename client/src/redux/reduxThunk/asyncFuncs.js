@@ -2,7 +2,6 @@ import {
   registerUserAC,
   loginUserAC,
   logoutUserAC,
-  globalErrorAC,
   ErrorLoginUserAC,
   ErrorRegisterUserAC,
   checkUserAC,
@@ -11,32 +10,42 @@ import {
   initRequestAC,
   addRequestAC,
   deleteRequestAC,
-  getFieldEventsAC
+  getFieldEventsAC,
 } from "../actionCreators/actionCreators";
 
 export const fetchRegisterUser = (nickname, email, password) => {
   return async (dispatch) => {
     try {
-      let response = await fetch("/users/registration", {
-        method: "POST",
-        headers: {
-          "Content-type": "Application/json",
-        },
-        body: JSON.stringify({
-          nickname,
-          email,
-          password,
-        }),
-      });
-      let userInfo = await response.json();
-      let { data, token } = userInfo;
-      if (userInfo.status === "success") {
-        dispatch(registerUserAC({ data, token }));
+      if (nickname && email && password) {
+        let response = await fetch("/users/registration", {
+          method: "POST",
+          headers: {
+            "Content-type": "Application/json",
+          },
+          body: JSON.stringify({
+            nickname,
+            email,
+            password,
+          }),
+        });
+        let userInfo = await response.json();
+        let { data, token } = userInfo;
+        if (userInfo.status === "success") {
+          dispatch(registerUserAC({ data, token }));
+        } else {
+          dispatch(
+            ErrorRegisterUserAC(
+              "Пользователь с таким именем/почтой уже существует"
+            )
+          );
+        }
       } else {
-        dispatch(ErrorRegisterUserAC());
+        dispatch(ErrorRegisterUserAC("Пожалуйста, заполните все поля"));
       }
     } catch (err) {
-      dispatch(globalErrorAC());
+      dispatch(
+        ErrorRegisterUserAC("Изивините, в данный момент наш сервис недоступен")
+      );
     }
   };
 };
@@ -44,25 +53,31 @@ export const fetchRegisterUser = (nickname, email, password) => {
 export const fetchLoginUser = (email, password) => {
   return async (dispatch) => {
     try {
-      let response = await fetch("/users/login", {
-        method: "POST",
-        headers: {
-          "Content-type": "Application/json",
-        },
-        body: JSON.stringify({
-          email,
-          password,
-        }),
-      });
-      let userInfo = await response.json();
-      let { data } = userInfo;
-      if (userInfo.status === "success") {
-        dispatch(loginUserAC(data));
+      if (email && password) {
+        let response = await fetch("/users/login", {
+          method: "POST",
+          headers: {
+            "Content-type": "Application/json",
+          },
+          body: JSON.stringify({
+            email,
+            password,
+          }),
+        });
+        let userInfo = await response.json();
+        let { data } = userInfo;
+        if (userInfo.status === "success") {
+          dispatch(loginUserAC(data));
+        } else {
+          dispatch(ErrorLoginUserAC("Неверно введены email или пароль"));
+        }
       } else {
-        dispatch(ErrorLoginUserAC());
+        dispatch(ErrorLoginUserAC("Пожалуйста, заполните все поля"));
       }
     } catch (err) {
-      dispatch(globalErrorAC());
+      dispatch(
+        ErrorLoginUserAC("Изивините, в данный момент наш сервис недоступен")
+      );
     }
   };
 };
@@ -84,10 +99,10 @@ export const fetchCheckUser = (token) => {
       if (userInfo.status === "success") {
         dispatch(registerUserAC({ data, token }));
       } else {
-        dispatch(ErrorRegisterUserAC(userInfo.message));
+        dispatch(ErrorRegisterUserAC("Error"));
       }
     } catch (err) {
-      dispatch(globalErrorAC());
+      dispatch(ErrorRegisterUserAC("Error"));
     }
   };
 };
@@ -112,30 +127,30 @@ export const fetchInitFields = () => {
     try {
       let response = await fetch("/fields");
       let result = await response.json();
-      let { data } = result
+      let { data } = result;
       if (result.status === "success") {
         dispatch(initFieldsAC(data));
       }
     } catch (err) {
-      console.log(err)
+      console.log(err);
     }
-  }
-}
+  };
+};
 
 export const fetchInitRequests = () => {
   return async (dispatch) => {
     try {
       let response = await fetch("/requests");
       let result = await response.json();
-      let { data } = result
+      let { data } = result;
       if (result.status === "success") {
         dispatch(initRequestAC(data));
       }
     } catch (err) {
-      console.log(err)
+      console.log(err);
     }
-  }
-}
+  };
+};
 
 export const fetchAddRequests = ({ lat, lng, fieldTitle, fieldContent }) => {
   return async (dispatch) => {
@@ -156,13 +171,13 @@ export const fetchAddRequests = ({ lat, lng, fieldTitle, fieldContent }) => {
       let { data } = result;
       if (result.status === "success") {
         dispatch(addRequestAC(data));
-        alert('Ваша заявка успешно отправлена')
+        alert("Ваша заявка успешно отправлена");
       }
     } catch (err) {
-      console.log(err)
+      console.log(err);
     }
-  }
-}
+  };
+};
 
 export const fetchDeleteRequests = (id) => {
   return async (dispatch) => {
@@ -175,15 +190,15 @@ export const fetchDeleteRequests = (id) => {
         body: JSON.stringify({ id }),
       });
       let result = await response.json();
-      let { data } = result
+      let { data } = result;
       if (result.status === "success") {
         dispatch(deleteRequestAC(data));
       }
     } catch (err) {
-      console.log(err)
+      console.log(err);
     }
-  }
-}
+  };
+};
 
 export const fetchGetFieldEvents = (payload) => {
   return async (dispatch) => {
@@ -193,7 +208,7 @@ export const fetchGetFieldEvents = (payload) => {
       const { data } = result;
       dispatch(getFieldEventsAC(data));
     } catch (err) {
-      console.log(err)
+      console.log(err);
     }
-  }
+  };
 };

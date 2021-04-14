@@ -31,7 +31,7 @@ function Timeline() {
         return  <div key={performance.now()}><p>{el.title}</p><p>{el.cardTitle}</p><p>{el.cardText}</p><p>{el.cardDetailedText}</p><SubmitButton>Присоединиться</SubmitButton></div>
       })}
       <div className="chrono-icons" key={performance.now()}>
-      {eventsData?.map((el) => {
+      {eventsData?.map(() => {
         return  <img src="/images/basketball.svg" alt="" />
       })}
       </div>

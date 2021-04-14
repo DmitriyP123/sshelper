@@ -119,7 +119,12 @@ class UserController {
               ),
             },
           });
-        } 
+        } else {
+          res.status(200).json({
+            status: "error",
+            message: 'Registration Error',
+          });
+        }
     } catch (error) {
       res.status(500).json({
         status: "error",

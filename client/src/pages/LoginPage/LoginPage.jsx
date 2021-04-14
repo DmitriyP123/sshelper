@@ -1,9 +1,7 @@
 import React, { useRef } from "react";
-import AnimationRevealPage from "helpers/AnimationRevealPage.js";
 import { Container as ContainerBase } from "components/misc/Layouts";
 import tw from "twin.macro";
 import styled from "styled-components";
-import { css } from "styled-components/macro"; //eslint-disable-line
 import illustration from "images/login-illustration.svg";
 import logo from "images/logo.svg";
 import googleIconImageSrc from "images/google-icon.png";
@@ -11,7 +9,7 @@ import { ReactComponent as LoginIcon } from "feather-icons/dist/icons/log-in.svg
 import { useHistory } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { fetchLoginUser } from '../../redux/reduxThunk/asyncFuncs'
-
+import store from '../../redux/store'
 function LoginPage() {
   const Container = tw(
     ContainerBase
@@ -52,22 +50,16 @@ function LoginPage() {
       ${tw`ml-3`}
     }
   `;
-  const IllustrationContainer = tw.div`sm:rounded-r-lg flex-1 bg-purple-100 text-center hidden lg:flex justify-center`;
-  const IllustrationImage = styled.div`
-    ${(props) => `background-image: url("${props.imageSrc}");`}
-    ${tw`m-12 xl:m-16 w-full max-w-sm bg-contain bg-center bg-no-repeat`}
-  `;
   const logoLinkUrl = "/";
-  const illustrationImageSrc = illustration;
   const headingText = "Войти SSHelper";
   const socialButtons = [
     {
       iconImageSrc: googleIconImageSrc,
-      text: "Sign In With VK",
+      text: "Sign In With Google",
       url: "https://google.com",
     },
   ];
-  const submitButtonText = "Sign In";
+  const submitButtonText = "Войти";
   const SubmitButtonIcon = LoginIcon;
   const forgotPasswordUrl = "#";
   const signupUrl = "/signup";
@@ -77,20 +69,24 @@ function LoginPage() {
   const emailInput = useRef()
   const passwordInput = useRef()
   const history = useHistory()
-  const { error, globalError } = useSelector(state => state.users)
+  const { error } = useSelector(state => state.users)
+
   const loginFormHandler = (e) => {
     e.preventDefault()
     const email = emailInput.current.value
     const password = passwordInput.current.value
     dispatch(fetchLoginUser(email,password))
-      if (error === false  && globalError === false) {
-        history.push('/map')
+    setTimeout(() => {
+      let  isError  = store.getState((store) =>store.users.error)
+      console.log(isError.users.error);
+      if (!isError.users.error) {
+        history.push("/map");
       }   
+    }, 500);  
   };
 
   return (
     <>
-      {/* <AnimationRevealPage disabled> */}
         <Container>
           <Content>
             <MainContainer>
@@ -119,14 +115,13 @@ function LoginPage() {
                   </DividerTextContainer>
 
                   <Form onSubmit={loginFormHandler}>
-                    <Input type="email" ref = {emailInput} placeholder="Email" />
-                    <Input type="password" ref = {passwordInput} placeholder="Password" />
+                    <Input type="email" ref = {emailInput} placeholder="Email" required />
+                    <Input type="password" ref = {passwordInput} placeholder="Password" required />
                     <SubmitButton type="submit">
                       <SubmitButtonIcon className="icon" />
                       <span className="text">{submitButtonText}</span>
                     </SubmitButton>
-                   {error && <p tw="mt-6 text-xs text-red-600 text-center">Вы неверно ввели почту или пароль</p>} 
-                   {globalError && <p tw="mt-6 text-xs text-red-600 text-center">Изивините, в данный момент наш сервис недоступен :(</p>}  
+                    {error && <p tw="mt-8 text-sm text-red-600 text-center">{error}</p>} 
                   </Form>
                   <p tw="mt-6 text-xs text-gray-600 text-center">
                     <a
@@ -148,13 +143,9 @@ function LoginPage() {
                 </FormContainer>
               </MainContent>
             </MainContainer>
-            {/* <IllustrationContainer>
-          <IllustrationImage imageSrc={illustrationImageSrc} />
-        </IllustrationContainer> */}
           </Content>
         </Container>
         //{" "}
-      {/* </AnimationRevealPage> */}
     </>
   );
 }

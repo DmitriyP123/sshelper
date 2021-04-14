@@ -7,7 +7,6 @@ import { FieldCtrl } from './controllers/FieldController'
 import { UserCtrl } from './controllers/UserController';
 import { MarkCtrl } from './controllers/MarksController'
 import express from 'express'
-import { registerValidations } from './validation/registration';
 
 import './core/db';
 
@@ -20,7 +19,7 @@ app.use(express.urlencoded({ extended: true }));
 app.get('/users', UserCtrl.getAll)
 app.get('/users/:id', UserCtrl.show);
 
-app.post('/users/registration', registerValidations, UserCtrl.registration)
+app.post('/users/registration', UserCtrl.registration)
 app.post('/users/login', UserCtrl.login);
 app.post('/users/verify', UserCtrl.verify);
 
