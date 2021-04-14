@@ -22,7 +22,7 @@ import AddEventModal from '../../components/AddEventModal/AddEventModal';
 
 import Timeline from '../../components/Timeline/Timeline';
 
-import { getFieldAC, setDateAC, getDayEventsAC } from '../../redux/actionCreators/actionCreators';
+import { getFieldAC, setDateAC, getDayEventsAC, getDayAvailTimesAC } from '../../redux/actionCreators/actionCreators';
 import { useDispatch, useSelector } from "react-redux";
 
 const Container = tw.div`relative `;
@@ -120,6 +120,7 @@ export default function FieldPage() {
     setTimeout(() => {
       dispatch(getFieldAC(id));
       dispatch(getDayEventsAC(`${date.getDate()}.${Number(date.getMonth()) + 1}.${date.getFullYear()}`));
+      dispatch(getDayAvailTimesAC());
     }, 350);
   }, [dispatch]);
 
@@ -127,6 +128,7 @@ export default function FieldPage() {
     setDate(date);
     dispatch(setDateAC(`${date.getDate()}.${Number(date.getMonth()) + 1}.${date.getFullYear()}`));
     dispatch(getDayEventsAC(`${date.getDate()}.${Number(date.getMonth()) + 1}.${date.getFullYear()}`));
+    dispatch(getDayAvailTimesAC());
   };
 
   return (
@@ -160,7 +162,7 @@ export default function FieldPage() {
                     value={date}
                   />
                 </div>
-                
+
                 <div>
                   <AddEventModal />
                 </div>
