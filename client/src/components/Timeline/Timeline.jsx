@@ -22,6 +22,7 @@ function Timeline() {
       <div style={{ width: "100%", height: "500px" }}>
         <Chrono
           mode="HORIZONTAL"
+
           itemWidth={1340/eventsData.length}
           cardHeight={400}
           allowDynamicUpdate
