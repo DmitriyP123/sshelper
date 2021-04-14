@@ -1,7 +1,11 @@
+<<<<<<< HEAD
+import { REGISTER_USER, USER_CHECK, EDIT_USER, LOGIN_USER, LOGOUT_USER, ERROR_REGISTER, ERROR_LOGIN, INIT_MARKERS, ADD_MARKER, INIT_FIELDS, GET_FIELD, SET_DATE, INIT_REQUESTS, ADD_REQUEST, DELETE_REQUEST, GET_FIELD_EVENTS, GET_DAY_EVENTS, GET_AVAIL_TIMES, ADD_EVENT } from '../actionTypes/actionTypes'
+=======
 import { REGISTER_USER, USER_CHECK,EDIT_USER, LOGIN_USER, LOGOUT_USER, ERROR_REGISTER, 
   ERROR_LOGIN, INIT_MARKERS, ADD_MARKER, INIT_FIELDS, GET_FIELD, SET_DATE, INIT_REQUESTS, 
   ADD_REQUEST,DELETE_REQUEST, GET_FIELD_EVENTS, GET_DAY_EVENTS,
  } from '../actionTypes/actionTypes'
+>>>>>>> 306583b60628a6594f36fc61e8136cf5dcbe02c2
 
 
 export const registerUserAC = (payload) => {
@@ -119,6 +123,19 @@ export const getFieldEventsAC = (payload) => {
 export const getDayEventsAC = (payload) => {
   return {
     type: GET_DAY_EVENTS,
+    payload
+  }
+};
+
+export const getDayAvailTimesAC = () => {
+  return {
+    type: GET_AVAIL_TIMES,
+  }
+};
+
+export const addEventAC = (payload) => {
+  return {
+    type: ADD_EVENT,
     payload
   }
 };

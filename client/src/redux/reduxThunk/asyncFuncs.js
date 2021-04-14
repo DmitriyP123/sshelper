@@ -11,13 +11,14 @@ import {
   addRequestAC,
   deleteRequestAC,
   getFieldEventsAC,
-  editUserAC
+  editUserAC,
+  addEventAC
 } from "../actionCreators/actionCreators";
 
 export const fetchRegisterUser = (nickname, email, password) => {
   return async (dispatch) => {
     try {
-      if ( nickname && email && password) {
+      if (nickname && email && password) {
         let response = await fetch("/users/registration", {
           method: "POST",
           headers: {
@@ -49,26 +50,26 @@ export const fetchLoginUser = (email, password) => {
   return async (dispatch) => {
     try {
       if (email && password) {
-      let response = await fetch("/users/login", {
-        method: "POST",
-        headers: {
-          "Content-type": "Application/json",
-        },
-        body: JSON.stringify({
-          email,
-          password,
-        }),
-      });
-      let userInfo = await response.json();
-      let { data } = userInfo;
-      if (userInfo.status === "success") {
-        dispatch(loginUserAC(data));
+        let response = await fetch("/users/login", {
+          method: "POST",
+          headers: {
+            "Content-type": "Application/json",
+          },
+          body: JSON.stringify({
+            email,
+            password,
+          }),
+        });
+        let userInfo = await response.json();
+        let { data } = userInfo;
+        if (userInfo.status === "success") {
+          dispatch(loginUserAC(data));
+        } else {
+          dispatch(ErrorLoginUserAC('Неверно введены email или пароль'));
+        }
       } else {
-        dispatch(ErrorLoginUserAC('Неверно введены email или пароль'));
-      } 
-    } else {
-      dispatch(ErrorLoginUserAC('Пожалуйста, заполните все поля'))
-    }
+        dispatch(ErrorLoginUserAC('Пожалуйста, заполните все поля'))
+      }
     } catch (err) {
       dispatch(ErrorLoginUserAC('Изивините, в данный момент наш сервис недоступен'));
     }
@@ -115,7 +116,7 @@ export const fetchEditUser = (id, about, expirience) => {
       });
       let userInfo = await response.json();
       let { data, token } = userInfo;
-        dispatch(editUserAC({ data, token }));
+      dispatch(editUserAC({ data, token }));
     } catch (err) {
       dispatch(ErrorRegisterUserAC('Error'));
     }
@@ -272,9 +273,38 @@ export const fetchGetFieldEvents = (payload) => {
       const response = await fetch(`/field/${payload}/events`);
       const result = await response.json();
       const { data } = result;
+      console.log(data)
       dispatch(getFieldEventsAC(data));
     } catch (err) {
       console.log(err)
     }
   }
 };
+
+export const fetchAddEvent = ({ name, description, time, date, fieldId }) => {
+  return async (dispatch) => {
+    try {
+      let response = await fetch("/events", {
+        method: "POST",
+        headers: {
+          "Content-type": "Application/json",
+        },
+        body: JSON.stringify({
+          title: name,
+          content: description,
+          start: time,
+          date,
+          fieldId
+        }),
+      });
+      let result = await response.json();
+      let { data } = result;
+      console.log(data)
+      if (result.status === "success") {
+        dispatch(addEventAC(data));
+      }
+    } catch (err) {
+      console.log(err)
+    }
+  }
+}
