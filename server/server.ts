@@ -13,12 +13,14 @@ import './core/db';
 
 const app = express()
 
+
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
 app.get('/users', UserCtrl.getAll)
 app.get('/users/:id', UserCtrl.show);
 
+app.put('/users/:id/pic', UserCtrl.addPortrait)
 app.post('/users/registration', UserCtrl.registration)
 app.post('/users/login', UserCtrl.login);
 app.post('/users/verify', UserCtrl.verify);

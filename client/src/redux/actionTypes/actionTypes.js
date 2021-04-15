@@ -6,6 +6,8 @@ export const LOGIN_USER = 'LOGIN_USER'
 export const USER_CHECK = 'USER_CHECK'
 export const EDIT_USER = 'EDIT_USER'
 export const INIT_USERS = 'INIT_USERS'
+export const UPDATE_PHOTO_USER = 'UPDATE_PHOTO_USER'
+
 
 export const INIT_MARKERS = 'INIT_MARKERS';
 export const ADD_MARKER = 'ADD_MARKER';
