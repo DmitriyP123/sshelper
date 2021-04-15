@@ -4,6 +4,7 @@ import {
   logoutUserAC,
   ErrorLoginUserAC,
   ErrorRegisterUserAC,
+  updatePhotoUserAC,
   initUsersAC,
   checkUserAC,
   initMarkersAC,
@@ -140,6 +141,29 @@ export const fetchEditUser = (id, about, expirience) => {
     }
   };
 };
+
+export const fetchUpdatePhotoUser = (id,portrait) => { 
+  return async (dispatch) => {
+    try {
+      console.log(id,portrait);
+      let response = await fetch(`/users/${id}/pic`, {
+        method: "PUT",
+        headers: {
+          "Content-type": "Application/json",
+        },
+        body: JSON.stringify({
+          portrait
+        }),
+      });
+      let userInfo = await response.json();
+      console.log(userInfo);
+      let { data } = userInfo;
+      dispatch(updatePhotoUserAC(data));
+    } catch (err) {
+      dispatch(ErrorRegisterUserAC('Error'));
+    }
+  }
+}
 
 export const fetchInitMarkers = () => {
   return async (dispatch) => {
