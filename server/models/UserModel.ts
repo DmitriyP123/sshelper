@@ -6,6 +6,7 @@ export interface UserModelInterface {
   password: string;
   nickname: string;
   about?:string;
+  portrait?:string;
   expirience?:string;
   isAdmin?: boolean;
   myEvents?: Array<String>,
@@ -27,6 +28,10 @@ const UserSchema = new Schema({
     unique: true,
     required: true,
     type: String,
+  },
+  portrait: {
+    type: String,
+    default:'https://img.icons8.com/bubbles/100/000000/user.png'
   },
   about: {
     type: String,

@@ -2,7 +2,7 @@ import {
   REGISTER_USER, USER_CHECK,INIT_USERS, EDIT_USER, LOGIN_USER, LOGOUT_USER, ERROR_REGISTER,
   ERROR_LOGIN, INIT_MARKERS, ADD_MARKER, INIT_FIELDS, GET_FIELD, SET_DATE, INIT_REQUESTS,
   ADD_REQUEST, DELETE_REQUEST, GET_FIELD_EVENTS, GET_DAY_EVENTS, GET_AVAIL_TIMES, ADD_EVENT,JOIN_EVENT,
-  LEAVE_EVENT
+  LEAVE_EVENT,UPDATE_PHOTO_USER
   
 } from '../actionTypes/actionTypes'
 
@@ -30,6 +30,13 @@ export const loginUserAC = (payload) => {
 export const editUserAC = (payload) => {
   return {
     type: EDIT_USER,
+    payload
+  }
+}
+
+export const updatePhotoUserAC = (payload) => {
+  return {
+    type:UPDATE_PHOTO_USER,
     payload
   }
 }
