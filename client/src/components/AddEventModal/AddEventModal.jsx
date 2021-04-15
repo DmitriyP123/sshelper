@@ -5,6 +5,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { useParams } from "react-router";
 import { v4 as uuidv4 } from 'uuid';
 import { fetchAddEvent } from '../../redux/reduxThunk/asyncFuncs';
+import { getDayEventsAC } from '../../redux/actionCreators/actionCreators';
 
 function AddEventModal(props) {
 
@@ -15,6 +16,8 @@ function AddEventModal(props) {
   const { currentDayAvailTimes } = useSelector(state => state.events);
   const { date } = useSelector(state => state.date);
   const { id } = useParams();
+
+  console.log(date)
 
   const handleClose = () => setShow(false);
   const handleShow = () => setShow(true);
@@ -32,6 +35,9 @@ function AddEventModal(props) {
       fieldId: id
     }));
     setShow(false);
+    setTimeout(() => {
+      dispatch(getDayEventsAC(date));
+    }, 100);
   }
 
   return (
