@@ -130,7 +130,6 @@ export default function FieldPage() {
     dispatch(getDayEventsAC(`${date.getDate()}.${Number(date.getMonth()) + 1}.${date.getFullYear()}`));
     dispatch(getDayAvailTimesAC());
   };
-
   return (
     <Container>
       <Content>
@@ -154,7 +153,7 @@ export default function FieldPage() {
                 ))}
               </TestimonialImageSlider>
               <TextContainer textOnLeft={textOnLeft}>
-                <HeadingInfo tw="hidden lg:block" subheading={subheading} heading={currentField.title} description={currentField.content} />
+                <HeadingInfo tw="hidden lg:block" subheading={currentField.address} heading={currentField.title} description={currentField.content} />
 
                 <div>
                   <Calendar

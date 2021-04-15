@@ -4,6 +4,18 @@ import "bootstrap/dist/css/bootstrap.min.css";
 import { fetchAcceptRequests } from '../../redux/reduxThunk/asyncFuncs'
 import { useDispatch } from 'react-redux'
 import { GoogleMap, useLoadScript, Marker } from "@react-google-maps/api";
+import Geocode from "react-geocode";
+
+Geocode.setApiKey(process.env.REACT_APP_GOOGLE_MAPS_API_KEY);
+
+Geocode.setLanguage("ru");
+
+Geocode.setRegion("ru");
+
+Geocode.setLocationType("ROOFTOP");
+
+Geocode.enableDebug();
+
 
 function RequestModal({ data }) {
   const [show, setShow] = useState(false);
@@ -14,6 +26,7 @@ function RequestModal({ data }) {
   const fieldTitleInput = useRef()
   const fieldContentInput = useRef()
   const markInfoInput = useRef()
+  const addressInput = useRef()
   const mapContainerStyle = {
     width: "25vw",
     height: "35vh",
@@ -31,23 +44,35 @@ function RequestModal({ data }) {
   
   const [marker, setMarker] = useState({ lat: "", lng: "" });
   const [center, setCenter] = useState({lat: 59.93848,lng: 30.31248,})
+  const [address, setAddress] = useState(data.fieldAddress);
   const dispatch = useDispatch()
+  useEffect(() => {
+    setMarker({ lat: data.lat, lng: data.lng });
+
+  }, []);
   const onMapClick = (e) => {
     setMarker({
       lat: e.latLng.lat(),
       lng: e.latLng.lng(),
     });
     setCenter({lat:e.latLng.lat(), lng:e.latLng.lng()})
-  };
 
+    Geocode.fromLatLng(e.latLng.lat(), e.latLng.lng()).then(
+      (response) => {
+        const address = response.results[0].formatted_address;   
+        setAddress(address)  
+      },
+      (error) => {
+        console.error(error);
+      }
+    )
+  };
+  console.log(address);
   const addFieldMarkHandler = () => {
     setShow(false)
     dispatch(fetchAcceptRequests(data._id, fieldTitleInput.current.value, 
-    fieldContentInput.current.value, latInput.current.value, lngInput.current.value, markInfoInput.current.value))
+    fieldContentInput.current.value, addressInput.current.value, latInput.current.value, lngInput.current.value, markInfoInput.current.value))
   };
-  useEffect(() => {
-    setMarker({ lat: data.lat, lng: data.lng });
-  }, []);
   return (
     <>
       <Button style={{ width: "170px" }} variant="success" onClick={handleShow}>
@@ -71,6 +96,8 @@ function RequestModal({ data }) {
             <Form.Control type="text" ref ={fieldTitleInput} defaultValue={data.fieldTitle} />
             <Form.Label>Описание поля</Form.Label>
             <Form.Control type="text" ref ={fieldContentInput} defaultValue={data.fieldContent} />
+            <Form.Label>Адрес поля</Form.Label>
+            <Form.Control type="text" ref={addressInput} defaultValue={address} />
             <br />
             <Row></Row>
           </Form.Group>

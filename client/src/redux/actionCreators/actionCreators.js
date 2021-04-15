@@ -1,10 +1,18 @@
 import {
-  REGISTER_USER, USER_CHECK, EDIT_USER, LOGIN_USER, LOGOUT_USER, ERROR_REGISTER,
+  REGISTER_USER, USER_CHECK,INIT_USERS, EDIT_USER, LOGIN_USER, LOGOUT_USER, ERROR_REGISTER,
   ERROR_LOGIN, INIT_MARKERS, ADD_MARKER, INIT_FIELDS, GET_FIELD, SET_DATE, INIT_REQUESTS,
-  ADD_REQUEST, DELETE_REQUEST, GET_FIELD_EVENTS, GET_DAY_EVENTS, GET_AVAIL_TIMES, ADD_EVENT
+  ADD_REQUEST, DELETE_REQUEST, GET_FIELD_EVENTS, GET_DAY_EVENTS, GET_AVAIL_TIMES, ADD_EVENT,JOIN_EVENT,
+  LEAVE_EVENT
+  
 } from '../actionTypes/actionTypes'
 
 
+export const initUsersAC = (payload) => {
+  return {
+    type:INIT_USERS,
+    payload
+  }
+}
 export const registerUserAC = (payload) => {
   return {
     type: REGISTER_USER,
@@ -136,3 +144,17 @@ export const addEventAC = (payload) => {
     payload
   }
 };
+
+export const joinEventAC = (payload) => {
+  return {
+    type:JOIN_EVENT,
+    payload
+  }
+}
+
+export const leaveEventAC = (payload) => {
+  return {
+    type:LEAVE_EVENT,
+    payload
+  }
+}

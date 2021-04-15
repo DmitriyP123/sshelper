@@ -65,8 +65,6 @@ function Map(props) {
   //   ]);
   // }, []);
 
-  console.log(selected);
-
   const mapRef = useRef();
 
   const onMapLoad = useCallback((map) => {
@@ -79,6 +77,12 @@ function Map(props) {
     console.log(mapRef.current)
   }, []);
 
+  const panTo = React.useCallback(({ lat, lng }) => {
+    console.log(mapRef.current)
+    console.log(lat,lng);
+    mapRef.current.panTo({ lat, lng });
+    mapRef.current.setZoom(16);
+  }, []);
   if (loadError) return "ERROR LOADING MAPS";
   if (!isLoaded) return "LOADING...";
 
@@ -88,6 +92,20 @@ function Map(props) {
       <Locate panTo={panTo} />
       <HeroContainer>
         <Content>
+        <button
+    onClick={() => {
+      navigator.geolocation.getCurrentPosition(
+        (position) => {
+          panTo({
+            lat: position.coords.latitude,
+            lng: position.coords.longitude,
+          });
+        },
+        () => null
+      );
+    }}>
+    KARTINKA
+  </button>
           <GoogleMap
             mapContainerStyle={mapContainerStyle}
             zoom={10}

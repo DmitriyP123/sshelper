@@ -64,6 +64,7 @@ function AddMarkPage() {
     Geocode.fromLatLng(e.latLng.lat(), e.latLng.lng()).then(
       (response) => {
         const address = response.results[0].formatted_address;
+        
         setAddress(address);
         console.log(address);
       },
@@ -105,6 +106,7 @@ function AddMarkPage() {
       lng: lngInput.current.value,
       fieldTitle: titleInput.current.value,
       fieldContent: contentInput.current.value,
+      fieldAddress: address,
     }
     dispatch(fetchAddRequests(data))
     history.push('/')

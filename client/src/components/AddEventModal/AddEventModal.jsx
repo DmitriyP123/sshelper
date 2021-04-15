@@ -17,7 +17,6 @@ function AddEventModal(props) {
   const { date } = useSelector(state => state.date);
   const { id } = useParams();
 
-  console.log(date)
 
   const handleClose = () => setShow(false);
   const handleShow = () => setShow(true);
