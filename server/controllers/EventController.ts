@@ -92,7 +92,7 @@ class EventsController {
       let currentEvent = await EventModel.findOne({ _id: req.params.id })
       if (currentEvent) {
         let newPart = currentEvent.participants?.filter(el => el != req.body.id)
-        await EventModel.findByIdAndUpdate(req.params.id, {participants:newPart}, {new:true}) 
+        currentEvent = await EventModel.findByIdAndUpdate(req.params.id, {participants:newPart}, {new:true}) 
         res.status(200).json({
           status: "success",
           data:currentEvent,

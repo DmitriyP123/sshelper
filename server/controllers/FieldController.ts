@@ -26,6 +26,7 @@ class FieldsController {
       const data: FieldModelInterface = {
         title: req.body.title,
         content: req.body.content,
+        address:req.body.address,
         events: [],
       };
 

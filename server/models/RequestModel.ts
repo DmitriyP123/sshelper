@@ -7,6 +7,7 @@ export interface RequestModelInterface {
   lng: number;
   fieldTitle: string;
   fieldContent: string;
+  fieldAddress:string;
 }
 
 export type RequestModelDocumentInterface = RequestModelInterface & Document;
@@ -25,6 +26,10 @@ const RequestSchema = new Schema({
     type: String,
   },
   fieldContent:{
+    required: true,
+    type: String,
+  },
+  fieldAddress:{
     required: true,
     type: String,
   },

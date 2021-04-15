@@ -23,6 +23,7 @@ app.post('/users/registration', UserCtrl.registration)
 app.post('/users/login', UserCtrl.login);
 app.post('/users/verify', UserCtrl.verify);
 app.put('/users/:id', UserCtrl.updateProfile)
+app.patch('/users/:id', UserCtrl.addEvent)
 
 app.get('/marks', MarkCtrl.getAll)
 app.post('/marks', MarkCtrl.create )

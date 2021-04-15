@@ -1,4 +1,4 @@
-import { REGISTER_USER,EDIT_USER, LOGOUT_USER, ERROR_REGISTER, ERROR_LOGIN, LOGIN_USER } from '../actionTypes/actionTypes'
+import { REGISTER_USER,EDIT_USER, LOGOUT_USER, ERROR_REGISTER, ERROR_LOGIN, LOGIN_USER, INIT_USERS } from '../actionTypes/actionTypes'
 const state = JSON.parse(window.localStorage.getItem("currentState"));
 
 let initialState = {
@@ -11,6 +11,7 @@ let initialState = {
   isAdmin: false,
   logged: false,
   error:false,
+  allUsers:[],
 }
 
 if (state) {
@@ -24,11 +25,15 @@ if (state) {
     logged:state.users.logged,
     isAdmin: state.users.isAdmin,
     error:false,
+    allUsers:[],
   }
 }
 
 const reducer = (state = initialState, action) => {
   switch(action.type) {
+    
+    case INIT_USERS:
+      return {...state, allUsers: action.payload}
 
     case ERROR_REGISTER: 
     return {...state, error: action.payload} 
@@ -46,7 +51,6 @@ const reducer = (state = initialState, action) => {
 
     case LOGOUT_USER: 
     return {...state, nickname: "",id:'',email: "",token:'',logged: false, isAdmin:false, error: false}
-
 
     default: 
     return state
