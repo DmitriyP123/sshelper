@@ -1,4 +1,4 @@
-import { GET_FIELD_EVENTS, GET_DAY_EVENTS, GET_AVAIL_TIMES, ADD_EVENT } from '../actionTypes/actionTypes';
+import { GET_FIELD_EVENTS, GET_DAY_EVENTS, GET_AVAIL_TIMES, ADD_EVENT, JOIN_EVENT,LEAVE_EVENT } from '../actionTypes/actionTypes';
 
 const initialState = {
   currentFieldEvents: [],
@@ -17,32 +17,26 @@ const reducer = (state = initialState, action) => {
     case GET_DAY_EVENTS:
       return {
         ...state, currentDayEvents: state.currentFieldEvents.filter(el => el.date === action.payload),
-        currentDayStartTimes: state.currentFieldEvents.filter(el => el.date === action.payload).map(el => el.start)
-        // .map(el => {
-        //   for (let elem of state.currentDayAllTimes) {
-        //     if (elem !== el) {
-        //       return el;
-        //     }
-        //   }
-        // }),
-        ,
-        eventsData: state.currentFieldEvents.filter(el => el.date === action.payload).map(el => { return { title: el.title, cardTitle: el.title, cardText: el.content, cardDetailedText: el.start } }),
+        currentDayStartTimes: state.currentFieldEvents.filter(el => el.date === action.payload).map(el => el.start),
+        eventsData: state.currentFieldEvents.filter(el => el.date === action.payload).map(el => { return { title: `${el.title}\n${el.start}`, cardTitle: el.title, cardText: el.content, cardDetailedText: el.start, id: el._id, party:el.participants} })
+        .sort(function (a, b) {
+          if (a.cardDetailedText > b.cardDetailedText) {
+            return 1
+          }
+          if (a.cardDetailedText < b.cardDetailedText) {
+            return -1
+          }
+        }),
       };
 
     case GET_AVAIL_TIMES:
       return { ...state, currentDayAvailTimes: state.currentDayAllTimes.filter((el) => !state.currentDayStartTimes.includes(el)) }
-    // for (let i = 0; i < state.currentDayStartTimes.length; i++) {
-    //   if (state.currentDayStartTimes[i] == el) {
-    //     console.log(state.currentDayStartTimes)
-    //     console.log('popalsya')
-    //   } else {
-    //     return el;
-    //   }
-    // }
-
     case ADD_EVENT:
       return { ...state, currentFieldEvents: [...state.currentFieldEvents, action.payload] };
-
+    case JOIN_EVENT:
+      return {...state, eventsData: state.eventsData.map(el => el.id == action.payload._id ? { title: `${action.payload.title}\n${action.payload.start}`, cardTitle: action.payload.title, cardText: action.payload.content, cardDetailedText: action.payload.start, id: action.payload._id, party:action.payload.participants} : el)}
+    case LEAVE_EVENT:
+      return {...state, eventsData: state.eventsData.map(el => el.id == action.payload._id ? { title: `${action.payload.title}\n${action.payload.start}`, cardTitle: action.payload.title, cardText: action.payload.content, cardDetailedText: action.payload.start, id: action.payload._id, party:action.payload.participants} : el)}
     default:
       return { ...state };
   }

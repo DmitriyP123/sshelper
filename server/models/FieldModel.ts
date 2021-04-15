@@ -3,6 +3,7 @@ export interface FieldModelInterface {
   _id?: string;
   title: string;
   content: string;
+  address:string;
   pictures?: Array<String>,
   events: Array<String> 
 }
@@ -15,6 +16,10 @@ const FieldSchema = new Schema({
     type: String,
   },
   content: {
+    required: true,
+    type: String,
+  },
+  address: {
     required: true,
     type: String,
   },

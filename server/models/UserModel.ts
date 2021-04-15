@@ -8,6 +8,7 @@ export interface UserModelInterface {
   about?:string;
   expirience?:string;
   isAdmin?: boolean;
+  myEvents?: Array<String>,
 }
 
 export type UserModelDocumentInterface = UserModelInterface & Document;
@@ -37,6 +38,11 @@ const UserSchema = new Schema({
     type: Boolean,
     default: false,
   },
+  myEvents:[{
+    type: Schema.Types.ObjectId,
+    ref: 'Event',
+    default:[],
+  }],
 });
 
 UserSchema.set("toJSON", {

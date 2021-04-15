@@ -5,6 +5,7 @@ export const ERROR_LOGIN = 'ERROR_LOGIN'
 export const LOGIN_USER = 'LOGIN_USER'
 export const USER_CHECK = 'USER_CHECK'
 export const EDIT_USER = 'EDIT_USER'
+export const INIT_USERS = 'INIT_USERS'
 
 export const INIT_MARKERS = 'INIT_MARKERS';
 export const ADD_MARKER = 'ADD_MARKER';
@@ -19,6 +20,8 @@ export const GET_FIELD_EVENTS = 'GET_FIELD_EVENTS';
 export const GET_DAY_EVENTS = 'GET_DAY_EVENTS';
 export const GET_AVAIL_TIMES = 'GET_AVAIL_TIMES';
 export const ADD_EVENT = 'ADD_EVENT';
+export const JOIN_EVENT = 'JOIN_EVENT'
+export const LEAVE_EVENT = 'LEAVE_EVENT'
 
 export const INIT_REQUESTS = 'INIT_REQUESTS'
 export const ADD_REQUEST = 'ADD_REQUEST'

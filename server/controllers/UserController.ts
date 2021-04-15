@@ -72,6 +72,7 @@ class UserController {
           email: req.body.email,
           nickname: req.body.nickname,
           password: await bcryptHash(req.body.password),
+          myEvents:[]
         };
   
          let user = await UserModel.create(data);
@@ -190,7 +191,35 @@ class UserController {
       });
     }
   }
+
+  async addEvent(req: express.Request, res: express.Response): Promise<void> {
+    try {
+      let user = await UserModel.findById({ _id: req.params.id })
+      if (user) {
+        user = await UserModel.findByIdAndUpdate({ _id: req.params.id }, {$push: {myEvents: req.body.id}}, {new:true})
+        res.status(200).json({
+          status: "success",
+          data:user,
+        });
+      } else {
+        res.json({
+          status: "error",
+          message: 'Такого ивента не существует',
+        });
+      }
+    } catch (error) {
+      res.json({
+        status: "error",
+        errors: JSON.stringify(error),
+      });
+    }
+   }
+
+
 }
+
+
+
 
 
 export const UserCtrl = new UserController();

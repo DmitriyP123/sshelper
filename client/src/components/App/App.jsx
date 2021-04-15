@@ -12,7 +12,7 @@ import ProfilePage from '../../pages/ProfilePage/ProfilePage'
 import Navbar from '../Navbar/Navbar'
 import RequestPage from '../../pages/RequestsPage/RequestPage'
 import FieldPage from '../../pages/FieldPage/FieldPage';
-import { fetchInitFields } from '../../redux/reduxThunk/asyncFuncs';
+import { fetchInitFields, fetchInitUsers } from '../../redux/reduxThunk/asyncFuncs';
 import AddMarkPage from '../../pages/AddMarkPage/AddMarkPage'
 import { useDispatch } from 'react-redux'
 function App() {
@@ -24,6 +24,7 @@ function App() {
   // })
   useEffect(() => {
     dispatch(fetchInitFields());
+    dispatch(fetchInitUsers())
   }, [dispatch]);
 
   return (
@@ -49,7 +50,7 @@ function App() {
           <Route path="/field/:id">
             <FieldPage />
           </Route>
-          <Route path="/profile/:id">
+          <Route path="/profile/:userId">
             <ProfilePage />
           </Route>
           <Route path="/requests">

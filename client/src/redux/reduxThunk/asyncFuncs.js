@@ -4,6 +4,7 @@ import {
   logoutUserAC,
   ErrorLoginUserAC,
   ErrorRegisterUserAC,
+  initUsersAC,
   checkUserAC,
   initMarkersAC,
   initFieldsAC,
@@ -12,8 +13,25 @@ import {
   deleteRequestAC,
   getFieldEventsAC,
   editUserAC,
-  addEventAC
+  addEventAC,
+  joinEventAC,
+  leaveEventAC
 } from "../actionCreators/actionCreators";
+
+export const fetchInitUsers = () => {
+  return async (dispatch) => {
+    try {
+      let response = await fetch("/users");
+      let usersInfo = await response.json();
+      let { data } = usersInfo;
+      if (usersInfo.status === "success") {
+        dispatch(initUsersAC(data));
+      }
+    } catch (err) {
+      dispatch(ErrorRegisterUserAC('Error'));
+    }
+  }
+}
 
 export const fetchRegisterUser = (nickname, email, password) => {
   return async (dispatch) => {
@@ -168,7 +186,7 @@ export const fetchInitRequests = () => {
   }
 }
 
-export const fetchAddRequests = ({ lat, lng, fieldTitle, fieldContent }) => {
+export const fetchAddRequests = ({ lat, lng, fieldTitle,fieldAddress, fieldContent }) => {
   return async (dispatch) => {
     try {
       let response = await fetch("/requests", {
@@ -181,6 +199,7 @@ export const fetchAddRequests = ({ lat, lng, fieldTitle, fieldContent }) => {
           lng,
           fieldTitle,
           fieldContent,
+          fieldAddress
         }),
       });
       let result = await response.json();
@@ -216,7 +235,7 @@ export const fetchDeleteRequests = (id) => {
   }
 }
 
-export const fetchAcceptRequests = (id, title, content, lat, lng, info) => {
+export const fetchAcceptRequests = (id, title, content,address, lat, lng, info) => {
   return async (dispatch) => {
     try {
       let response = await fetch('/field', {
@@ -226,7 +245,8 @@ export const fetchAcceptRequests = (id, title, content, lat, lng, info) => {
         },
         body: JSON.stringify({ 
           title,
-          content
+          content,
+          address
         }),
       });
       let result = await response.json();
@@ -273,7 +293,6 @@ export const fetchGetFieldEvents = (payload) => {
       const response = await fetch(`/field/${payload}/events`);
       const result = await response.json();
       const { data } = result;
-      console.log(data)
       dispatch(getFieldEventsAC(data));
     } catch (err) {
       console.log(err)
@@ -302,6 +321,52 @@ export const fetchAddEvent = ({ name, description, time, date, fieldId }) => {
       console.log(data)
       if (result.status === "success") {
         dispatch(addEventAC(data));
+      }
+    } catch (err) {
+      console.log(err)
+    }
+  }
+}
+
+export const fetchJoinEvent = (eventId, UserId) => {
+  return async (dispatch) => {
+    try {
+      let response = await fetch(`/events/${eventId}`, {
+        method: "PATCH",
+        headers: {
+          "Content-type": "Application/json",
+        },
+        body: JSON.stringify({
+          id:UserId,
+        }),
+      });
+      let result = await response.json();
+      let { data } = result;
+      if (result.status === "success") {
+        dispatch(joinEventAC(data));
+      }
+    } catch (err) {
+      console.log(err)
+    }
+  }
+}
+
+export const fetchLeaveEvent = (eventId, UserId) => {
+  return async (dispatch) => {
+    try {
+      let response = await fetch(`/events/${eventId}`, {
+        method: "PUT",
+        headers: {
+          "Content-type": "Application/json",
+        },
+        body: JSON.stringify({
+          id:UserId,
+        }),
+      });
+      let result = await response.json();
+      let { data } = result;
+      if (result.status === "success") {
+        dispatch(leaveEventAC(data));
       }
     } catch (err) {
       console.log(err)

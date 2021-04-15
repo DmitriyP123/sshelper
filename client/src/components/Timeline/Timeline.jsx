@@ -1,11 +1,12 @@
 import React, { useEffect, useState } from "react";
 import "./Timeline.css";
+import { Link, useHistory } from 'react-router-dom'
 import { Chrono } from "react-chrono";
 import { useDispatch, useSelector } from "react-redux";
 import { getDayEventsAC } from '../../redux/actionCreators/actionCreators';
 import tw from "twin.macro";
 import styled from "styled-components";
-
+import { fetchJoinEvent, fetchLeaveEvent } from '../../redux/reduxThunk/asyncFuncs'
 const SubmitButton = styled.button`
   ${tw`mt-5 tracking-wide font-semibold bg-primary-500 text-gray-100 w-full py-4 rounded-lg hover:bg-primary-900 transition-all duration-300 ease-in-out flex items-center justify-center focus:shadow-outline focus:outline-none`}
   .icon {
@@ -18,22 +19,25 @@ const SubmitButton = styled.button`
 
 function Timeline() {
 
-  // const dispatch = useDispatch();
-
   const { eventsData } = useSelector(state => state.events);
   const { date } = useSelector(state => state.date);
+  const { id, allUsers, logged } = useSelector(state => state.users)
 
-  console.log(date);
-
-  // useEffect(() => {
-  //   setTimeout(() => {
-  //     dispatch(getDayEventsAC(date));
-  //   }, 2000);
-  // }, [date]);
-
+  const dispatch = useDispatch()
+  const history = useHistory()
+  const joinEventHandler = (e) => {
+    if (logged) {
+      dispatch(fetchJoinEvent(e.target.id,id))
+    } else {
+      history.push('/signin')
+    }
+  }
+  const leaveEventHandler = (e) => {
+    dispatch(fetchLeaveEvent(e.target.id,id))
+  }
   return (
     <div className="Timeline">
-      <div style={{ width: "100%", height: "500px" }}>
+      <div style={{ width: "100%", height: "800px" }}>
         <Chrono
           mode="HORIZONTAL"
 
@@ -43,7 +47,16 @@ function Timeline() {
           items={eventsData}
         >
           {eventsData?.map((el) => {
-            return <div key={performance.now()}><p>{el.title}</p><p>{el.cardTitle}</p><p>{el.cardText}</p><p>{el.cardDetailedText}</p><SubmitButton>Присоединиться</SubmitButton></div>
+            return <div key={performance.now()}>
+            <p>{el.title}</p>
+            <p>{el.cardTitle}</p>
+            <p>{el.cardText}</p>
+            <p>{el.cardDetailedText}</p>
+            <ul>Участники: {el.party.map(e => <li key={performance.now()}><Link to={`/profile/${allUsers.find(el => el._id == e)._id}`}>{allUsers.find(el => el._id == e).nickname}</Link></li>)}</ul>
+            {!el.party.includes(id) 
+            ? <SubmitButton id={el.id} onClick={joinEventHandler}>Присоединиться</SubmitButton>
+            : <SubmitButton id={el.id} onClick={leaveEventHandler}>Отказаться от участия</SubmitButton>
+             }</div>
           })}
           <div className="chrono-icons" key={performance.now()}>
             {eventsData?.map(() => {

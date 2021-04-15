@@ -31,6 +31,7 @@ class RequestController {
         lng: req.body.lng,
         fieldTitle:req.body.fieldTitle,
         fieldContent: req.body.fieldContent,
+        fieldAddress:req.body.fieldAddress,
       };
 
       let request = await RequestModel.create(data);
