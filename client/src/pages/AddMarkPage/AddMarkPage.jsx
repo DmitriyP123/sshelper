@@ -24,9 +24,6 @@ Geocode.setLocationType("ROOFTOP");
 Geocode.enableDebug();
 
 
-
-
-
 function AddMarkPage() {
   const libraries = ["places"];
 
@@ -67,7 +64,8 @@ function AddMarkPage() {
     Geocode.fromLatLng(e.latLng.lat(), e.latLng.lng()).then(
       (response) => {
         const address = response.results[0].formatted_address;
-        setAddress(address.replace());
+        
+        setAddress(address);
         console.log(address);
       },
       (error) => {

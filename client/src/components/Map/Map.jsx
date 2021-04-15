@@ -26,23 +26,22 @@ const mapContainerStyle = {
   width: '100vw',
   height: '95vh'
 };
-
-const center = {
-  lat: 59.938480,
-  lng: 30.312480
-};
-
 const options = {
   disableDefaultUI: true,
   zoomControl: true,
   // styles:  - возможно поменяем стиль карты
 };
 
+const center = {
+  lat: 59.938480,
+  lng: 30.312480
+};
+
+
 function Map(props) {
 
   const dispatch = useDispatch();
   const { markers } = useSelector(state => state.map);
-  const history = useHistory();
 
   useEffect(() => {
     dispatch(fetchInitMarkers());
@@ -67,14 +66,16 @@ function Map(props) {
   // }, []);
 
   const mapRef = useRef();
+
   const onMapLoad = useCallback((map) => {
     mapRef.current = map;
   }, []);
 
-  const showFieldInfo = () => {
-    console.log(selected.id);
-    history.push('/fieldpage');
-  };
+  const panTo = React.useCallback(({ lat, lng }) => {
+    mapRef.current.panTo({ lat, lng });
+    mapRef.current.setZoom(14);
+    console.log(mapRef.current)
+  }, []);
 
   const panTo = React.useCallback(({ lat, lng }) => {
     console.log(mapRef.current)
@@ -88,6 +89,7 @@ function Map(props) {
 
   return (
     <Container>
+      <Locate panTo={panTo} />
       <HeroContainer>
         <Content>
         <button
@@ -143,23 +145,29 @@ function Map(props) {
                 </div>
               </InfoWindow>
             ) : null}
-            {/* <Locate panTo={panTo} />
-            <Search panTo={panTo} /> */}
+            {/* <Search panTo={panTo} /> */}
           </GoogleMap>
         </Content>
       </HeroContainer>
-    </Container>
+    </Container >
   );
 };
 
-// 59.941774
-// 30.361191
-
-// 59.933549
-// 30.345025
-
-// 59.968925
-// 30.41511
-
+function Locate({ panTo }) {
+  return (<button
+    onClick={() => {
+      navigator.geolocation.getCurrentPosition(
+        (position) => {
+          panTo({
+            lat: position.coords.latitude,
+            lng: position.coords.longitude,
+          });
+        },
+        () => null
+      );
+    }}>
+    KARTINKA
+  </button>)
+};
 
 export default Map;
