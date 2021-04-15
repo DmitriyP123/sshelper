@@ -72,39 +72,33 @@ function Map(props) {
   }, []);
 
   const panTo = React.useCallback(({ lat, lng }) => {
-    mapRef.current.panTo({ lat, lng });
-    mapRef.current.setZoom(14);
     console.log(mapRef.current)
-  }, []);
-
-  const panTo = React.useCallback(({ lat, lng }) => {
-    console.log(mapRef.current)
-    console.log(lat,lng);
+    console.log(lat, lng);
     mapRef.current.panTo({ lat, lng });
     mapRef.current.setZoom(16);
   }, []);
+
   if (loadError) return "ERROR LOADING MAPS";
   if (!isLoaded) return "LOADING...";
 
 
   return (
     <Container>
-      <Locate panTo={panTo} />
       <HeroContainer>
         <Content>
-        <button
-    onClick={() => {
-      navigator.geolocation.getCurrentPosition(
-        (position) => {
-          panTo({
-            lat: position.coords.latitude,
-            lng: position.coords.longitude,
-          });
-        },
-        () => null
-      );
-    }}>
-    KARTINKA
+          <button
+            onClick={() => {
+              navigator.geolocation.getCurrentPosition(
+                (position) => {
+                  panTo({
+                    lat: position.coords.latitude,
+                    lng: position.coords.longitude,
+                  });
+                },
+                () => null
+              );
+            }}>
+            KARTINKA
   </button>
           <GoogleMap
             mapContainerStyle={mapContainerStyle}
@@ -151,23 +145,6 @@ function Map(props) {
       </HeroContainer>
     </Container >
   );
-};
-
-function Locate({ panTo }) {
-  return (<button
-    onClick={() => {
-      navigator.geolocation.getCurrentPosition(
-        (position) => {
-          panTo({
-            lat: position.coords.latitude,
-            lng: position.coords.longitude,
-          });
-        },
-        () => null
-      );
-    }}>
-    KARTINKA
-  </button>)
 };
 
 export default Map;
