@@ -43,6 +43,7 @@ function Timeline() {
           items={eventsData}
         >
           {eventsData?.map((el) => {
+            { console.log(el) }
             return <div key={performance.now()}><p>{el.title}</p><p>{el.cardTitle}</p><p>{el.cardText}</p><p>{el.cardDetailedText}</p><SubmitButton>Присоединиться</SubmitButton></div>
           })}
           <div className="chrono-icons" key={performance.now()}>

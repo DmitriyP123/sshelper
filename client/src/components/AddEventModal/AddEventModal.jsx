@@ -37,7 +37,7 @@ function AddEventModal(props) {
     setShow(false);
     setTimeout(() => {
       dispatch(getDayEventsAC(date));
-    }, 100);
+    }, 500);
   }
 
   return (
