@@ -14,14 +14,10 @@ import RequestPage from '../../pages/RequestsPage/RequestPage'
 import FieldPage from '../../pages/FieldPage/FieldPage';
 import { fetchInitFields, fetchInitUsers } from '../../redux/reduxThunk/asyncFuncs';
 import AddMarkPage from '../../pages/AddMarkPage/AddMarkPage'
-import { useDispatch } from 'react-redux'
+import { useDispatch } from 'react-redux';
+
 function App() {
   const dispatch = useDispatch();
-  // const { token } = useSelector(state => state.users)
-  // const dispatch = useDispatch()
-  // useEffect(()=> {
-  //   dispatch(fetchCheckUser(token))
-  // })
   useEffect(() => {
     dispatch(fetchInitFields());
     dispatch(fetchInitUsers())

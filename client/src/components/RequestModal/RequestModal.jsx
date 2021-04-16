@@ -1,10 +1,11 @@
 import React, { useState, useEffect, useRef } from "react";
-import { Modal, Button, Form, Row, Col } from "react-bootstrap";
+import { Modal, Button, Form, Row } from "react-bootstrap";
 import "bootstrap/dist/css/bootstrap.min.css";
 import { fetchAcceptRequests } from '../../redux/reduxThunk/asyncFuncs'
 import { useDispatch } from 'react-redux'
 import { GoogleMap, useLoadScript, Marker } from "@react-google-maps/api";
 import Geocode from "react-geocode";
+import mapStyles from '../Map/mapStyles';
 
 Geocode.setApiKey(process.env.REACT_APP_GOOGLE_MAPS_API_KEY);
 
@@ -32,18 +33,18 @@ function RequestModal({ data }) {
     height: "35vh",
     alignItems: "center",
   };
-  
+
   const options = {
     disableDefaultUI: true,
     zoomControl: true,
-    // styles:  - возможно поменяем стиль карты
+    styles: mapStyles
   };
   const { isLoaded, loadError } = useLoadScript({
     googleMapsApiKey: process.env.REACT_APP_GOOGLE_MAPS_API_KEY,
   });
-  
+
   const [marker, setMarker] = useState({ lat: "", lng: "" });
-  const [center, setCenter] = useState({lat: 59.93848,lng: 30.31248,})
+  const [center, setCenter] = useState({ lat: 59.93848, lng: 30.31248, })
   const [address, setAddress] = useState(data.fieldAddress);
   const dispatch = useDispatch()
   useEffect(() => {
@@ -55,12 +56,12 @@ function RequestModal({ data }) {
       lat: e.latLng.lat(),
       lng: e.latLng.lng(),
     });
-    setCenter({lat:e.latLng.lat(), lng:e.latLng.lng()})
+    setCenter({ lat: e.latLng.lat(), lng: e.latLng.lng() })
 
     Geocode.fromLatLng(e.latLng.lat(), e.latLng.lng()).then(
       (response) => {
-        const address = response.results[0].formatted_address;   
-        setAddress(address)  
+        const address = response.results[0].formatted_address;
+        setAddress(address)
       },
       (error) => {
         console.error(error);
@@ -70,8 +71,8 @@ function RequestModal({ data }) {
   console.log(address);
   const addFieldMarkHandler = () => {
     setShow(false)
-    dispatch(fetchAcceptRequests(data._id, fieldTitleInput.current.value, 
-    fieldContentInput.current.value, addressInput.current.value, latInput.current.value, lngInput.current.value, markInfoInput.current.value))
+    dispatch(fetchAcceptRequests(data._id, fieldTitleInput.current.value,
+      fieldContentInput.current.value, addressInput.current.value, latInput.current.value, lngInput.current.value, markInfoInput.current.value))
   };
   return (
     <>
@@ -86,16 +87,16 @@ function RequestModal({ data }) {
         <Modal.Body>
           <Form.Group>
             <Form.Label>latitude</Form.Label>
-            <Form.Control type="text" value={marker.lat} ref = {latInput} disabled />
+            <Form.Control type="text" value={marker.lat} ref={latInput} disabled />
             <Form.Label>longtitude</Form.Label>
-            <Form.Control type="text" value={marker.lng} ref = {lngInput} disabled />
+            <Form.Control type="text" value={marker.lng} ref={lngInput} disabled />
             <Form.Label>Описание метки</Form.Label>
-            <Form.Control type="text" ref ={markInfoInput} placeholder="описание метки на карте" />
+            <Form.Control type="text" ref={markInfoInput} placeholder="описание метки на карте" required/>
             <br />
             <Form.Label>Название поля</Form.Label>
-            <Form.Control type="text" ref ={fieldTitleInput} defaultValue={data.fieldTitle} />
+            <Form.Control type="text" ref={fieldTitleInput} defaultValue={data.fieldTitle} />
             <Form.Label>Описание поля</Form.Label>
-            <Form.Control type="text" ref ={fieldContentInput} defaultValue={data.fieldContent} />
+            <Form.Control type="text" ref={fieldContentInput} defaultValue={data.fieldContent} />
             <Form.Label>Адрес поля</Form.Label>
             <Form.Control type="text" ref={addressInput} defaultValue={address} />
             <br />

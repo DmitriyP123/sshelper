@@ -5,8 +5,6 @@ import tw from "twin.macro";
 import { css } from "styled-components/macro"; //eslint-disable-line
 import { SectionHeading, Subheading as SubheadingBase } from "../../components/misc/Headings.js";
 import { PrimaryButton } from "../../components/misc/Buttons";
-import { ReactComponent as QuotesLeftIcon } from "../../images/quotes-l.svg";
-import { ReactComponent as QuotesRightIcon } from "../../images/quotes-r.svg";
 import { ReactComponent as ChevronLeftIcon } from "feather-icons/dist/icons/chevron-left.svg";
 import { ReactComponent as ChevronRightIcon } from "feather-icons/dist/icons/chevron-right.svg";
 import { ReactComponent as SvgDecoratorBlob1 } from "../../images/svg-decorator-blob-4.svg";
@@ -15,7 +13,6 @@ import "slick-carousel/slick/slick.css";
 import { useParams } from "react-router";
 import { fetchGetFieldEvents } from '../../redux/reduxThunk/asyncFuncs';
 
-import Navbar from '../../components/Navbar/Navbar';
 import Calendar from 'react-calendar';
 import 'react-calendar/dist/Calendar.css';
 import AddEventModal from '../../components/AddEventModal/AddEventModal';
@@ -32,8 +29,6 @@ const Testimonials = styled.div``;
 const Testimonial = tw.div`max-w-md lg:max-w-none mx-auto lg:mx-0 flex flex-col items-center lg:items-stretch lg:flex-row`;
 
 const TestimonialImageSlider = tw(Slider)`w-full lg:w-5/12 flex-shrink-0 `;
-const TestimonialTextSlider = tw(Slider)``;
-const TestimonialText = tw.div`outline-none`;
 
 const ImageAndControlContainer = tw.div`relative outline-none`;
 const Image = styled.div(props => [
@@ -58,13 +53,6 @@ const Subheading = tw(SubheadingBase)`mb-4`;
 const HeadingTitle = tw(SectionHeading)`lg:text-left leading-tight`;
 const Description = tw.p`max-w-md text-center mx-auto lg:mx-0 lg:text-left lg:max-w-none leading-relaxed text-sm sm:text-base lg:text-lg font-medium mt-4 text-secondary-100`;
 
-const QuoteContainer = tw.div`relative mt-10 lg:mt-20`;
-const Quote = tw.blockquote`text-center lg:text-left text-sm sm:text-lg lg:text-xl xl:text-2xl`;
-const CustomerInfo = tw.div`mt-6 flex flex-col sm:flex-row items-center justify-center lg:justify-start`;
-
-const QuotesLeft = tw(QuotesLeftIcon)`w-6 h-6 opacity-75 text-primary-500 inline-block mr-1 -mt-3`;
-const QuotesRight = tw(QuotesRightIcon)`w-6 h-6 opacity-75 text-primary-500 inline-block ml-1 -mt-3`;
-
 const DecoratorBlob1 = tw(
   SvgDecoratorBlob1
 )`absolute w-32 top-0 left-0 -z-10 text-primary-500 opacity-25 transform -translate-x-full`;
@@ -76,7 +64,6 @@ export default function FieldPage() {
 
   const { currentField } = useSelector(state => state.field);
 
-  const { eventsData } = useSelector(state => state.events);
 
   let subheading = "Адрес";
   let heading = "Название"; // .name
@@ -108,12 +95,7 @@ export default function FieldPage() {
   const dispatch = useDispatch();
   const { id } = useParams();
 
-  // CALENDAR
   const [date, setDate] = useState(new Date());
-
-  // const currentDate = `${date.getDate()}.${date.getMonth()}.${date.getFullYear()}`;
-
-  // format = D.M.YYYY
 
   useEffect(() => {
     dispatch(fetchGetFieldEvents(id));
@@ -121,7 +103,7 @@ export default function FieldPage() {
       dispatch(getFieldAC(id));
       dispatch(getDayEventsAC(`${date.getDate()}.${Number(date.getMonth()) + 1}.${date.getFullYear()}`));
       dispatch(getDayAvailTimesAC());
-    }, 350);
+    }, 500);
   }, [dispatch]);
 
   const changeDate = (date) => {
@@ -159,11 +141,11 @@ export default function FieldPage() {
                   <Calendar
                     onChange={changeDate}
                     value={date}
-                    minDate={new Date()} // ??????????
+                    minDate={new Date()}
                   />
                 </div>
 
-                <div>
+                <div style={{ marginTop: '30px' }}>
                   <AddEventModal />
                 </div>
 

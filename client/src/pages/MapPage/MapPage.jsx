@@ -3,7 +3,7 @@ import Map from '../../components/Map/Map';
 
 function MapPage(props) {
   return (
-    <Map />
+      <Map />
   );
 }
 

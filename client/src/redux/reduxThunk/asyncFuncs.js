@@ -82,7 +82,7 @@ export const fetchLoginUser = (email, password) => {
         let userInfo = await response.json();
         let { data } = userInfo;
         if (userInfo.status === "success") {
-          dispatch(loginUserAC(data));
+          dispatch(loginUserAC(userInfo));
         } else {
           dispatch(ErrorLoginUserAC('Неверно введены email или пароль'));
         }
