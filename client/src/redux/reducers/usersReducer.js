@@ -56,6 +56,7 @@ const reducer = (state = initialState, action) => {
     case LOGIN_USER: 
     return {...state, portrait:action.payload.data.portrait, nickname:action.payload.data.nickname, email:action.payload.data.email, id:action.payload.data._id, token:action.payload.token, isAdmin:action.payload.data.isAdmin, expirience:action.payload.data.expirience, about:action.payload.data.about, error: false, logged:true} 
 
+
     case LOGOUT_USER: 
     return {...state, nickname: "",id:'',email: "",token:'',logged: false, isAdmin:false, error: false}
 

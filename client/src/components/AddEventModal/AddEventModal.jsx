@@ -37,18 +37,17 @@ function AddEventModal(props) {
   const eventDescriptionInput = useRef();
   const eventTimeInput = useRef();
 
-  const addEventFunc = () => {
-    dispatch(fetchAddEvent({
+  const addEventFunc = async  () => {
+    await dispatch(fetchAddEvent({
       name: eventNameInput.current.value,
       description: eventDescriptionInput.current.value,
       time: eventTimeInput.current.value,
       date,
       fieldId: id
     }));
+     await dispatch(getDayEventsAC(date));
+     await dispatch(getDayAvailTimesAC());
     setShow(false);
-    setTimeout(() => {
-      dispatch(getDayEventsAC(date));
-    }, 500);
   }
 
   return (

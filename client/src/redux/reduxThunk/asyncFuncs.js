@@ -80,7 +80,6 @@ export const fetchLoginUser = (email, password) => {
           }),
         });
         let userInfo = await response.json();
-        let { data } = userInfo;
         if (userInfo.status === "success") {
           dispatch(loginUserAC(userInfo));
         } else {
@@ -90,12 +89,13 @@ export const fetchLoginUser = (email, password) => {
         dispatch(ErrorLoginUserAC('Пожалуйста, заполните все поля'))
       }
     } catch (err) {
+      console.log(err);
       dispatch(ErrorLoginUserAC('Изивините, в данный момент наш сервис недоступен'));
     }
   };
 };
 
-export const fetchCheckUser = (token) => {
+export const fetchCheckUser = () => {
   return async (dispatch) => {
     try {
       let response = await fetch("/users/verify", {
@@ -230,7 +230,6 @@ export const fetchAddRequests = ({ lat, lng, fieldTitle,fieldAddress, fieldConte
       let { data } = result;
       if (result.status === "success") {
         dispatch(addRequestAC(data));
-        alert('Ваша заявка успешно отправлена')
       }
     } catch (err) {
       console.log(err)
