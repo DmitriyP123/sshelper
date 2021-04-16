@@ -5,7 +5,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { useParams } from "react-router";
 import { v4 as uuidv4 } from 'uuid';
 import { fetchAddEvent } from '../../redux/reduxThunk/asyncFuncs';
-import { getDayEventsAC } from '../../redux/actionCreators/actionCreators';
+import { getDayEventsAC, getDayAvailTimesAC } from '../../redux/actionCreators/actionCreators';
 
 function AddEventModal(props) {
 
@@ -25,18 +25,17 @@ function AddEventModal(props) {
   const eventDescriptionInput = useRef();
   const eventTimeInput = useRef();
 
-  const addEventFunc = () => {
-    dispatch(fetchAddEvent({
+  const addEventFunc = async  () => {
+    await dispatch(fetchAddEvent({
       name: eventNameInput.current.value,
       description: eventDescriptionInput.current.value,
       time: eventTimeInput.current.value,
       date,
       fieldId: id
     }));
+     await dispatch(getDayEventsAC(date));
+     await dispatch(getDayAvailTimesAC());
     setShow(false);
-    setTimeout(() => {
-      dispatch(getDayEventsAC(date));
-    }, 500);
   }
 
   return (

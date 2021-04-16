@@ -27,6 +27,7 @@ class FieldsController {
         title: req.body.title,
         content: req.body.content,
         address:req.body.address,
+        pictures:['https://thumbs.dreamstime.com/b/streetball-field-bright-sunny-day-55082514.jpg','https://media.npr.org/assets/img/2016/03/29/ap_090911089838_sq-3271237f28995f6530d9634ff27228cae88e3440.jpg','https://centrsporta-nevskiy.ru/wp-content/uploads/2020/12/xmrebgrit_c.jpg'],
         events: [],
       };
 

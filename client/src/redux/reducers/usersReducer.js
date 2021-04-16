@@ -46,13 +46,15 @@ const reducer = (state = initialState, action) => {
 
     case EDIT_USER:
       return{...state, token:action.payload.token,expirience:action.payload.data.expirience, about:action.payload.data.about, error: false, logged:true }
+
     case UPDATE_PHOTO_USER:
       return{...state, portrait:action.payload.portrait, error: false, logged:true }
+
     case REGISTER_USER: 
-    return {...state, nickname:action.payload.data.nickname, email:action.payload.data.email, id:action.payload.data._id, token:action.payload.token, expirience:action.payload.expirience, about:action.payload.about, error: false, logged:true} 
+    return {...state, portrait:action.payload.data.portrait, nickname:action.payload.data.nickname, email:action.payload.data.email, id:action.payload.data._id, token:action.payload.token, expirience:action.payload.expirience, about:action.payload.about, error: false, logged:true} 
 
     case LOGIN_USER: 
-    return {...state, nickname:action.payload.nickname, email:action.payload.email, id:action.payload._id, token:action.payload.token, isAdmin:action.payload.isAdmin, expirience:action.payload.expirience, about:action.payload.about, error: false, logged:true} 
+    return {...state, portrait:action.payload.data.portrait,  nickname:action.payload.data.nickname, email:action.payload.data.email, id:action.payload.data._id, token:action.payload.token, isAdmin:action.payload.data.isAdmin, expirience:action.payload.data.expirience, about:action.payload.data.about, error: false, logged:true} 
 
     case LOGOUT_USER: 
     return {...state, nickname: "",id:'',email: "",token:'',logged: false, isAdmin:false, error: false}
