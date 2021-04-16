@@ -1,17 +1,13 @@
 import React, { useCallback, useEffect, useRef, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { GoogleMap, useLoadScript, Marker, InfoWindow } from '@react-google-maps/api';
-import { formatRelative } from 'date-fns';
 import tw from "twin.macro";
 import styled from "styled-components";
 import './Map.css';
-import Navbar from 'components/Navbar/Navbar';
-// import usePlacesAutocomplete, { getGeocode, getLatLng } from 'use-places-autocomplete';
-// import { Combobox, ComboboxInput, ComboboxPopover, ComboboxList, ComboboxOption, } from "@reach/combobox";
 import "@reach/combobox/styles.css";
-import { useHistory } from 'react-router';
 import { fetchInitMarkers } from '../../redux/reduxThunk/asyncFuncs';
 import { Link } from 'react-router-dom';
+import mapStyles from './mapStyles';
 
 
 const Container = styled.div`
@@ -24,12 +20,12 @@ const libraries = ['places'];
 
 const mapContainerStyle = {
   width: '100vw',
-  height: '95vh'
+  height: '100vh'
 };
 const options = {
   disableDefaultUI: true,
   zoomControl: true,
-  // styles:  - возможно поменяем стиль карты
+  styles: mapStyles
 };
 
 const center = {
@@ -38,7 +34,7 @@ const center = {
 };
 
 
-function Map(props) {
+function Map() {
 
   const dispatch = useDispatch();
   const { markers } = useSelector(state => state.map);
@@ -53,17 +49,6 @@ function Map(props) {
   });
 
   const [selected, setSelected] = useState(null);
-
-  // const onMapClick = useCallback((e) => {
-  //   setMarkers((current) => [
-  //     ...current,
-  //     {
-  //       lat: e.latLng.lat(),
-  //       lng: e.latLng.lng(),
-  //       time: new Date(),
-  //     }
-  //   ]);
-  // }, []);
 
   const mapRef = useRef();
 
@@ -86,30 +71,29 @@ function Map(props) {
     <Container>
       <HeroContainer>
         <Content>
-          <button
-            onClick={() => {
-              navigator.geolocation.getCurrentPosition(
-                (position) => {
-                  panTo({
-                    lat: position.coords.latitude,
-                    lng: position.coords.longitude,
-                  });
-                },
-                () => null
-              );
-            }}>
-            KARTINKA
-  </button>
+          <div className="locate">
+            <button
+              onClick={() => {
+                navigator.geolocation.getCurrentPosition(
+                  (position) => {
+                    panTo({
+                      lat: position.coords.latitude,
+                      lng: position.coords.longitude,
+                    });
+                  },
+                  () => null
+                );
+              }}>
+              <img src="/images/compass.svg" alt="compass" />
+            </button>
+          </div>
           <GoogleMap
             mapContainerStyle={mapContainerStyle}
             zoom={10}
             center={center}
             options={options}
-            // onClick={onMapClick}
             onLoad={onMapLoad}>
             {markers.map(marker => <Marker key={marker._id}
-              // key = .id ?
-              // UUID ?
               position={{
                 lat: marker.lat,
                 lng: marker.lng
@@ -131,19 +115,16 @@ function Map(props) {
                 }}
               >
                 <div>
-                  {/* <h2>{selected.marker.lat}</h2> */}
                   <p>{selected.marker.info}</p>
-                  {/* <p>Добавлено: {formatRelative(selected.marker.time, new Date())}</p> */}
-                  {/* <button onClick={showFieldInfo}>Подробнее</button> */}
                   <Link to={`/field/${selected.marker.field}`}>Подробнее</Link>
                 </div>
               </InfoWindow>
             ) : null}
-            {/* <Search panTo={panTo} /> */}
           </GoogleMap>
         </Content>
       </HeroContainer>
     </Container >
+
   );
 };
 

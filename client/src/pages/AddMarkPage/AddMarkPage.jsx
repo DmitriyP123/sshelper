@@ -6,12 +6,12 @@ import {
 } from "@react-google-maps/api";
 import tw from "twin.macro";
 import styled from "styled-components";
-import Navbar from "components/Navbar/Navbar";
 import { ReactComponent as LoginIcon } from "feather-icons/dist/icons/upload.svg";
 import { fetchAddRequests } from '../../redux/reduxThunk/asyncFuncs'
-import { useDispatch, useSelector } from 'react-redux'
+import { useDispatch } from 'react-redux'
 import { useHistory } from 'react-router-dom';
 import Geocode from "react-geocode";
+import mapStyles from '../../components/Map/mapStyles';
 
 Geocode.setApiKey(process.env.REACT_APP_GOOGLE_MAPS_API_KEY);
 
@@ -28,16 +28,16 @@ function AddMarkPage() {
   const libraries = ["places"];
 
   const mapContainerStyle = {
-    width: "55vw",
+    width: "60vw",
     height: "80vh",
-    alignItems: "left",
+    // alignItems: "left",
   };
 
 
   const options = {
     disableDefaultUI: true,
     zoomControl: true,
-    // styles:  - возможно поменяем стиль карты
+    styles: mapStyles
   };
   const { isLoaded, loadError } = useLoadScript({
     googleMapsApiKey: process.env.REACT_APP_GOOGLE_MAPS_API_KEY,
@@ -64,7 +64,7 @@ function AddMarkPage() {
     Geocode.fromLatLng(e.latLng.lat(), e.latLng.lng()).then(
       (response) => {
         const address = response.results[0].formatted_address;
-        
+
         setAddress(address);
         console.log(address);
       },
@@ -72,7 +72,7 @@ function AddMarkPage() {
         console.error(error);
       }
     );
-  }
+  };
 
   const history = useHistory()
   const dispatch = useDispatch()
@@ -126,6 +126,12 @@ function AddMarkPage() {
               position={{
                 lat: marker.lat,
                 lng: marker.lng,
+              }}
+              icon={{
+                url: '/images/basketball.svg', // ???
+                scaledSize: new window.google.maps.Size(30, 30),
+                origin: new window.google.maps.Point(0, 0),
+                anchor: new window.google.maps.Point(15, 15)
               }}
             />}
           </GoogleMap>

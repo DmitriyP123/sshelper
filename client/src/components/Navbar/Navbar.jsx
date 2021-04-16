@@ -18,19 +18,15 @@ import { useHistory } from 'react-router-dom'
 
 const PrimaryLink = tw(PrimaryLinkBase)`rounded-full`
 const Container = styled.div`
-  ${tw`relative -mx-8 -mt-8 bg-center bg-cover h-screen`}
+  ${tw`relative -mx-8 -mt-6 bg-center bg-cover h-screen`}
   background-color: purple;
-  height: 8rem;
+  height: 7rem;
   margin-left: 0rem;
   margin-right: 0rem;
 `;
 
 const OpacityOverlay = tw.div`z-10 mt-0 absolute inset-0 bg-black opacity-100`;
-// opacity-100 ???
-const HeroContainer = tw.div`z-20 relative px-6 sm:px-8 mx-auto h-full flex flex-row-reverse`;
-
-
-// ADD STYLES IN TALIWIND (PADDINGS, MARGINS, SPACING)
+const HeroContainer = tw.div`z-20 relative px-6 sm:px-8 mx-3 h-full flex flex-row-reverse`;
 
 function Navbar() {
   const { logged, nickname, id, isAdmin } = useSelector(state => state.users)
@@ -46,21 +42,21 @@ function Navbar() {
   const navLinks = [
     <NavLinks key={1}>
       <NavLink href="/">
-        Main
+        Основная
       </NavLink>
       <NavLink href="/map">
-        Map
+        Карта
       </NavLink>
       <NavLink href="/addmark">
-        Add Mark
+        Добавить поле
       </NavLink>
     </NavLinks>,
     <NavLinks key={2}>
       <PrimaryLink style={{ marginRight: '5%' }} href="/signin">
-        Login
+        Логин
       </PrimaryLink>
       <PrimaryLink style={{ marginRight: '5%' }} href="/signup">
-        SignUp
+        Регистрация
     </PrimaryLink>
     </NavLinks>
   ];

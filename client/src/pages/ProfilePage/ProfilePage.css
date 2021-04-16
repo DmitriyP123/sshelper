@@ -4,7 +4,7 @@ body {
 
 /* !!!!! */
 .page-container {
-  margin-left: 80px;
+  /* margin-left: 10px; */
 }
 
 .icon-edit {
@@ -25,7 +25,8 @@ body {
   box-shadow: 0 1px 20px 0 rgba(69, 90, 100, 0.08);
   border: none;
   margin-bottom: 30px;
-  height: 290px;
+  height: 425px;
+  width: 775px;
 }
 
 .m-r-0 {
@@ -42,7 +43,8 @@ body {
 
 .bg-c-lite-green {
   background: -webkit-gradient(linear, left top, right top, from(#8963f2), to(#9135ce));
-  background: linear-gradient(to right, #8963f2, #9135ce)
+  background: linear-gradient(to right, #8963f2, #9135ce);
+  height: 500px;
 }
 
 .user-profile {
@@ -50,7 +52,8 @@ body {
 }
 
 .card-block {
-  padding: 1.25rem
+  padding: 1.25rem;
+  margin-left: 15px;
 }
 
 .m-b-25 {

@@ -5,7 +5,19 @@ import { useDispatch, useSelector } from 'react-redux';
 import { useParams } from "react-router";
 import { v4 as uuidv4 } from 'uuid';
 import { fetchAddEvent } from '../../redux/reduxThunk/asyncFuncs';
-import { getDayEventsAC, getDayAvailTimesAC } from '../../redux/actionCreators/actionCreators';
+import { getDayEventsAC } from '../../redux/actionCreators/actionCreators';
+import tw from "twin.macro";
+import styled from "styled-components";
+
+const SubmitButton = styled.button`
+  ${tw`mt-5 tracking-wide font-semibold bg-primary-500 text-gray-100 w-full py-4 rounded-lg hover:bg-primary-900 transition-all duration-300 ease-in-out flex items-center justify-center focus:shadow-outline focus:outline-none`}
+  .icon {
+    ${tw`w-6 h-6 -ml-2`}
+  }
+  .text {
+    ${tw`ml-3`}
+  }
+`;
 
 function AddEventModal(props) {
 
@@ -40,9 +52,9 @@ function AddEventModal(props) {
 
   return (
     <>
-      <Button style={{ width: '170px' }} variant="primary" onClick={handleShow}>
+      <SubmitButton style={{ width: '170px' }} variant="primary" onClick={handleShow}>
         Добавить Ивент
-      </Button>
+      </SubmitButton>
 
       <Modal show={show} onHide={handleClose}>
         <Modal.Header closeButton>
