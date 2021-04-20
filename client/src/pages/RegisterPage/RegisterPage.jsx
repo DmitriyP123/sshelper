@@ -6,7 +6,7 @@ import { css } from "styled-components/macro"; //eslint-disable-line
 import { ReactComponent as SignUpIcon } from "feather-icons/dist/icons/user-plus.svg";
 import { useHistory } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
-import { fetchRegisterUser } from "../../redux/reduxThunk/asyncFuncs";
+import { fetchRegisterUser, fetchInitUsers } from "../../redux/reduxThunk/asyncFuncs";
 import store from '../../redux/store'
 function RegisterPage() {
   const logoLinkUrl = "/"
@@ -56,8 +56,9 @@ function RegisterPage() {
       let isError = store.getState((store) => store.users.error)
       if (!isError.users.error) {
         history.push("/map");
+        dispatch(fetchInitUsers());
       }
-    }, 300);
+    }, 600);
   };
 
   return (

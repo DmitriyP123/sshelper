@@ -1,4 +1,4 @@
-import { GET_FIELD_EVENTS, GET_DAY_EVENTS, GET_AVAIL_TIMES, ADD_EVENT, JOIN_EVENT,LEAVE_EVENT } from '../actionTypes/actionTypes';
+import { GET_FIELD_EVENTS, GET_DAY_EVENTS, GET_AVAIL_TIMES, ADD_EVENT, JOIN_EVENT,LEAVE_EVENT } from './contracts/actiontypes';
 
 const initialState = {
   currentFieldEvents: [],

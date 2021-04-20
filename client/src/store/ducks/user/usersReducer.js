@@ -1,5 +1,5 @@
 import { REGISTER_USER,EDIT_USER, LOGOUT_USER, 
-  ERROR_REGISTER, ERROR_LOGIN, LOGIN_USER, INIT_USERS, UPDATE_PHOTO_USER } from '../actionTypes/actionTypes'
+  ERROR_REGISTER, ERROR_LOGIN, LOGIN_USER, INIT_USERS, UPDATE_PHOTO_USER } from './contracts/actionTypes'
 const state = JSON.parse(window.localStorage.getItem("currentState"));
 
 let initialState = {

@@ -1,8 +1,4 @@
-import {
-  INIT_REQUESTS,
-  ADD_REQUEST,
-  DELETE_REQUEST,
-} from "../actionTypes/actionTypes";
+import {INIT_REQUESTS, ADD_REQUEST, DELETE_REQUEST} from "./contracts/actionTypes";
 
 const initialState = {
   requests: [],

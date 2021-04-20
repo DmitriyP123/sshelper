@@ -27,7 +27,7 @@ export default () => {
           <LinksContainer>
             <Link href="/">Home</Link>
             <Link href="/map">Map</Link>
-            <Link href="/developers">Developers</Link>
+            {/* <Link href="/developers">Developers</Link> */}
           </LinksContainer>
           <CopyrightText>
             &copy; Copyright 2021, StreetBallity Inc. All Rights Reserved.

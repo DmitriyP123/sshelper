@@ -1,4 +1,4 @@
-import { INIT_MARKERS, ADD_MARKER } from '../actionTypes/actionTypes';
+import { INIT_MARKERS, ADD_MARKER } from './contracts/actionTypes';
 
 const initialState = {
   markers: [],

@@ -26,8 +26,9 @@ class FieldsController {
       const data: FieldModelInterface = {
         title: req.body.title,
         content: req.body.content,
-        address:req.body.address,
+        address: req.body.address,
         events: [],
+        pictures: ['https://thumbs.dreamstime.com/b/streetball-field-bright-sunny-day-55082514.jpg', 'https://media.npr.org/assets/img/2016/03/29/ap_090911089838_sq-3271237f28995f6530d9634ff27228cae88e3440.jpg', 'https://centrsporta-nevskiy.ru/wp-content/uploads/2020/12/xmrebgrit_c.jpg'],
       };
 
       let field = await FieldModel.create(data);
@@ -53,7 +54,7 @@ class FieldsController {
         content: req.body.content,
         start: req.body.start,
         date: req.body.date,
-        field:req.body.fieldId,
+        field: req.body.fieldId,
       };
 
       let event = await EventModel.create(data);

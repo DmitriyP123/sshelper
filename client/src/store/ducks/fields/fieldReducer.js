@@ -1,4 +1,4 @@
-import { INIT_FIELDS, GET_FIELD } from '../actionTypes/actionTypes';
+import { INIT_FIELDS, GET_FIELD } from './contracts/actionTypes';
 
 const initialState = {
   fields: [],

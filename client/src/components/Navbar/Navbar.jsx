@@ -53,7 +53,7 @@ function Navbar() {
     </NavLinks>,
     <NavLinks key={2}>
       <PrimaryLink style={{ marginRight: '5%' }} href="/signin">
-        Логин
+        Вход
       </PrimaryLink>
       <PrimaryLink style={{ marginRight: '5%' }} href="/signup">
         Регистрация

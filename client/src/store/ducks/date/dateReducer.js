@@ -1,4 +1,4 @@
-import { SET_DATE } from '../actionTypes/actionTypes';
+import { SET_DATE } from './contracts/actionTypes';
 
 const initialState = {
   date: `${new Date().getDate()}.${Number(new Date().getMonth()) + 1}.${new Date().getFullYear()}`,

@@ -32,8 +32,8 @@ function RequestPage() {
             {' '}
             <span>Lng: {el.lng}</span>
             {' '}
-            <p>FieldName: {el.fieldTitle}</p>
-            <p>FieldContent: {el.fieldContent}</p>
+            <p>Название: {el.fieldTitle}</p>
+            <p>Описание: {el.fieldContent}</p>
             <RequestModal data={el} />
             {' '}
             <Button variant='danger' onClick={deleteRequestHandler} id={el._id}>Отклонить заявку</Button>
