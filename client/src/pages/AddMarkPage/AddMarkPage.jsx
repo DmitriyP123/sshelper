@@ -7,7 +7,7 @@ import {
 import tw from "twin.macro";
 import styled from "styled-components";
 import { ReactComponent as LoginIcon } from "feather-icons/dist/icons/upload.svg";
-import { fetchAddRequests } from '../../redux/reduxThunk/asyncFuncs'
+import { fetchAddRequests } from '../../store/ducks/request/asyncFunction'
 import { useDispatch } from 'react-redux'
 import { useHistory } from 'react-router-dom';
 import Geocode from "react-geocode";

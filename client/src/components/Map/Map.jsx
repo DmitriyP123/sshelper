@@ -5,7 +5,7 @@ import tw from "twin.macro";
 import styled from "styled-components";
 import './Map.css';
 import "@reach/combobox/styles.css";
-import { fetchInitMarkers } from '../../redux/reduxThunk/asyncFuncs';
+import { fetchInitMarkers } from '../../store/ducks/markers/asyncFunction';
 import { Link } from 'react-router-dom';
 import mapStyles from './mapStyles';
 

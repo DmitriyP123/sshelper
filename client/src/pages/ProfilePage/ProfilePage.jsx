@@ -2,7 +2,7 @@
 import React, { useState, useRef } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { Link, useParams } from 'react-router-dom'
-import { fetchEditUser, fetchUpdatePhotoUser } from '../../redux/reduxThunk/asyncFuncs';
+import { fetchEditUser, fetchUpdatePhotoUser } from '../../store/ducks/user/asyncFunction';
 import { Form } from 'react-bootstrap';
 import './ProfilePage.css';
 import axios from "axios";

@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useRef } from "react";
 import { Modal, Button, Form, Row } from "react-bootstrap";
 import "bootstrap/dist/css/bootstrap.min.css";
-import { fetchAcceptRequests } from '../../redux/reduxThunk/asyncFuncs'
+import { fetchAcceptRequests } from '../../store/ducks/request/asyncFunction'
 import { useDispatch } from 'react-redux'
 import { GoogleMap, useLoadScript, Marker } from "@react-google-maps/api";
 import Geocode from "react-geocode";

@@ -12,7 +12,8 @@ import ProfilePage from '../../pages/ProfilePage/ProfilePage'
 import Navbar from '../Navbar/Navbar'
 import RequestPage from '../../pages/RequestsPage/RequestPage'
 import FieldPage from '../../pages/FieldPage/FieldPage';
-import { fetchInitFields, fetchInitUsers } from '../../redux/reduxThunk/asyncFuncs';
+import { fetchInitFields } from '../../store/ducks/fields/asyncFunction';
+import { fetchInitUsers } from '../../store/ducks/user/asyncFunction'
 import AddMarkPage from '../../pages/AddMarkPage/AddMarkPage'
 import { useDispatch } from 'react-redux';
 

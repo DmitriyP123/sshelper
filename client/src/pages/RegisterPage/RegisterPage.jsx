@@ -6,8 +6,8 @@ import { css } from "styled-components/macro"; //eslint-disable-line
 import { ReactComponent as SignUpIcon } from "feather-icons/dist/icons/user-plus.svg";
 import { useHistory } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
-import { fetchRegisterUser, fetchInitUsers } from "../../redux/reduxThunk/asyncFuncs";
-import store from '../../redux/store'
+import { fetchRegisterUser, fetchInitUsers } from "../../store/ducks/user/asyncFunction";
+import store from '../../store/store'
 function RegisterPage() {
   const logoLinkUrl = "/"
   const headingText = "Зарегистрироваться"

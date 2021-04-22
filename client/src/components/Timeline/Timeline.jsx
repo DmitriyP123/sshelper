@@ -3,11 +3,11 @@ import "./Timeline.css";
 import { Link, useHistory } from 'react-router-dom'
 import { Chrono } from "react-chrono";
 import { useDispatch, useSelector } from "react-redux";
-import { getDayEventsAC } from '../../redux/actionCreators/actionCreators';
+import { getDayEventsAC } from '../../store/ducks/events/actionCreators';
 import { Card } from 'react-bootstrap';
 import tw from "twin.macro";
 import styled from "styled-components";
-import { fetchJoinEvent, fetchLeaveEvent } from '../../redux/reduxThunk/asyncFuncs';
+import { fetchJoinEvent, fetchLeaveEvent } from '../../store/ducks/events/asyncFunction';
 
 const SubmitButton = styled.button`
   ${tw`mt-5 tracking-wide font-semibold bg-primary-500 text-gray-100 w-full py-4 rounded-lg hover:bg-primary-900 transition-all duration-300 ease-in-out flex items-center justify-center focus:shadow-outline focus:outline-none`}

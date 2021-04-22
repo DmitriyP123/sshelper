@@ -4,7 +4,7 @@ import styled from "styled-components";
 import { css } from "styled-components/macro"; //eslint-disable-line
 import Header, { NavLink, NavLinks, PrimaryLink as PrimaryLinkBase, LogoLink, NavToggle, DesktopNavLinks } from "../headers/light.js";
 import { useSelector, useDispatch } from 'react-redux'
-import { logoutUserAC } from '../../redux/actionCreators/actionCreators'
+import { logoutUserAC } from '../../store/ducks/user/actionCreator'
 import { useHistory } from 'react-router-dom'
  const StyledHeader = styled(Header)`
   ${tw`pt-8 max-w-none w-full`}

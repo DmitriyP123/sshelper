@@ -45,7 +45,7 @@ app.get('/requests', RequestCtrl.getAll)
 app.post('/requests', RequestCtrl.create)
 app.delete('/requests', RequestCtrl.delete)
 
-app.listen(process.env.PORT, (): void => {
-    console.log('server runned on: ',process.env.PORT);
+app.listen(4200, (): void => {
+    console.log('server runned on: ', 4200);
     
 })

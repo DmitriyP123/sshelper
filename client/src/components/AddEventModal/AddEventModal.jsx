@@ -4,8 +4,8 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 import { useDispatch, useSelector } from 'react-redux';
 import { useParams } from "react-router";
 import { v4 as uuidv4 } from 'uuid';
-import { fetchAddEvent } from '../../redux/reduxThunk/asyncFuncs';
-import { getDayEventsAC } from '../../redux/actionCreators/actionCreators';
+import { fetchAddEvent } from '../../store/ducks/events/asyncFunction';
+import { getDayEventsAC } from '../../store/ducks/events/actionCreators';
 import tw from "twin.macro";
 import styled from "styled-components";
 

@@ -1,11 +1,11 @@
 import { combineReducers } from 'redux';
 
 import usersReducer from './ducks/user/usersReducer';
-import mapReducer from './reducers/mapReducer';
-import fieldReducer from './reducers/fieldReducer'
-import dateReducer from './reducers/dateReducer';
-import requestReducer from './reducers/requestReducer'
-import eventsReducer from './reducers/eventsReducer';
+import mapReducer from './ducks/markers/mapReducer';
+import fieldReducer from './ducks/fields/fieldReducer'
+import dateReducer from './ducks/date/dateReducer';
+import requestReducer from './ducks/request/requestReducer'
+import eventsReducer from './ducks/events/eventsReducer';
 
 const rootReducer = combineReducers({
   users: usersReducer,

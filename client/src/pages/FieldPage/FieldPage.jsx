@@ -11,7 +11,7 @@ import { ReactComponent as SvgDecoratorBlob1 } from "../../images/svg-decorator-
 import { ReactComponent as SvgDecoratorBlob2 } from "../../images/svg-decorator-blob-5.svg";
 import "slick-carousel/slick/slick.css";
 import { useParams } from "react-router";
-import { fetchGetFieldEvents } from '../../redux/reduxThunk/asyncFuncs';
+import { fetchGetFieldEvents } from '../../store/ducks/events/asyncFunction';
 
 import Calendar from 'react-calendar';
 import 'react-calendar/dist/Calendar.css';
@@ -19,7 +19,9 @@ import AddEventModal from '../../components/AddEventModal/AddEventModal';
 
 import Timeline from '../../components/Timeline/Timeline';
 
-import { getFieldAC, setDateAC, getDayEventsAC, getDayAvailTimesAC } from '../../redux/actionCreators/actionCreators';
+import { getFieldAC } from '../../store/ducks/fields/actionCreator';
+import { setDateAC } from '../../store/ducks/date/actionCreator';
+import { getDayEventsAC, getDayAvailTimesAC } from '../../store/ducks/events/actionCreators'
 import { useDispatch, useSelector } from "react-redux";
 
 const Container = tw.div`relative `;

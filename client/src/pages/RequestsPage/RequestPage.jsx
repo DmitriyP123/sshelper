@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux'
-import { fetchInitRequests, fetchDeleteRequests } from '../../redux/reduxThunk/asyncFuncs'
+import { fetchInitRequests, fetchDeleteRequests } from '../../store/ducks/request/asyncFunction'
 import RequestModal from '../../components/RequestModal/RequestModal';
 import tw from "twin.macro";
 import styled from "styled-components";

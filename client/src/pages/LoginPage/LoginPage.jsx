@@ -6,8 +6,8 @@ import { css } from "styled-components/macro"; //eslint-disable-line
 import { ReactComponent as LoginIcon } from "feather-icons/dist/icons/log-in.svg";
 import { useHistory } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
-import { fetchLoginUser } from '../../redux/reduxThunk/asyncFuncs'
-import store from '../../redux/store'
+import { fetchLoginUser } from '../../store/ducks/user/asyncFunction'
+import store from '../../store/store'
 function LoginPage() {
   const Container = tw(
     ContainerBase
