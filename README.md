@@ -24,14 +24,14 @@
 
 ## Используемые технологии
 Backend:
--TypeScript
--Express
--Node.js
--JWT
--MongoDB
--Cloudinary
+- TypeScript
+- Express
+- Node.js
+- JWT
+- MongoDB
+- Cloudinary
 FrontEnd:
--React
--Redux(Thunk)
--Tailwind css
--Bootstrap
+- React
+- Redux(Thunk)
+- Tailwind css
+- Bootstrap
